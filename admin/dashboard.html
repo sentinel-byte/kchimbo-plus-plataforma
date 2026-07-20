@@ -686,9 +686,21 @@
   // ─────────────────────────────────────────────────────────
   let tipoFiltroAdmin = 'TODOS';
 
-  function openMediaAdmin(titulo, url) {
-    document.getElementById('mediaModalTitle').textContent = titulo;
-    document.getElementById('mediaModalIframe').src = url;
+  function openMediaAdmin(titulo, url, tipo = 'PDF') {
+    document.getElementById('mediaModalTitle').textContent = `${tipo === 'PDF' ? '📄' : '🎬'} ${titulo}`;
+    const iframe = document.getElementById('mediaModalIframe');
+
+    if (tipo === 'PDF' || url.includes('.pdf') || url.includes('drive.google.com')) {
+      const viewerUrl = url.includes('drive.google.com')
+        ? url.replace('/view', '/preview')
+        : `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
+      iframe.src = viewerUrl;
+      iframe.style.height = '80vh';
+    } else {
+      iframe.src = url;
+      iframe.style.height = '60vh';
+    }
+
     openModal('mediaModal');
   }
 
@@ -829,7 +841,7 @@
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const card = btn.closest('.padlet-post-card');
-        openMediaAdmin(card.dataset.titulo, card.dataset.url);
+        openMediaAdmin(card.dataset.titulo, card.dataset.url, card.dataset.tipo);
       });
     });
 
@@ -858,7 +870,7 @@
     container.querySelectorAll('.padlet-post-card').forEach(card => {
       card.addEventListener('click', (e) => {
         if (e.target.closest('.padlet-post-more-btn') || e.target.closest('.padlet-options-menu')) return;
-        openMediaAdmin(card.dataset.titulo, card.dataset.url);
+        openMediaAdmin(card.dataset.titulo, card.dataset.url, card.dataset.tipo);
       });
     });
   }
