@@ -1,0 +1,21 @@
+# KCHIMBO+ — Netlify Configuration
+# Le dice a Netlify que publique los archivos HTML estáticos
+# sin ejecutar ningún build de Next.js
+
+[build]
+  publish = "."
+  command = ""
+
+# Redireccionamiento para que el login sea la página principal
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+# Headers de seguridad
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Cache-Control = "public, max-age=0, must-revalidate"
