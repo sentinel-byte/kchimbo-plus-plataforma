@@ -597,13 +597,18 @@
 
 <!-- Modal para ver PDF / Video -->
 <div class="modal-overlay" id="mediaModal">
-  <div class="modal-box" style="max-width:800px;">
+  <div class="modal-box" style="max-width:850px;">
     <div class="modal-header">
       <div class="modal-title" id="mediaModalTitle">Clase</div>
-      <button class="modal-close" id="mediaModalClose">✕</button>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <a id="mediaModalExternalBtn" href="#" target="_blank" class="btn btn-outline btn-sm" style="font-size:0.75rem;padding:4px 12px;text-decoration:none;">
+          ↗️ Abrir en nueva pestaña
+        </a>
+        <button class="modal-close" id="mediaModalClose">✕</button>
+      </div>
     </div>
-    <div class="modal-body" style="padding:0;">
-      <iframe id="mediaModalIframe" class="pdf-viewer-wrap" src="" frameborder="0" allowfullscreen></iframe>
+    <div class="modal-body" style="padding:0;background:#000;">
+      <iframe id="mediaModalIframe" class="pdf-viewer-wrap" src="" frameborder="0" allowfullscreen style="width:100%;height:75vh;border:none;"></iframe>
     </div>
   </div>
 </div>
@@ -1004,22 +1009,23 @@
   // ─────────────────────────────────────────────────────────
   // MEDIA MODAL (PDF / Video)
   // ─────────────────────────────────────────────────────────
-  function openMedia(titulo, url, tipo) {
+  function openMedia(titulo, url, tipo = 'PDF') {
     document.getElementById('mediaModalTitle').textContent = `${tipo === 'PDF' ? '📄' : '🎬'} ${titulo}`;
     const iframe = document.getElementById('mediaModalIframe');
+    const extBtn = document.getElementById('mediaModalExternalBtn');
 
-    if (tipo === 'PDF') {
-      // Google Drive viewer
-      const viewerUrl = url.includes('drive.google.com')
-        ? url.replace('/view', '/preview')
-        : `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
-      iframe.src = viewerUrl;
-      iframe.style.height = '80vh';
-    } else {
-      iframe.src = url;
-      iframe.style.height = '60vh';
+    if (extBtn) extBtn.href = url;
+
+    let viewerUrl = url;
+    if (tipo === 'PDF' || url.includes('.pdf') || url.includes('drive.google.com')) {
+      if (url.includes('drive.google.com')) {
+        viewerUrl = url.replace('/view', '/preview');
+      } else {
+        viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
+      }
     }
 
+    iframe.src = viewerUrl;
     document.getElementById('mediaModal').classList.add('open');
   }
 
