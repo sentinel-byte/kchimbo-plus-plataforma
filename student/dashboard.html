@@ -594,15 +594,23 @@
   }, 600);
 
   // ─────────────────────────────────────────────────────────
-  // NAVEGACIÓN
+  // NAVEGACIÓN Y RUTAS (Hash Routing)
   // ─────────────────────────────────────────────────────────
-  function showSection(name) {
+  function showSection(name, updateUrl = true) {
+    const secEl = document.getElementById(`section-${name}`);
+    const navEl = document.getElementById(`nav-${name}`);
+    if (!secEl || !navEl) return;
+
     document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.getElementById(`section-${name}`).classList.add('active');
-    document.getElementById(`nav-${name}`).classList.add('active');
+    secEl.classList.add('active');
+    navEl.classList.add('active');
     currentSection = name;
     closeSidebar();
+
+    if (updateUrl && window.location.hash !== `#${name}`) {
+      history.pushState(null, '', `#${name}`);
+    }
 
     // Cargar contenido de sección
     if (name === 'clases') renderClases();
@@ -610,6 +618,14 @@
     if (name === 'avance') renderAvance();
     if (name === 'pagos') renderPagos();
   }
+
+  function handleRoute() {
+    const hash = window.location.hash.replace('#', '') || 'clases';
+    showSection(hash, false);
+  }
+
+  window.addEventListener('hashchange', handleRoute);
+  window.addEventListener('popstate', handleRoute);
 
   document.querySelectorAll('.nav-item[data-section]').forEach(item => {
     item.addEventListener('click', () => showSection(item.dataset.section));
@@ -1269,8 +1285,8 @@
     window.location.href = '../index.html';
   });
 
-  // ── Inicializar primera sección ──
-  renderClases();
+  // ── Inicializar ruta actual basada en URL hash ──
+  handleRoute();
 
 })();
 </script>
