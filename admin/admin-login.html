@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KCHIMBO+ | Administrador — Iniciar Sesión</title>
+  <meta name="description" content="Acceso administrador a la plataforma KCHIMBO+.">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+<div class="login-page">
+  <div class="login-bg">
+    <div class="login-blob blob-1" style="background: radial-gradient(circle, rgba(160,64,0,0.15) 0%, rgba(192,57,43,0.08) 60%, transparent 80%);"></div>
+    <div class="login-blob blob-2" style="background: radial-gradient(circle, rgba(192,57,43,0.12) 0%, rgba(160,64,0,0.06) 60%, transparent 80%);"></div>
+    <svg class="login-curves" viewBox="0 0 1440 900" preserveAspectRatio="none">
+      <path d="M-100,300 Q200,100 500,350 T1200,200 T1600,400" stroke="rgba(160,64,0,0.06)" stroke-width="2" fill="none"/>
+      <path d="M-100,600 Q300,400 700,600 T1400,450 T1700,600" stroke="rgba(192,57,43,0.05)" stroke-width="2" fill="none"/>
+      <circle cx="100" cy="100" r="120" stroke="rgba(160,64,0,0.05)" stroke-width="1.5" fill="none"/>
+      <circle cx="1350" cy="750" r="100" stroke="rgba(192,57,43,0.04)" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+
+  <div class="login-container">
+    <!-- Brand -->
+    <div class="login-brand">
+      <div class="login-logo-wrap" style="background: linear-gradient(145deg, #A04000 0%, #C0392B 50%, #7D3412 100%);">
+        <div class="logo-text-fallback">
+          <div class="kchimbo">KCHIMBO<span>+</span></div>
+          <div class="sub">Panel Admin</div>
+        </div>
+      </div>
+      <h1 class="login-tagline">Panel de <span>Administración</span></h1>
+      <p class="login-desc">
+        Gestiona el contenido, usuarios, preguntas y membresías de la plataforma <strong>KCHIMBO+</strong> desde aquí.
+      </p>
+      <div class="brand-dots">
+        <div class="brand-dot active"></div>
+        <div class="brand-dot"></div>
+        <div class="brand-dot"></div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="login-form-panel">
+      <div style="display:flex; justify-content:center; margin-bottom:16px;">
+        <div class="admin-badge">🛡️ Administrador</div>
+      </div>
+      <div class="login-form-title">Acceso Restringido</div>
+      <h2 class="login-form-subtitle">Panel <span class="highlight">Admin</span></h2>
+
+      <div class="lockout-box" id="lockoutBox">
+        <div class="lockout-icon">🔒</div>
+        <div class="lockout-title">Acceso bloqueado temporalmente</div>
+        <div class="lockout-timer" id="lockoutTimer">10:00</div>
+        <div class="lockout-sub">3 intentos fallidos. Espera para volver a intentarlo.</div>
+      </div>
+
+      <div class="login-error" id="loginError">
+        <span>⚠️</span>
+        <span id="loginErrorText">Credenciales de administrador incorrectas.</span>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="usuario">Usuario Admin</label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">🛡️</span>
+            <input type="text" id="usuario" class="form-input" placeholder="Usuario administrador" autocomplete="username" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Contraseña</label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">🔑</span>
+            <input type="password" id="password" class="form-input" placeholder="Contraseña segura" autocomplete="current-password" required>
+            <button type="button" class="toggle-pass" id="togglePass">👁️</button>
+          </div>
+        </div>
+
+        <div class="attempts-dots" id="attemptsDots">
+          <div class="attempt-dot" id="dot0"></div>
+          <div class="attempt-dot" id="dot1"></div>
+          <div class="attempt-dot" id="dot2"></div>
+        </div>
+
+        <button type="submit" class="btn-login" id="btnLogin"
+          style="background: linear-gradient(135deg, #A04000, #C0392B); box-shadow: 0 6px 20px rgba(160,64,0,0.4);">
+          <span id="btnLoginText">Acceder al Panel</span>
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <p class="dev-text">Desarrollado por <strong>Carlos Llano</strong></p>
+        <p class="dev-text"><a href="mailto:llanovilca97@gmail.com">llanovilca97@gmail.com</a></p>
+        <p class="dev-text" style="margin-top:6px; font-size:0.68rem;">
+          <a href="../index.html">← Volver al login de estudiante</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="../js/demo-data.js"></script>
+<script src="../js/sheets-api.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+(function() {
+  const sesion = AUTH.getSesion();
+  if (sesion && sesion.rol === 'admin') {
+    window.location.href = 'dashboard.html';
+    return;
+  }
+
+  let lockoutTimerObj = null;
+  let intentosActuales = 0;
+
+  const form       = document.getElementById('loginForm');
+  const usuarioIn  = document.getElementById('usuario');
+  const passwordIn = document.getElementById('password');
+  const btnLogin   = document.getElementById('btnLogin');
+  const btnText    = document.getElementById('btnLoginText');
+  const lockoutBox = document.getElementById('lockoutBox');
+  const lockoutTmr = document.getElementById('lockoutTimer');
+  const loginError = document.getElementById('loginError');
+  const loginErrTx = document.getElementById('loginErrorText');
+  const togglePass = document.getElementById('togglePass');
+
+  togglePass.addEventListener('click', () => {
+    const isPass = passwordIn.type === 'password';
+    passwordIn.type = isPass ? 'text' : 'password';
+    togglePass.textContent = isPass ? '🙈' : '👁️';
+  });
+
+  function updateAttemptDots(intentos) {
+    for (let i = 0; i < 3; i++) {
+      document.getElementById(`dot${i}`).classList.toggle('used', i < intentos);
+    }
+  }
+
+  function showError(msg) {
+    loginErrTx.textContent = msg;
+    loginError.classList.add('visible');
+  }
+  function hideError() { loginError.classList.remove('visible'); }
+
+  function iniciarBloqueo(ms) {
+    btnLogin.disabled = true;
+    usuarioIn.disabled = true;
+    passwordIn.disabled = true;
+    lockoutBox.classList.add('visible');
+    hideError();
+    if (lockoutTimerObj) lockoutTimerObj.stop();
+    lockoutTimerObj = new LockoutTimer(ms,
+      (m,s) => { lockoutTmr.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; },
+      () => {
+        lockoutBox.classList.remove('visible');
+        btnLogin.disabled = false;
+        usuarioIn.disabled = false;
+        passwordIn.disabled = false;
+        intentosActuales = 0;
+        updateAttemptDots(0);
+        btnText.textContent = 'Acceder al Panel';
+      }
+    );
+    lockoutTimerObj.start();
+  }
+
+  const lastUser = localStorage.getItem('kchimbo_last_admin') || '';
+  if (lastUser) {
+    const bloqueo = AUTH.estaBlockeado(lastUser);
+    if (bloqueo.bloqueado) iniciarBloqueo(bloqueo.msRestantes);
+    else { intentosActuales = AUTH.getIntentos(lastUser); updateAttemptDots(intentosActuales); }
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const usuario = usuarioIn.value.trim();
+    const password = passwordIn.value;
+    if (!usuario || !password) { showError('Ingresa usuario y contraseña.'); return; }
+
+    localStorage.setItem('kchimbo_last_admin', usuario.toLowerCase());
+    btnLogin.disabled = true;
+    btnText.textContent = 'Verificando...';
+    hideError();
+
+    try {
+      const resultado = await AUTH.login(usuario, password);
+      if (resultado.success && resultado.sesion.rol === 'admin') {
+        btnText.textContent = '✅ Accediendo...';
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 600);
+      } else if (resultado.success && resultado.sesion.rol !== 'admin') {
+        AUTH.logout();
+        showError('No tienes permisos de administrador.');
+        btnLogin.disabled = false;
+        btnText.textContent = 'Acceder al Panel';
+      } else if (resultado.bloqueado) {
+        iniciarBloqueo(resultado.msRestantes);
+        btnText.textContent = 'Bloqueado';
+      } else {
+        intentosActuales = resultado.intentos || intentosActuales + 1;
+        updateAttemptDots(intentosActuales);
+        showError(resultado.mensaje);
+        btnLogin.disabled = false;
+        btnText.textContent = 'Acceder al Panel';
+        passwordIn.value = '';
+        passwordIn.focus();
+      }
+    } catch (err) {
+      showError('Error de conexión.');
+      btnLogin.disabled = false;
+      btnText.textContent = 'Acceder al Panel';
+    }
+  });
+})();
+</script>
+</body>
+</html>

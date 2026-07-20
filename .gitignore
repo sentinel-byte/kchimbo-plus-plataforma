@@ -1,0 +1,37 @@
+# KCHIMBO+ — .gitignore
+
+# Next.js / build artifacts (de otros proyectos en el workspace)
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+.env*
+
+# Node
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (por si se usa en el futuro)
+node_modules/
+npm-debug.log
+
+# Logs
+*.log
+
+# Temporales
+*.tmp
+*.temp

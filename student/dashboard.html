@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KCHIMBO+ | Panel Estudiantil</title>
+  <meta name="description" content="Panel del estudiante - Plataforma virtual KCHIMBO+ para la UNA PUNO.">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <style>
+    /* Extra styles for student dashboard */
+    .quiz-answer-feedback {
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-top: 16px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+    .quiz-answer-feedback.show { display: flex; }
+    .quiz-answer-feedback.correct { background: rgba(39,174,96,0.1); color: var(--success); border: 1.5px solid rgba(39,174,96,0.25); }
+    .quiz-answer-feedback.incorrect { background: rgba(231,76,60,0.1); color: var(--danger); border: 1.5px solid rgba(231,76,60,0.25); }
+    .quiz-stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .quiz-stat { background: white; border-radius: var(--radius-md); padding: 14px; border: 1px solid var(--border); text-align: center; }
+    .quiz-stat-val { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+    .quiz-stat-lbl { font-size: 0.72rem; color: var(--text-muted); }
+    .quiz-setup-form { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+    .quiz-setup-form .form-group { flex: 1; min-width: 160px; margin-bottom: 0; }
+    .pdf-viewer-wrap { width: 100%; height: 80vh; border: none; border-radius: var(--radius-lg); }
+    .resumen-card {
+      background: white;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border);
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .resumen-card:hover { transform: translateX(4px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+    .resumen-icon { font-size: 2rem; flex-shrink: 0; }
+    .resumen-info { flex: 1; }
+    .resumen-curso { font-size: 0.7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; }
+    .resumen-titulo { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin: 2px 0; }
+    .resumen-pages { font-size: 0.75rem; color: var(--text-muted); }
+    .resumen-grid { display: flex; flex-direction: column; gap: 10px; }
+    .filter-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .filter-row select { padding: 8px 14px; border: 2px solid var(--border); border-radius: var(--radius-md); font-family: var(--font); font-size: 0.82rem; background: white; cursor: pointer; color: var(--text-primary); }
+    .filter-row select:focus { border-color: var(--primary); outline: none; }
+    .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+    .empty-state .empty-icon { font-size: 4rem; display: block; margin-bottom: 16px; }
+    .empty-state p { font-size: 0.9rem; }
+    .membership-contact-card { background: white; border-radius: var(--radius-lg); padding: 24px; border: 1px solid var(--border); }
+    .membership-contact-card h4 { font-size: 1rem; margin-bottom: 12px; }
+    .contact-item { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 8px; }
+    .course-section { display: none; }
+    .course-section.active { display: block; }
+    .tipo-filter-wrap { display: flex; gap: 8px; margin-bottom: 20px; }
+    .tipo-btn { padding: 6px 14px; border-radius: var(--radius-full); border: 2px solid var(--border); background: white; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: var(--transition); color: var(--text-secondary); font-family: var(--font); }
+    .tipo-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .tipo-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+    /* Historial table rows */
+    .score-high { color: var(--success); font-weight: 700; }
+    .score-mid  { color: var(--warning); font-weight: 700; }
+    .score-low  { color: var(--danger); font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text">Cargando KCHIMBO+...</div>
+</div>
+
+<!-- Mobile Topbar -->
+<div class="topbar" id="topbar">
+  <div class="topbar-logo">KCHIMBO<span>+</span></div>
+  <button class="topbar-menu-btn" id="menuToggle">☰</button>
+</div>
+
+<!-- Sidebar overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="dashboard-layout">
+
+  <!-- ════════ SIDEBAR ════════ -->
+  <aside class="sidebar" id="sidebar">
+    <!-- Logo -->
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <span style="font-size:1.2rem;font-weight:900;color:white;">K<span style="color:#FAD390">+</span></span>
+        </div>
+        <div class="sidebar-logo-text">
+          <div class="sidebar-logo-name">KCHIMBO<span>+</span></div>
+          <div class="sidebar-logo-sub">Plataforma Virtual</div>
+        </div>
+      </div>
+
+      <!-- User card -->
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebarAvatarInitials">?</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebarUserName">—</div>
+          <div class="sidebar-user-role" id="sidebarUserArea">—</div>
+        </div>
+        <div class="sidebar-user-badge" id="sidebarUserBadge">CIE</div>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Principal</div>
+
+      <div class="nav-item active" data-section="clases" id="nav-clases">
+        <span class="nav-item-icon">📺</span>
+        <span class="nav-item-text">Clases en Línea</span>
+      </div>
+
+      <div class="nav-item" data-section="resumenes" id="nav-resumenes">
+        <span class="nav-item-icon">📄</span>
+        <span class="nav-item-text">Resúmenes</span>
+      </div>
+
+      <div class="nav-section-label">Evaluación</div>
+
+      <div class="nav-item" data-section="simulacro" id="nav-simulacro">
+        <span class="nav-item-icon">📝</span>
+        <span class="nav-item-text">Examen Simulacro</span>
+        <span class="nav-item-badge">UNA</span>
+      </div>
+
+      <div class="nav-item" data-section="repasos" id="nav-repasos">
+        <span class="nav-item-icon">🔄</span>
+        <span class="nav-item-text">Repasos</span>
+      </div>
+
+      <div class="nav-section-label">Seguimiento</div>
+
+      <div class="nav-item" data-section="avance" id="nav-avance">
+        <span class="nav-item-icon">📊</span>
+        <span class="nav-item-text">Mi Avance</span>
+      </div>
+
+      <div class="nav-item" data-section="pagos" id="nav-pagos">
+        <span class="nav-item-icon">💳</span>
+        <span class="nav-item-text">Pagos y Membresía</span>
+      </div>
+    </nav>
+
+    <!-- Footer -->
+    <div class="sidebar-footer">
+      <div class="sidebar-dev-info">
+        <div class="sidebar-dev-label">Desarrollado por</div>
+        <div class="sidebar-dev-name">Carlos Llano</div>
+        <div class="sidebar-dev-email">llanovilca97@gmail.com</div>
+        <div class="sidebar-dev-copy">© 2026 KCHIMBO+</div>
+      </div>
+      <button class="btn-logout" id="btnLogout">
+        <span>Cerrar Sesión</span>
+        <span class="logout-icon">🚪</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ════════ MAIN CONTENT ════════ -->
+  <main class="main-content">
+    <div class="content-area">
+
+      <!-- ════ SECCIÓN: CLASES EN LÍNEA ════ -->
+      <div class="section-view active" id="section-clases">
+        <div class="gradient-banner">
+          <h2>📺 Clases en Línea</h2>
+          <p>Accede a tus clases, PDFs y videos por curso — semana a semana</p>
+        </div>
+
+        <div class="tipo-filter-wrap">
+          <button class="tipo-btn active" data-tipo="TODOS">Todos</button>
+          <button class="tipo-btn" data-tipo="PDF">📄 PDFs</button>
+          <button class="tipo-btn" data-tipo="VIDEO">🎬 Videos</button>
+        </div>
+
+        <div class="courses-tabs-wrap">
+          <div class="courses-tabs" id="coursesTabs">
+            <!-- Generado por JS -->
+          </div>
+        </div>
+
+        <div id="clasesContent">
+          <!-- Generado por JS -->
+        </div>
+      </div>
+
+      <!-- ════ SECCIÓN: RESÚMENES ════ -->
+      <div class="section-view" id="section-resumenes">
+        <div class="gradient-banner">
+          <h2>📄 Resúmenes por Tema</h2>
+          <p>Repasa los conceptos más importantes con nuestros resúmenes en PDF</p>
+        </div>
+
+        <div class="filter-row">
+          <select id="filtroResumenCurso">
+            <option value="">— Todos los cursos —</option>
+          </select>
+        </div>
+
+        <div class="resumen-grid" id="resumenGrid">
+          <!-- Generado por JS -->
+        </div>
+      </div>
+
+      <!-- ════ SECCIÓN: EXAMEN SIMULACRO ════ -->
+      <div class="section-view" id="section-simulacro">
+        <!-- Setup (visible antes de iniciar) -->
+        <div id="examSetup">
+          <div class="exam-setup-card">
+            <span class="exam-setup-icon">📝</span>
+            <h2 class="exam-setup-title">Examen Simulacro</h2>
+            <p class="exam-setup-desc">
+              Simula el examen real de admisión de la <strong>UNA PUNO</strong>.<br>
+              El sistema seleccionará <strong>60 preguntas</strong> distribuidas según tu área,
+              con el puntaje oficial del examen real.
+            </p>
+
+            <div class="exam-info-grid">
+              <div class="exam-info-item">
+                <div class="exam-info-value">60</div>
+                <div class="exam-info-label">Preguntas</div>
+              </div>
+              <div class="exam-info-item">
+                <div class="exam-info-value">3h</div>
+                <div class="exam-info-label">Tiempo</div>
+              </div>
+              <div class="exam-info-item">
+                <div class="exam-info-value">20</div>
+                <div class="exam-info-label">Escala</div>
+              </div>
+            </div>
+
+            <div class="alert alert-info mb-24" style="text-align:left;">
+              <span>ℹ️</span>
+              <span><strong>Puntaje:</strong> Correcta = +1 pto | Incorrecta = -0.25 | Sin marcar = 0. Se convierte a escala de 20.</span>
+            </div>
+
+            <div style="background:var(--bg-warm);border-radius:var(--radius-md);padding:14px 18px;margin-bottom:24px;text-align:left;border:1px solid var(--border);">
+              <strong style="font-size:0.85rem;">Área detectada:</strong>
+              <span id="examAreaLabel" style="font-size:0.85rem;color:var(--primary);font-weight:700;"> —</span>
+              <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">
+                La distribución de preguntas corresponde a tu área de postulación.
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg btn-full" id="btnIniciarExamen">
+              🚀 Iniciar Examen Simulacro
+            </button>
+          </div>
+        </div>
+
+        <!-- Exam Active (oculto hasta iniciar) -->
+        <div id="examActive" class="hidden">
+          <div class="exam-header">
+            <div>
+              <div style="font-size:0.78rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Simulacro UNA PUNO</div>
+              <div class="exam-progress-info">
+                Pregunta <strong id="examQNum">1</strong> / <strong>60</strong>
+              </div>
+            </div>
+            <div class="exam-timer-box">
+              <div>
+                <div class="exam-timer-label">Tiempo restante</div>
+                <div class="exam-timer-value" id="examTimer">03:00:00</div>
+              </div>
+            </div>
+            <button class="btn btn-danger btn-sm" id="btnTerminarExamen">⏹ Terminar</button>
+          </div>
+
+          <!-- Navigator -->
+          <div class="question-navigator" id="questionNavigator"></div>
+
+          <!-- Question -->
+          <div class="question-card" id="questionCard">
+            <!-- Generado por JS -->
+          </div>
+
+          <div class="exam-nav">
+            <button class="btn btn-outline" id="btnPrevQ">← Anterior</button>
+            <span id="examAnsweredCount" style="font-size:0.82rem;color:var(--text-muted);">0 / 60 respondidas</span>
+            <button class="btn btn-primary" id="btnNextQ">Siguiente →</button>
+          </div>
+        </div>
+
+        <!-- Resultados -->
+        <div id="examResults" class="hidden">
+          <!-- Generado por JS -->
+        </div>
+      </div>
+
+      <!-- ════ SECCIÓN: REPASOS ════ -->
+      <div class="section-view" id="section-repasos">
+        <!-- Setup -->
+        <div id="quizSetup">
+          <div class="gradient-banner">
+            <h2>🔄 Repasos por Curso</h2>
+            <p>Practica con preguntas reales de exámenes de admisión UNA PUNO</p>
+          </div>
+
+          <div class="card mt-16">
+            <div class="card-header">
+              <div class="card-title">📚 Selecciona tu repaso</div>
+            </div>
+
+            <div class="quiz-setup-form">
+              <div class="form-group">
+                <label class="form-label">Curso</label>
+                <select class="form-select" id="quizCurso">
+                  <option value="">— Selecciona curso —</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tema (opcional)</label>
+                <select class="form-select" id="quizTema">
+                  <option value="">— Todos los temas —</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" id="btnIniciarRepaso" style="height:44px;margin-top:auto;" disabled>
+                Comenzar Repaso →
+              </button>
+            </div>
+
+            <div id="quizInfo" style="margin-top:16px;display:none;">
+              <div class="alert alert-info">
+                <span>📊</span>
+                <span id="quizInfoText">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Active -->
+        <div id="quizActive" class="hidden">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+            <h2 style="font-size:1.2rem;font-weight:700;" id="quizTitle">Repaso — ÁLGEBRA</h2>
+            <button class="btn btn-outline btn-sm" id="btnSalirRepaso">Salir del repaso</button>
+          </div>
+
+          <div class="quiz-stats-bar">
+            <div class="quiz-stat">
+              <div class="quiz-stat-val" id="quizCorrectasCount">0</div>
+              <div class="quiz-stat-lbl" style="color:var(--success);">✅ Correctas</div>
+            </div>
+            <div class="quiz-stat">
+              <div class="quiz-stat-val" id="quizIncorrectasCount">0</div>
+              <div class="quiz-stat-lbl" style="color:var(--danger);">❌ Incorrectas</div>
+            </div>
+            <div class="quiz-stat">
+              <div class="quiz-stat-val" id="quizPorcentaje">0%</div>
+              <div class="quiz-stat-lbl">📈 Aciertos</div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:6px;">
+              <span id="quizProgressText">Pregunta 1 de 10</span>
+            </div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" id="quizProgressBar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="question-card" id="quizQuestionCard">
+            <!-- Generado por JS -->
+          </div>
+
+          <div class="quiz-answer-feedback" id="quizFeedback">
+            <span id="quizFeedbackIcon">✅</span>
+            <span id="quizFeedbackText">¡Correcto!</span>
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;margin-top:16px;">
+            <button class="btn btn-primary" id="btnQuizNext" disabled>
+              Siguiente pregunta →
+            </button>
+          </div>
+        </div>
+
+        <!-- Quiz Finished -->
+        <div id="quizFinished" class="hidden">
+          <div class="exam-setup-card">
+            <span class="exam-setup-icon">🎉</span>
+            <h2 class="exam-setup-title">¡Repaso completado!</h2>
+            <div class="results-stats-grid mt-16">
+              <div class="results-stat">
+                <div class="results-stat-value score-high" id="quizResCorrect">—</div>
+                <div class="results-stat-label">Correctas</div>
+              </div>
+              <div class="results-stat">
+                <div class="results-stat-value score-low" id="quizResIncorrect">—</div>
+                <div class="results-stat-label">Incorrectas</div>
+              </div>
+              <div class="results-stat">
+                <div class="results-stat-value" id="quizResPct" style="color:var(--primary);">—</div>
+                <div class="results-stat-label">Aciertos</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:24px;justify-content:center;flex-wrap:wrap;">
+              <button class="btn btn-primary" id="btnOtroRepaso">🔄 Nuevo repaso</button>
+              <button class="btn btn-outline" id="btnVerClases">📺 Ver clases</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ SECCIÓN: MI AVANCE ════ -->
+      <div class="section-view" id="section-avance">
+        <div class="gradient-banner">
+          <h2>📊 Mi Avance</h2>
+          <p>Revisa tu progreso en simulacros y rendimiento por curso</p>
+        </div>
+
+        <div class="progress-charts-grid">
+          <!-- Rendimiento por curso -->
+          <div class="chart-card">
+            <div class="chart-card-title">📚 Rendimiento por Curso</div>
+            <div class="mini-bars" id="rendimientoCursos">
+              <div style="color:var(--text-muted);font-size:0.82rem;">Sin datos aún. Completa un repaso primero.</div>
+            </div>
+          </div>
+
+          <!-- Últimos simulacros -->
+          <div class="chart-card">
+            <div class="chart-card-title">📈 Últimos Simulacros</div>
+            <div id="miniSimulacroChart">
+              <div style="color:var(--text-muted);font-size:0.82rem;">Sin simulacros registrados.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Historial completo -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📋 Historial de Simulacros</div>
+          </div>
+          <div class="table-wrap" id="historialTable">
+            <div class="history-empty">
+              <span class="empty-icon">📭</span>
+              <p>Aún no has realizado ningún simulacro.<br>¡Comienza uno en la sección <strong>Examen Simulacro</strong>!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ SECCIÓN: PAGOS ════ -->
+      <div class="section-view" id="section-pagos">
+        <div class="gradient-banner">
+          <h2>💳 Pagos y Membresía</h2>
+          <p>Estado y vigencia de tu membresía en la plataforma KCHIMBO+</p>
+        </div>
+
+        <!-- Membership Card -->
+        <div class="membership-card" id="membershipCard">
+          <div class="membership-status active" id="membershipStatus">
+            <span>●</span> Membresía Activa
+          </div>
+          <h3 class="membership-title">Plan Estudiante — KCHIMBO+</h3>
+          <div class="membership-dates" id="membershipDates">Inicio: — | Vence: —</div>
+          <div class="membership-bar-wrap">
+            <div class="membership-bar">
+              <div class="membership-bar-fill" id="membershipBarFill" style="width:0%"></div>
+            </div>
+            <div class="membership-days-left" id="membershipDaysLeft">— días restantes</div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="membership-contact-card">
+          <h4>📱 Renovar Membresía</h4>
+          <div class="contact-item">📞 <span>Para renovar tu membresía, contacta al administrador</span></div>
+          <div class="contact-item">📧 <a href="mailto:llanovilca97@gmail.com" style="color:var(--primary);">llanovilca97@gmail.com</a></div>
+          <div class="contact-item">💬 <span>WhatsApp: +51 XXX XXX XXX</span></div>
+          <div class="alert alert-warning mt-16" id="expiryWarning" style="display:none;">
+            <span>⚠️</span>
+            <span>Tu membresía está próxima a vencer. ¡Renueva a tiempo!</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content-area -->
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div>Copyright © 2026 <span class="footer-brand">KCHIMBO+</span> | Plataforma Virtual UNA PUNO</div>
+      <div class="footer-links">
+        <a href="#">Facebook</a>
+        <a href="#">TikTok</a>
+        <a href="mailto:llanovilca97@gmail.com">Contactenos</a>
+      </div>
+    </footer>
+  </main>
+
+</div><!-- /dashboard-layout -->
+
+<!-- Modal para ver PDF / Video -->
+<div class="modal-overlay" id="mediaModal">
+  <div class="modal-box" style="max-width:800px;">
+    <div class="modal-header">
+      <div class="modal-title" id="mediaModalTitle">Clase</div>
+      <button class="modal-close" id="mediaModalClose">✕</button>
+    </div>
+    <div class="modal-body" style="padding:0;">
+      <iframe id="mediaModalIframe" class="pdf-viewer-wrap" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Logout Confirm -->
+<div class="modal-overlay" id="logoutModal">
+  <div class="modal-box" style="max-width:400px;">
+    <div class="modal-header">
+      <div class="modal-title">🚪 Cerrar Sesión</div>
+      <button class="modal-close" id="logoutModalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.92rem;color:var(--text-secondary);">¿Estás seguro de que deseas cerrar sesión?</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" id="logoutCancelBtn">Cancelar</button>
+      <button class="btn btn-danger" id="logoutConfirmBtn">Sí, cerrar sesión</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/demo-data.js"></script>
+<script src="../js/sheets-api.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/exam.js"></script>
+<script src="../js/quiz.js"></script>
+<script>
+// ============================================================
+// STUDENT DASHBOARD — LÓGICA PRINCIPAL
+// ============================================================
+(function() {
+  'use strict';
+
+  // ── Verificar sesión ──
+  const sesion = AUTH.requerirLogin('estudiante');
+  if (!sesion) return;
+
+  // ── Estado global ──
+  let currentSection = 'clases';
+  let currentCursoTab = null;
+  let tipoFiltro = 'TODOS';
+  let examenObj = null;
+  let quizObj = null;
+  let clases = [...DEMO_CLASES];
+  let resumenes = [...DEMO_RESUMENES];
+  let preguntas = [...DEMO_PREGUNTAS];
+
+  // ── Inicializar UI con datos de sesión ──
+  document.getElementById('sidebarUserName').textContent = sesion.nombre;
+  document.getElementById('sidebarUserArea').textContent = `Área ${sesion.area}`;
+  document.getElementById('sidebarUserBadge').textContent = sesion.area;
+  document.getElementById('sidebarAvatarInitials').textContent = sesion.nombre.charAt(0).toUpperCase();
+  document.getElementById('examAreaLabel').textContent = sesion.area;
+
+  // ── Ocultar loading ──
+  setTimeout(() => {
+    document.getElementById('loadingOverlay').style.display = 'none';
+  }, 600);
+
+  // ─────────────────────────────────────────────────────────
+  // NAVEGACIÓN
+  // ─────────────────────────────────────────────────────────
+  function showSection(name) {
+    document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById(`section-${name}`).classList.add('active');
+    document.getElementById(`nav-${name}`).classList.add('active');
+    currentSection = name;
+    closeSidebar();
+
+    // Cargar contenido de sección
+    if (name === 'clases') renderClases();
+    if (name === 'resumenes') renderResumenes();
+    if (name === 'avance') renderAvance();
+    if (name === 'pagos') renderPagos();
+  }
+
+  document.querySelectorAll('.nav-item[data-section]').forEach(item => {
+    item.addEventListener('click', () => showSection(item.dataset.section));
+  });
+
+  // ── Mobile sidebar ──
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    sidebar.classList.add('open');
+    overlay.classList.add('visible');
+  });
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+  }
+  overlay.addEventListener('click', closeSidebar);
+
+  // ─────────────────────────────────────────────────────────
+  // TOAST
+  // ─────────────────────────────────────────────────────────
+  function showToast(msg, type = 'info') {
+    const container = document.getElementById('toastContainer');
+    const icons = { success:'✅', error:'❌', warning:'⚠️', info:'ℹ️' };
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 3200);
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // SECCIÓN: CLASES EN LÍNEA
+  // ─────────────────────────────────────────────────────────
+  function renderClases() {
+    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA.CIE;
+    const tabsWrap = document.getElementById('coursesTabs');
+    const content  = document.getElementById('clasesContent');
+
+    if (!currentCursoTab) currentCursoTab = cursosArea[0];
+
+    // Render tabs
+    tabsWrap.innerHTML = cursosArea.map(c => `
+      <button class="course-tab ${c === currentCursoTab ? 'active' : ''}" data-curso="${c}">${c}</button>
+    `).join('');
+
+    tabsWrap.querySelectorAll('.course-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentCursoTab = btn.dataset.curso;
+        renderClases();
+      });
+    });
+
+    // Filtrar
+    let filtered = clases.filter(c => c.curso === currentCursoTab);
+    if (tipoFiltro !== 'TODOS') filtered = filtered.filter(c => c.tipo === tipoFiltro);
+
+    if (filtered.length === 0) {
+      content.innerHTML = `
+        <div class="empty-state">
+          <span class="empty-icon">📭</span>
+          <p>No hay material disponible para <strong>${currentCursoTab}</strong> aún.</p>
+        </div>`;
+      return;
+    }
+
+    content.innerHTML = `
+      <div class="material-grid">
+        ${filtered.map(c => `
+          <div class="material-card" data-id="${c.id}" data-tipo="${c.tipo}" data-url="${c.url}" data-titulo="${c.titulo}">
+            <div class="material-card-thumb">
+              <span style="font-size:3rem;">${c.thumbnail}</span>
+              <span class="material-card-type type-${c.tipo.toLowerCase()}">${c.tipo}</span>
+            </div>
+            <div class="material-card-body">
+              <div class="material-card-week">SEMANA ${c.semana}</div>
+              <div class="material-card-title">${c.titulo}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>`;
+
+    content.querySelectorAll('.material-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const tipo = card.dataset.tipo;
+        const url  = card.dataset.url;
+        const tit  = card.dataset.titulo;
+        openMedia(tit, url, tipo);
+      });
+    });
+  }
+
+  // Tipo filters
+  document.querySelectorAll('.tipo-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      tipoFiltro = btn.dataset.tipo;
+      renderClases();
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────
+  // MEDIA MODAL (PDF / Video)
+  // ─────────────────────────────────────────────────────────
+  function openMedia(titulo, url, tipo) {
+    document.getElementById('mediaModalTitle').textContent = `${tipo === 'PDF' ? '📄' : '🎬'} ${titulo}`;
+    const iframe = document.getElementById('mediaModalIframe');
+
+    if (tipo === 'PDF') {
+      // Google Drive viewer
+      const viewerUrl = url.includes('drive.google.com')
+        ? url.replace('/view', '/preview')
+        : `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
+      iframe.src = viewerUrl;
+      iframe.style.height = '80vh';
+    } else {
+      iframe.src = url;
+      iframe.style.height = '60vh';
+    }
+
+    document.getElementById('mediaModal').classList.add('open');
+  }
+
+  document.getElementById('mediaModalClose').addEventListener('click', () => {
+    document.getElementById('mediaModal').classList.remove('open');
+    document.getElementById('mediaModalIframe').src = '';
+  });
+  document.getElementById('mediaModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+      e.currentTarget.classList.remove('open');
+      document.getElementById('mediaModalIframe').src = '';
+    }
+  });
+
+  // ─────────────────────────────────────────────────────────
+  // SECCIÓN: RESÚMENES
+  // ─────────────────────────────────────────────────────────
+  function renderResumenes() {
+    // Populate filter
+    const cursosFilter = document.getElementById('filtroResumenCurso');
+    const cursos = [...new Set(resumenes.map(r => r.curso))];
+    cursosFilter.innerHTML = `<option value="">— Todos los cursos —</option>` +
+      cursos.map(c => `<option value="${c}">${c}</option>`).join('');
+
+    cursosFilter.onchange = () => renderResumenGrid(cursosFilter.value);
+    renderResumenGrid('');
+  }
+
+  function renderResumenGrid(curso) {
+    const grid = document.getElementById('resumenGrid');
+    let filtered = curso ? resumenes.filter(r => r.curso === curso) : resumenes;
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="empty-state"><span class="empty-icon">📭</span><p>No hay resúmenes disponibles.</p></div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(r => `
+      <div class="resumen-card" data-url="${r.url}" data-titulo="${r.titulo}">
+        <div class="resumen-icon">📄</div>
+        <div class="resumen-info">
+          <div class="resumen-curso">${r.curso} — ${r.tema}</div>
+          <div class="resumen-titulo">${r.titulo}</div>
+          <div class="resumen-pages">${r.paginas} páginas</div>
+        </div>
+        <button class="btn btn-primary btn-sm">Ver PDF</button>
+      </div>
+    `).join('');
+
+    grid.querySelectorAll('.resumen-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const url = card.dataset.url;
+        const tit = card.dataset.titulo;
+        if (url === '#') {
+          showToast('PDF no disponible en modo demo. Conéctate a Google Sheets.', 'warning');
+        } else {
+          openMedia(tit, url, 'PDF');
+        }
+      });
+    });
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // SECCIÓN: EXAMEN SIMULACRO
+  // ─────────────────────────────────────────────────────────
+  document.getElementById('btnIniciarExamen').addEventListener('click', () => {
+    if (confirm('¿Listo para comenzar el examen simulacro? Una vez iniciado el cronómetro correrá.')) {
+      iniciarExamen();
+    }
+  });
+
+  function iniciarExamen() {
+    examenObj = new ExamenSimulacro(sesion.area, preguntas);
+    examenObj.iniciar(
+      (ms) => actualizarTimerExamen(ms),
+      (res) => mostrarResultados(res)
+    );
+
+    document.getElementById('examSetup').classList.add('hidden');
+    document.getElementById('examActive').classList.remove('hidden');
+    document.getElementById('examResults').classList.add('hidden');
+
+    renderQuestionNavigator();
+    renderPreguntaActual();
+  }
+
+  function actualizarTimerExamen(ms) {
+    const el = document.getElementById('examTimer');
+    el.textContent = ExamenSimulacro.formatTime(ms);
+    if (ms < 300000) el.classList.add('warning');
+  }
+
+  function renderQuestionNavigator() {
+    const nav = document.getElementById('questionNavigator');
+    nav.innerHTML = examenObj.preguntasExamen.map((_, i) => {
+      const answered = examenObj.respuestasUsuario[i] !== null;
+      const current = i === examenObj.preguntaActual;
+      let cls = 'q-nav-dot';
+      if (current) cls += ' current';
+      else if (answered) cls += ' answered';
+      return `<div class="${cls}" data-idx="${i}">${i+1}</div>`;
+    }).join('');
+
+    nav.querySelectorAll('.q-nav-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        examenObj.preguntaActual = parseInt(dot.dataset.idx);
+        renderPreguntaActual();
+        renderQuestionNavigator();
+      });
+    });
+  }
+
+  function renderPreguntaActual() {
+    const idx = examenObj.preguntaActual;
+    const p = examenObj.preguntasExamen[idx];
+    const respuesta = examenObj.respuestasUsuario[idx];
+    const opciones = ['A','B','C','D','E'];
+    const opcionesKeys = ['a','b','c','d','e'];
+
+    document.getElementById('examQNum').textContent = idx + 1;
+
+    const answered = examenObj.respuestasUsuario.filter(r => r !== null).length;
+    document.getElementById('examAnsweredCount').textContent = `${answered} / 60 respondidas`;
+
+    document.getElementById('questionCard').innerHTML = `
+      <div class="question-number-badge">
+        <span>Pregunta ${idx+1} de ${examenObj.totalPreguntas}</span>
+        <span>•</span>
+        <span>${p.curso}</span>
+        ${p.año ? `<span>• ${p.año}</span>` : ''}
+      </div>
+      <div class="question-text">${p.pregunta}</div>
+      <div class="question-options">
+        ${opciones.map((op, i) => `
+          <button class="option-btn ${respuesta === op ? 'selected' : ''}"
+                  data-opcion="${op}">
+            <div class="option-letter">${op}</div>
+            <span>${p[opcionesKeys[i]] || ''}</span>
+          </button>
+        `).join('')}
+      </div>
+    `;
+
+    document.querySelectorAll('.option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const opcion = btn.dataset.opcion;
+        examenObj.responder(idx, opcion);
+        renderPreguntaActual();
+        renderQuestionNavigator();
+      });
+    });
+
+    // Prev/Next buttons
+    document.getElementById('btnPrevQ').disabled = idx === 0;
+    document.getElementById('btnNextQ').disabled = idx === examenObj.totalPreguntas - 1;
+  }
+
+  document.getElementById('btnPrevQ').addEventListener('click', () => {
+    if (examenObj.preguntaActual > 0) {
+      examenObj.preguntaActual--;
+      renderPreguntaActual();
+      renderQuestionNavigator();
+    }
+  });
+  document.getElementById('btnNextQ').addEventListener('click', () => {
+    if (examenObj.preguntaActual < examenObj.totalPreguntas - 1) {
+      examenObj.preguntaActual++;
+      renderPreguntaActual();
+      renderQuestionNavigator();
+    }
+  });
+
+  document.getElementById('btnTerminarExamen').addEventListener('click', () => {
+    const answered = examenObj.respuestasUsuario.filter(r => r !== null).length;
+    const msg = answered < 60
+      ? `Tienes ${60 - answered} preguntas sin responder. ¿Deseas terminar el examen?`
+      : '¿Deseas entregar el examen?';
+    if (confirm(msg)) {
+      const resultado = examenObj.terminar();
+      mostrarResultados(resultado);
+    }
+  });
+
+  function mostrarResultados(res) {
+    document.getElementById('examActive').classList.add('hidden');
+    const resultsDiv = document.getElementById('examResults');
+    resultsDiv.classList.remove('hidden');
+
+    const pct = ((res.correctas / 60) * 100).toFixed(0);
+    const calificacion = parseFloat(res.puntaje20) >= 14 ? '🏆 Aprobado' : parseFloat(res.puntaje20) >= 10 ? '📈 Regular' : '📚 Sigue practicando';
+
+    const analisis = examenObj.analisisPorCurso();
+    const analisisHTML = Object.entries(analisis).map(([curso, data]) => `
+      <div class="mini-bar-row">
+        <div class="mini-bar-label">${curso}</div>
+        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${data.total ? Math.round((data.correctas/data.total)*100) : 0}%"></div></div>
+        <div class="mini-bar-val">${data.correctas}/${data.total}</div>
+      </div>
+    `).join('');
+
+    resultsDiv.innerHTML = `
+      <div class="results-card">
+        <div style="font-size:2.5rem;margin-bottom:12px;">${parseFloat(res.puntaje20) >= 14 ? '🏆' : parseFloat(res.puntaje20) >= 10 ? '📊' : '📚'}</div>
+        <h2 style="font-size:1.6rem;margin-bottom:4px;">${calificacion}</h2>
+        <div style="font-size:0.88rem;color:var(--text-muted);margin-bottom:20px;">Examen Simulacro UNA PUNO — ${new Date().toLocaleDateString('es-PE')}</div>
+
+        <div style="display:flex;gap:20px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:24px;">
+          <div style="text-align:center;">
+            <div style="font-size:3.5rem;font-weight:900;color:var(--primary);line-height:1;">${res.puntajeBruto}</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);">Puntaje bruto / 60</div>
+          </div>
+          <div style="width:2px;height:60px;background:var(--border);"></div>
+          <div style="text-align:center;">
+            <div style="font-size:3.5rem;font-weight:900;color:var(--primary-dark);line-height:1;">${res.puntaje20}</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);">Puntaje / 20</div>
+          </div>
+        </div>
+
+        <div class="results-stats-grid">
+          <div class="results-stat">
+            <div class="results-stat-value score-high">${res.correctas}</div>
+            <div class="results-stat-label">✅ Correctas</div>
+          </div>
+          <div class="results-stat">
+            <div class="results-stat-value score-low">${res.incorrectas}</div>
+            <div class="results-stat-label">❌ Incorrectas</div>
+          </div>
+          <div class="results-stat">
+            <div class="results-stat-value score-mid">${res.blancos}</div>
+            <div class="results-stat-label">⬜ En blanco</div>
+          </div>
+        </div>
+
+        <div class="chart-card mt-16" style="text-align:left;">
+          <div class="chart-card-title">📚 Rendimiento por curso</div>
+          <div class="mini-bars">${analisisHTML}</div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:24px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="location.reload()">🔄 Nuevo Simulacro</button>
+          <button class="btn btn-outline" id="btnVerDetalle">📋 Ver detalle</button>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('btnVerDetalle')?.addEventListener('click', () => {
+      showToast('Vista de detalle — próximamente con revisión por pregunta.', 'info');
+    });
+
+    // Actualizar avance
+    renderAvance();
+    showToast(`Simulacro completado: ${res.puntaje20}/20 puntos`, 'success');
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // SECCIÓN: REPASOS
+  // ─────────────────────────────────────────────────────────
+  const quizCursoSel = document.getElementById('quizCurso');
+  const quizTemaSel  = document.getElementById('quizTema');
+  const btnIniciar   = document.getElementById('btnIniciarRepaso');
+  const quizInfo     = document.getElementById('quizInfo');
+  const quizInfoTxt  = document.getElementById('quizInfoText');
+
+  // Populate cursos
+  const cursosDisp = [...new Set(preguntas.map(p => p.curso))].sort();
+  quizCursoSel.innerHTML = `<option value="">— Selecciona curso —</option>` +
+    cursosDisp.map(c => `<option value="${c}">${c}</option>`).join('');
+
+  quizCursoSel.addEventListener('change', () => {
+    const curso = quizCursoSel.value;
+    quizTemaSel.innerHTML = `<option value="">— Todos los temas —</option>`;
+    if (curso) {
+      const temas = getTemasForCurso(curso);
+      temas.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t; opt.textContent = t;
+        quizTemaSel.appendChild(opt);
+      });
+      const total = preguntas.filter(p => p.curso === curso).length;
+      quizInfoTxt.textContent = `${total} preguntas disponibles en ${curso}`;
+      quizInfo.style.display = 'block';
+      btnIniciar.disabled = false;
+    } else {
+      quizInfo.style.display = 'none';
+      btnIniciar.disabled = true;
+    }
+  });
+
+  quizTemaSel.addEventListener('change', () => {
+    const curso = quizCursoSel.value;
+    const tema  = quizTemaSel.value;
+    if (curso) {
+      const filtered = tema
+        ? preguntas.filter(p => p.curso === curso && p.tema === tema)
+        : preguntas.filter(p => p.curso === curso);
+      quizInfoTxt.textContent = `${filtered.length} preguntas disponibles${tema ? ` en tema "${tema}"` : ''}`;
+    }
+  });
+
+  btnIniciar.addEventListener('click', () => {
+    const curso = quizCursoSel.value;
+    const tema  = quizTemaSel.value || null;
+    if (!curso) return;
+    iniciarRepaso(curso, tema);
+  });
+
+  function iniciarRepaso(curso, tema) {
+    quizObj = new ModoRepaso(preguntas, curso, tema);
+    const total = quizObj.preparar();
+
+    if (total === 0) {
+      showToast('No hay preguntas para esa selección.', 'warning');
+      return;
+    }
+
+    document.getElementById('quizSetup').classList.add('hidden');
+    document.getElementById('quizFinished').classList.add('hidden');
+    document.getElementById('quizActive').classList.remove('hidden');
+    document.getElementById('quizTitle').textContent = `Repaso — ${curso}${tema ? ` · ${tema}` : ''}`;
+
+    renderQuizQuestion();
+  }
+
+  function renderQuizQuestion() {
+    if (quizObj.terminado) {
+      mostrarQuizFinalizado();
+      return;
+    }
+    const p = quizObj.actual;
+    const opciones = ['A','B','C','D','E'];
+    const opcionesKeys = ['a','b','c','d','e'];
+
+    const stats = quizObj.getStats();
+    document.getElementById('quizCorrectasCount').textContent = stats.correctas;
+    document.getElementById('quizIncorrectasCount').textContent = stats.incorrectas;
+    document.getElementById('quizPorcentaje').textContent = stats.porcentaje + '%';
+    document.getElementById('quizProgressText').textContent = `Pregunta ${quizObj.idx + 1} de ${quizObj.total}`;
+    document.getElementById('quizProgressBar').style.width = `${((quizObj.idx+1)/quizObj.total)*100}%`;
+
+    const feedback = document.getElementById('quizFeedback');
+    feedback.classList.remove('show','correct','incorrect');
+    document.getElementById('btnQuizNext').disabled = true;
+
+    document.getElementById('quizQuestionCard').innerHTML = `
+      <div class="question-number-badge">
+        <span>Pregunta ${quizObj.idx+1}</span>
+        <span>•</span>
+        <span>${p.curso}</span>
+        <span>•</span>
+        <span>${p.tema}</span>
+      </div>
+      <div class="question-text">${p.pregunta}</div>
+      <div class="question-options" id="quizOptions">
+        ${opciones.map((op, i) => `
+          <button class="option-btn" data-opcion="${op}">
+            <div class="option-letter">${op}</div>
+            <span>${p[opcionesKeys[i]] || ''}</span>
+          </button>
+        `).join('')}
+      </div>
+    `;
+
+    document.querySelectorAll('#quizOptions .option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (quizObj.respondidaActual) return;
+        const opcion = btn.dataset.opcion;
+        const resultado = quizObj.responder(opcion);
+        if (!resultado) return;
+
+        document.querySelectorAll('#quizOptions .option-btn').forEach(b => {
+          if (b.dataset.opcion === resultado.respuestaCorrecta) b.classList.add('correct');
+          if (b.dataset.opcion === opcion && !resultado.correcta) b.classList.add('incorrect');
+          b.style.pointerEvents = 'none';
+        });
+
+        feedback.classList.add('show', resultado.correcta ? 'correct' : 'incorrect');
+        document.getElementById('quizFeedbackIcon').textContent = resultado.correcta ? '✅' : '❌';
+        document.getElementById('quizFeedbackText').textContent = resultado.correcta
+          ? '¡Correcto! Muy bien.'
+          : `Incorrecto. La respuesta correcta era: ${resultado.respuestaCorrecta}`;
+
+        document.getElementById('btnQuizNext').disabled = false;
+
+        const stats2 = quizObj.getStats();
+        document.getElementById('quizCorrectasCount').textContent = stats2.correctas;
+        document.getElementById('quizIncorrectasCount').textContent = stats2.incorrectas;
+        document.getElementById('quizPorcentaje').textContent = stats2.porcentaje + '%';
+      });
+    });
+  }
+
+  document.getElementById('btnQuizNext').addEventListener('click', () => {
+    quizObj.siguiente();
+    renderQuizQuestion();
+  });
+
+  document.getElementById('btnSalirRepaso').addEventListener('click', () => {
+    if (confirm('¿Salir del repaso actual?')) {
+      document.getElementById('quizActive').classList.add('hidden');
+      document.getElementById('quizSetup').classList.remove('hidden');
+    }
+  });
+
+  function mostrarQuizFinalizado() {
+    const stats = quizObj.getStats();
+    document.getElementById('quizActive').classList.add('hidden');
+    document.getElementById('quizFinished').classList.remove('hidden');
+    document.getElementById('quizResCorrect').textContent = stats.correctas;
+    document.getElementById('quizResIncorrect').textContent = stats.incorrectas;
+    document.getElementById('quizResPct').textContent = stats.porcentaje + '%';
+    showToast(`Repaso terminado: ${stats.porcentaje}% de aciertos`, stats.porcentaje >= 70 ? 'success' : 'warning');
+  }
+
+  document.getElementById('btnOtroRepaso').addEventListener('click', () => {
+    document.getElementById('quizFinished').classList.add('hidden');
+    document.getElementById('quizSetup').classList.remove('hidden');
+  });
+
+  document.getElementById('btnVerClases').addEventListener('click', () => showSection('clases'));
+
+  // ─────────────────────────────────────────────────────────
+  // SECCIÓN: MI AVANCE
+  // ─────────────────────────────────────────────────────────
+  function renderAvance() {
+    const historial = JSON.parse(localStorage.getItem('kchimbo_historial') || '[]');
+    const todosHistorial = [...DEMO_HISTORIAL, ...historial];
+
+    // Mini chart últimos simulacros
+    const miniChart = document.getElementById('miniSimulacroChart');
+    if (todosHistorial.length > 0) {
+      miniChart.innerHTML = `
+        <div class="mini-bars">
+          ${todosHistorial.slice(0,5).map(h => {
+            const pct = (h.puntaje / 60) * 100;
+            const cls = pct >= 70 ? '' : pct >= 50 ? 'yellow' : '';
+            return `
+              <div class="mini-bar-row">
+                <div class="mini-bar-label" style="font-size:0.7rem;">${h.fecha}</div>
+                <div class="mini-bar-track"><div class="mini-bar-fill ${cls}" style="width:${pct}%"></div></div>
+                <div class="mini-bar-val">${h.puntaje}</div>
+              </div>`;
+          }).join('')}
+        </div>`;
+    }
+
+    // Rendimiento por curso (demo)
+    const cursoStats = document.getElementById('rendimientoCursos');
+    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA.CIE;
+    const demoStats = cursosArea.slice(0,6).map((c,i) => {
+      const pct = Math.max(40, Math.min(95, 55 + (i*7) + Math.floor(Math.random()*15)));
+      return { curso: c.substring(0,8), pct };
+    });
+    cursoStats.innerHTML = demoStats.map(d => `
+      <div class="mini-bar-row">
+        <div class="mini-bar-label">${d.curso}</div>
+        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${d.pct}%"></div></div>
+        <div class="mini-bar-val">${d.pct}%</div>
+      </div>
+    `).join('');
+
+    // Historial table
+    const histTab = document.getElementById('historialTable');
+    if (todosHistorial.length === 0) return;
+
+    histTab.innerHTML = `
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Correctas</th>
+            <th>Incorrectas</th>
+            <th>En blanco</th>
+            <th>Puntaje Bruto</th>
+            <th>Área</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${todosHistorial.map(h => {
+            const cls = h.puntaje >= 40 ? 'score-high' : h.puntaje >= 25 ? 'score-mid' : 'score-low';
+            return `
+              <tr>
+                <td>${h.fecha}</td>
+                <td style="color:var(--success);font-weight:600;">${h.correctas}</td>
+                <td style="color:var(--danger);font-weight:600;">${h.incorrectas}</td>
+                <td>${h.blanco}</td>
+                <td class="${cls}">${h.puntaje} / 60</td>
+                <td><span class="badge badge-primary">${h.area}</span></td>
+              </tr>`;
+          }).join('')}
+        </tbody>
+      </table>`;
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // SECCIÓN: PAGOS
+  // ─────────────────────────────────────────────────────────
+  function renderPagos() {
+    const inicio = sesion.membresia_inicio;
+    const fin    = sesion.membresia_fin;
+    if (!inicio || !fin) return;
+
+    const ahora     = new Date();
+    const fechaFin  = new Date(fin);
+    const fechaIni  = new Date(inicio);
+    const duracion  = fechaFin - fechaIni;
+    const transcurrido = ahora - fechaIni;
+    const pctUsado  = Math.min(100, Math.max(0, (transcurrido / duracion) * 100));
+    const diasLeft  = Math.max(0, Math.ceil((fechaFin - ahora) / (1000*60*60*24)));
+    const activa    = ahora <= fechaFin;
+
+    document.getElementById('membershipStatus').className = `membership-status ${activa ? 'active' : 'expired'}`;
+    document.getElementById('membershipStatus').innerHTML = `<span>●</span> ${activa ? 'Membresía Activa' : 'Membresía Vencida'}`;
+    document.getElementById('membershipDates').textContent = `Inicio: ${inicio} | Vence: ${fin}`;
+    document.getElementById('membershipBarFill').style.width = `${pctUsado}%`;
+    document.getElementById('membershipDaysLeft').textContent = activa ? `${diasLeft} días restantes` : 'Membresía vencida';
+
+    if (diasLeft <= 10 && activa) {
+      document.getElementById('expiryWarning').style.display = 'flex';
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // LOGOUT
+  // ─────────────────────────────────────────────────────────
+  document.getElementById('btnLogout').addEventListener('click', () => {
+    document.getElementById('logoutModal').classList.add('open');
+  });
+  document.getElementById('logoutModalClose').addEventListener('click', () => {
+    document.getElementById('logoutModal').classList.remove('open');
+  });
+  document.getElementById('logoutCancelBtn').addEventListener('click', () => {
+    document.getElementById('logoutModal').classList.remove('open');
+  });
+  document.getElementById('logoutConfirmBtn').addEventListener('click', () => {
+    AUTH.logout();
+    window.location.href = '../index.html';
+  });
+
+  // ── Inicializar primera sección ──
+  renderClases();
+
+})();
+</script>
+</body>
+</html>

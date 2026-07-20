@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KCHIMBO+ | Plataforma Virtual UNA PUNO — Iniciar Sesión</title>
+  <meta name="description" content="Accede a la plataforma virtual KCHIMBO+ para prepararte para el examen de admisión de la UNA PUNO. Clases en línea, simulacros, repasos y más.">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+<div class="login-page">
+
+  <!-- Decorative Background -->
+  <div class="login-bg">
+    <div class="login-blob blob-1"></div>
+    <div class="login-blob blob-2"></div>
+    <div class="login-blob blob-3"></div>
+    <!-- Decorative SVG curves -->
+    <svg class="login-curves" viewBox="0 0 1440 900" preserveAspectRatio="none">
+      <path d="M-100,300 Q200,100 500,350 T1200,200 T1600,400" stroke="rgba(232,82,26,0.06)" stroke-width="2" fill="none"/>
+      <path d="M-100,500 Q300,300 700,500 T1400,350 T1700,500" stroke="rgba(192,57,43,0.05)" stroke-width="2" fill="none"/>
+      <path d="M0,700 Q400,500 800,650 T1500,550 T1800,700" stroke="rgba(160,64,0,0.04)" stroke-width="2" fill="none"/>
+      <circle cx="100" cy="100" r="120" stroke="rgba(232,82,26,0.04)" stroke-width="1.5" fill="none"/>
+      <circle cx="1350" cy="750" r="100" stroke="rgba(192,57,43,0.04)" stroke-width="1.5" fill="none"/>
+      <circle cx="1200" cy="150" r="80" stroke="rgba(232,82,26,0.03)" stroke-width="1" fill="none"/>
+    </svg>
+  </div>
+
+  <!-- Main Login Container -->
+  <div class="login-container">
+
+    <!-- Brand Side -->
+    <div class="login-brand">
+      <div class="login-logo-wrap" id="loginLogoWrap">
+        <!-- Fallback text logo -->
+        <div class="logo-text-fallback">
+          <div class="kchimbo">KCHIMBO<span>+</span></div>
+          <div class="sub">Plataforma Virtual</div>
+        </div>
+      </div>
+
+      <h1 class="login-tagline">Tu camino al <span>éxito</span> empieza aquí</h1>
+      <p class="login-desc">
+        Prepárate para el examen de admisión de la <strong>Universidad Nacional del Altiplano — Puno</strong> con clases en línea, simulacros reales y repasos inteligentes.
+      </p>
+
+      <div class="brand-dots">
+        <div class="brand-dot active"></div>
+        <div class="brand-dot"></div>
+        <div class="brand-dot"></div>
+      </div>
+    </div>
+
+    <!-- Form Side -->
+    <div class="login-form-panel">
+      <div class="login-form-title">Estudiante</div>
+      <h2 class="login-form-subtitle">Iniciar <span class="highlight">Sesión</span></h2>
+
+      <!-- Lockout Box -->
+      <div class="lockout-box" id="lockoutBox">
+        <div class="lockout-icon">🔒</div>
+        <div class="lockout-title">Cuenta temporalmente bloqueada</div>
+        <div class="lockout-timer" id="lockoutTimer">10:00</div>
+        <div class="lockout-sub">3 intentos fallidos. Espera para volver a intentarlo.</div>
+      </div>
+
+      <!-- Error Message -->
+      <div class="login-error" id="loginError">
+        <span>⚠️</span>
+        <span id="loginErrorText">Usuario o contraseña incorrectos.</span>
+      </div>
+
+      <!-- Form -->
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="usuario">Usuario</label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">👤</span>
+            <input
+              type="text"
+              id="usuario"
+              class="form-input"
+              placeholder="Ingresa tu usuario"
+              autocomplete="username"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Contraseña</label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">🔑</span>
+            <input
+              type="password"
+              id="password"
+              class="form-input"
+              placeholder="Ingresa tu contraseña"
+              autocomplete="current-password"
+              required
+            >
+            <button type="button" class="toggle-pass" id="togglePass" title="Mostrar/ocultar contraseña">👁️</button>
+          </div>
+        </div>
+
+        <!-- Attempts dots -->
+        <div class="attempts-dots" id="attemptsDots">
+          <div class="attempt-dot" id="dot0"></div>
+          <div class="attempt-dot" id="dot1"></div>
+          <div class="attempt-dot" id="dot2"></div>
+        </div>
+
+        <button type="submit" class="btn-login" id="btnLogin">
+          <span id="btnLoginText">Iniciar Sesión</span>
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <p class="dev-text">
+          Desarrollado por <strong>Carlos Llano</strong> &nbsp;|&nbsp;
+          <a href="mailto:llanovilca97@gmail.com">llanovilca97@gmail.com</a>
+        </p>
+        <p class="dev-text" style="margin-top:4px; font-size:0.68rem;">
+          ¿Eres administrador? <a href="admin-login.html">Acceso admin →</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/demo-data.js"></script>
+<script src="js/sheets-api.js"></script>
+<script src="js/auth.js"></script>
+<script>
+(function() {
+  // Redirigir si ya está logueado
+  const sesion = AUTH.getSesion();
+  if (sesion) {
+    window.location.href = sesion.rol === 'admin'
+      ? 'admin/dashboard.html'
+      : 'student/dashboard.html';
+    return;
+  }
+
+  // ── Estado ──
+  let lockoutTimerObj = null;
+  let intentosActuales = 0;
+
+  // ── DOM ──
+  const form       = document.getElementById('loginForm');
+  const usuarioIn  = document.getElementById('usuario');
+  const passwordIn = document.getElementById('password');
+  const btnLogin   = document.getElementById('btnLogin');
+  const btnText    = document.getElementById('btnLoginText');
+  const lockoutBox = document.getElementById('lockoutBox');
+  const lockoutTmr = document.getElementById('lockoutTimer');
+  const loginError = document.getElementById('loginError');
+  const loginErrTx = document.getElementById('loginErrorText');
+  const togglePass = document.getElementById('togglePass');
+
+  // ── Toggle password visibility ──
+  togglePass.addEventListener('click', () => {
+    const isPass = passwordIn.type === 'password';
+    passwordIn.type = isPass ? 'text' : 'password';
+    togglePass.textContent = isPass ? '🙈' : '👁️';
+  });
+
+  // ── Actualizar dots de intentos ──
+  function updateAttemptDots(intentos) {
+    for (let i = 0; i < 3; i++) {
+      const dot = document.getElementById(`dot${i}`);
+      dot.classList.toggle('used', i < intentos);
+    }
+  }
+
+  // ── Mostrar error ──
+  function showError(msg) {
+    loginErrTx.textContent = msg;
+    loginError.classList.add('visible');
+  }
+  function hideError() {
+    loginError.classList.remove('visible');
+  }
+
+  // ── Iniciar countdown de bloqueo ──
+  function iniciarBloqueo(msRestantes) {
+    btnLogin.disabled = true;
+    usuarioIn.disabled = true;
+    passwordIn.disabled = true;
+    lockoutBox.classList.add('visible');
+    hideError();
+
+    if (lockoutTimerObj) lockoutTimerObj.stop();
+    lockoutTimerObj = new LockoutTimer(
+      msRestantes,
+      (mins, secs) => {
+        lockoutTmr.textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+      },
+      () => {
+        lockoutBox.classList.remove('visible');
+        btnLogin.disabled = false;
+        usuarioIn.disabled = false;
+        passwordIn.disabled = false;
+        intentosActuales = 0;
+        updateAttemptDots(0);
+        btnText.textContent = 'Iniciar Sesión';
+      }
+    );
+    lockoutTimerObj.start();
+  }
+
+  // ── Verificar bloqueo al cargar ──
+  function verificarBloqueoInicial() {
+    const u = localStorage.getItem('kchimbo_last_user') || '';
+    if (u) {
+      const bloqueo = AUTH.estaBlockeado(u);
+      if (bloqueo.bloqueado) {
+        iniciarBloqueo(bloqueo.msRestantes);
+      } else {
+        intentosActuales = AUTH.getIntentos(u);
+        updateAttemptDots(intentosActuales);
+      }
+    }
+  }
+  verificarBloqueoInicial();
+
+  // ── Submit ──
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const usuario = usuarioIn.value.trim();
+    const password = passwordIn.value;
+
+    if (!usuario || !password) {
+      showError('Por favor, ingresa usuario y contraseña.');
+      return;
+    }
+
+    localStorage.setItem('kchimbo_last_user', usuario.toLowerCase());
+
+    // Loading state
+    btnLogin.disabled = true;
+    btnText.textContent = 'Verificando...';
+    hideError();
+
+    try {
+      const resultado = await AUTH.login(usuario, password);
+
+      if (resultado.success) {
+        btnText.textContent = '✅ Accediendo...';
+        showToast('¡Bienvenido a KCHIMBO+!', 'success');
+        setTimeout(() => {
+          const { sesion } = resultado;
+          window.location.href = sesion.rol === 'admin'
+            ? 'admin/dashboard.html'
+            : 'student/dashboard.html';
+        }, 800);
+
+      } else if (resultado.bloqueado) {
+        iniciarBloqueo(resultado.msRestantes);
+        btnText.textContent = 'Bloqueado';
+
+      } else {
+        intentosActuales = resultado.intentos || intentosActuales + 1;
+        updateAttemptDots(intentosActuales);
+        showError(resultado.mensaje);
+        btnLogin.disabled = false;
+        btnText.textContent = 'Iniciar Sesión';
+        passwordIn.value = '';
+        passwordIn.focus();
+      }
+    } catch (err) {
+      console.error(err);
+      showError('Error de conexión. Intenta de nuevo.');
+      btnLogin.disabled = false;
+      btnText.textContent = 'Iniciar Sesión';
+    }
+  });
+
+  // ── Toast ──
+  function showToast(msg, type = 'info') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `<span>${type === 'success' ? '✅' : 'ℹ️'}</span><span>${msg}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 3200);
+  }
+})();
+</script>
+</body>
+</html>

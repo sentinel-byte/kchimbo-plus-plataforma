@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KCHIMBO+ | Panel Administrador</title>
+  <meta name="description" content="Panel de administración KCHIMBO+.">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <style>
+    /* Admin-specific styles */
+    .sidebar-user-badge.admin-badge-sidebar {
+      background: linear-gradient(135deg, var(--primary-deeper), var(--primary-dark));
+    }
+    .admin-role-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: var(--radius-full);
+      background: linear-gradient(135deg,#A04000,#C0392B);
+      color: white; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .form-inline-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .form-inline-row .form-group { flex: 1; min-width: 180px; }
+    .action-icon-btn {
+      width: 32px; height: 32px; border-radius: var(--radius-sm);
+      border: none; cursor: pointer; display: inline-flex;
+      align-items: center; justify-content: center; font-size: 0.9rem;
+      transition: var(--transition); font-family: var(--font);
+    }
+    .action-edit { background: rgba(41,128,185,0.1); color: #2980B9; }
+    .action-edit:hover { background: rgba(41,128,185,0.2); }
+    .action-delete { background: rgba(231,76,60,0.1); color: #E74C3C; }
+    .action-delete:hover { background: rgba(231,76,60,0.2); }
+    .action-view { background: rgba(39,174,96,0.1); color: #27AE60; }
+    .action-view:hover { background: rgba(39,174,96,0.2); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeInUp 0.3s ease; }
+    .users-status-active { color: var(--success); font-weight: 600; }
+    .users-status-expired { color: var(--danger); font-weight: 600; }
+    .empty-table-msg { text-align:center; padding: 30px; color: var(--text-muted); font-size:0.88rem; }
+  </style>
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text">Cargando Panel Admin...</div>
+</div>
+
+<!-- Mobile Topbar -->
+<div class="topbar" id="topbar">
+  <div class="topbar-logo">KCHIMBO<span>+</span> <span style="font-size:0.65rem;color:var(--text-muted);font-weight:500;">Admin</span></div>
+  <button class="topbar-menu-btn" id="menuToggle">☰</button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="dashboard-layout">
+
+  <!-- ════════ SIDEBAR ADMIN ════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon" style="background:linear-gradient(135deg,#A04000,#C0392B);">
+          <span style="font-size:1rem;font-weight:900;color:white;">A<span style="color:#FAD390">+</span></span>
+        </div>
+        <div class="sidebar-logo-text">
+          <div class="sidebar-logo-name">KCHIMBO<span>+</span></div>
+          <div class="sidebar-logo-sub">Panel Admin</div>
+        </div>
+      </div>
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" style="background:linear-gradient(135deg,#A04000,#C0392B);" id="adminAvatar">A</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="adminName">Admin</div>
+          <div class="sidebar-user-role">Administrador</div>
+        </div>
+        <div class="sidebar-user-badge admin-badge-sidebar">🛡️</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Gestión de Contenido</div>
+      <div class="nav-item active" data-section="clases" id="nav-clases">
+        <span class="nav-item-icon">📺</span><span class="nav-item-text">Clases en Línea</span>
+      </div>
+      <div class="nav-item" data-section="resumenes" id="nav-resumenes">
+        <span class="nav-item-icon">📄</span><span class="nav-item-text">Resúmenes</span>
+      </div>
+      <div class="nav-section-label">Evaluaciones</div>
+      <div class="nav-item" data-section="preguntas" id="nav-preguntas">
+        <span class="nav-item-icon">📝</span><span class="nav-item-text">Banco de Preguntas</span>
+      </div>
+      <div class="nav-section-label">Usuarios</div>
+      <div class="nav-item" data-section="usuarios" id="nav-usuarios">
+        <span class="nav-item-icon">👥</span><span class="nav-item-text">Estudiantes</span>
+      </div>
+      <div class="nav-item" data-section="avance" id="nav-avance">
+        <span class="nav-item-icon">📊</span><span class="nav-item-text">Progreso Estudiantes</span>
+      </div>
+      <div class="nav-item" data-section="pagos" id="nav-pagos">
+        <span class="nav-item-icon">💳</span><span class="nav-item-text">Membresías y Pagos</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-dev-info">
+        <div class="sidebar-dev-label">Desarrollado por</div>
+        <div class="sidebar-dev-name">Carlos Llano</div>
+        <div class="sidebar-dev-email">llanovilca97@gmail.com</div>
+        <div class="sidebar-dev-copy">© 2026 KCHIMBO+</div>
+      </div>
+      <button class="btn-logout" id="btnLogout">
+        <span>Cerrar Sesión</span><span class="logout-icon">🚪</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ════════ MAIN CONTENT ════════ -->
+  <main class="main-content">
+    <div class="content-area">
+
+      <!-- ════ CLASES EN LÍNEA ════ -->
+      <div class="section-view active" id="section-clases">
+        <div class="section-header">
+          <div class="section-title">
+            <div class="icon-wrap">📺</div> Clases en Línea
+          </div>
+          <button class="btn btn-primary" id="btnAddClase">+ Agregar Clase</button>
+        </div>
+
+        <div class="admin-actions-bar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="searchClases" placeholder="Buscar clase...">
+          </div>
+          <select class="form-select" style="width:auto;" id="filterClasCurso">
+            <option value="">Todos los cursos</option>
+          </select>
+          <select class="form-select" style="width:auto;" id="filterClasTipo">
+            <option value="">Todos los tipos</option>
+            <option value="PDF">PDF</option>
+            <option value="VIDEO">VIDEO</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Curso</th><th>Semana</th><th>Título</th><th>Tipo</th><th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="clasesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ RESÚMENES ════ -->
+      <div class="section-view" id="section-resumenes">
+        <div class="section-header">
+          <div class="section-title"><div class="icon-wrap">📄</div> Resúmenes</div>
+          <button class="btn btn-primary" id="btnAddResumen">+ Agregar Resumen</button>
+        </div>
+
+        <div class="admin-actions-bar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="searchResumenes" placeholder="Buscar resumen...">
+          </div>
+          <select class="form-select" style="width:auto;" id="filterResCurso">
+            <option value="">Todos los cursos</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Curso</th><th>Tema</th><th>Título</th><th>Páginas</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="resumenesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ BANCO DE PREGUNTAS ════ -->
+      <div class="section-view" id="section-preguntas">
+        <div class="section-header">
+          <div class="section-title"><div class="icon-wrap">📝</div> Banco de Preguntas</div>
+          <button class="btn btn-primary" id="btnAddPregunta">+ Nueva Pregunta</button>
+        </div>
+
+        <div class="admin-stats-row">
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-info">
+              <div class="stat-value" id="totalPreguntas">0</div>
+              <div class="stat-label">Total de preguntas</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:linear-gradient(135deg,#2980B9,#1A5276);">🔬</div>
+            <div class="stat-info">
+              <div class="stat-value" id="pCIE">0</div>
+              <div class="stat-label">Área CIE</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:linear-gradient(135deg,#8E44AD,#6C3483);">📚</div>
+            <div class="stat-info">
+              <div class="stat-value" id="pLETRAS">0</div>
+              <div class="stat-label">Área LETRAS</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:linear-gradient(135deg,#27AE60,#1E8449);">🏫</div>
+            <div class="stat-info">
+              <div class="stat-value" id="pCursos">0</div>
+              <div class="stat-label">Cursos distintos</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-actions-bar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="searchPreguntas" placeholder="Buscar pregunta...">
+          </div>
+          <select class="form-select" style="width:auto;" id="filterPregCurso">
+            <option value="">Todos los cursos</option>
+          </select>
+          <select class="form-select" style="width:auto;" id="filterPregArea">
+            <option value="">Todas las áreas</option>
+            <option value="CIE">CIE</option>
+            <option value="LETRAS">LETRAS</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>#</th><th>Curso</th><th>Tema</th><th>Área</th><th>Año</th><th>Pregunta</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="preguntasTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ USUARIOS / ESTUDIANTES ════ -->
+      <div class="section-view" id="section-usuarios">
+        <div class="section-header">
+          <div class="section-title"><div class="icon-wrap">👥</div> Estudiantes</div>
+          <button class="btn btn-primary" id="btnAddUsuario">+ Nuevo Estudiante</button>
+        </div>
+
+        <div class="admin-stats-row">
+          <div class="stat-card">
+            <div class="stat-icon">👤</div>
+            <div class="stat-info"><div class="stat-value" id="totalEstudiantes">0</div><div class="stat-label">Total estudiantes</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:linear-gradient(135deg,#27AE60,#1E8449);">✅</div>
+            <div class="stat-info"><div class="stat-value" id="estudiantesActivos">0</div><div class="stat-label">Membresías activas</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:linear-gradient(135deg,#E74C3C,#C0392B);">⏰</div>
+            <div class="stat-info"><div class="stat-value" id="estudiantesVencidos">0</div><div class="stat-label">Membresías vencidas</div></div>
+          </div>
+        </div>
+
+        <div class="admin-actions-bar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="searchUsuarios" placeholder="Buscar estudiante...">
+          </div>
+          <select class="form-select" style="width:auto;" id="filterArea">
+            <option value="">Todas las áreas</option>
+            <option value="CIE">CIE</option>
+            <option value="LETRAS">LETRAS</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Usuario</th><th>Nombre</th><th>Área</th><th>Membresía</th><th>Estado</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="usuariosTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ════ PROGRESO ESTUDIANTES ════ -->
+      <div class="section-view" id="section-avance">
+        <div class="section-header">
+          <div class="section-title"><div class="icon-wrap">📊</div> Progreso de Estudiantes</div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📋 Historial de Simulacros</div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Estudiante</th><th>Fecha</th><th>Correctas</th><th>Puntaje</th><th>Área</th></tr></thead>
+              <tbody id="progresoTableBody">
+                <tr><td colspan="5" class="empty-table-msg">No hay datos de simulacros aún.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ MEMBRESÍAS Y PAGOS ════ -->
+      <div class="section-view" id="section-pagos">
+        <div class="section-header">
+          <div class="section-title"><div class="icon-wrap">💳</div> Membresías y Pagos</div>
+        </div>
+
+        <div class="admin-actions-bar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="searchPagos" placeholder="Buscar estudiante...">
+          </div>
+          <select class="form-select" style="width:auto;" id="filterPagoEstado">
+            <option value="">Todos los estados</option>
+            <option value="activo">Activo</option>
+            <option value="vencido">Vencido</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Estudiante</th><th>Área</th><th>Inicio</th><th>Vencimiento</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <tbody id="pagosTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /content-area -->
+
+    <footer class="main-footer">
+      <div>Copyright © 2026 <span class="footer-brand">KCHIMBO+</span> | Panel Administrador</div>
+      <div class="footer-links">
+        <a href="#">Facebook</a><a href="#">TikTok</a>
+        <a href="mailto:llanovilca97@gmail.com">Contactenos</a>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<!-- ════ MODALES CRUD ════ -->
+
+<!-- Modal Clase -->
+<div class="modal-overlay" id="claseModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="claseModalTitle">Nueva Clase</div>
+      <button class="modal-close" onclick="closeModal('claseModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="claseId">
+      <div class="form-inline-row">
+        <div class="form-group"><label class="form-label">Curso</label>
+          <select class="form-select" id="claseForm_curso">
+            <option value="">Selecciona...</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Semana</label>
+          <input type="number" class="form-input" id="claseForm_semana" min="1" max="30">
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Título</label>
+        <input type="text" class="form-input" id="claseForm_titulo" placeholder="Ej: Álgebra - Semana 1">
+      </div>
+      <div class="form-inline-row">
+        <div class="form-group"><label class="form-label">Tipo</label>
+          <select class="form-select" id="claseForm_tipo">
+            <option value="PDF">PDF</option><option value="VIDEO">VIDEO</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Thumbnail (emoji)</label>
+          <input type="text" class="form-input" id="claseForm_thumbnail" placeholder="📐" maxlength="4">
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">URL (Google Drive / YouTube)</label>
+        <input type="url" class="form-input" id="claseForm_url" placeholder="https://...">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('claseModal')">Cancelar</button>
+      <button class="btn btn-primary btn-sm" id="btnGuardarClase">💾 Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Resumen -->
+<div class="modal-overlay" id="resumenModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="resumenModalTitle">Nuevo Resumen</div>
+      <button class="modal-close" onclick="closeModal('resumenModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="resumenId">
+      <div class="form-inline-row">
+        <div class="form-group"><label class="form-label">Curso</label>
+          <select class="form-select" id="resForm_curso"><option value="">Selecciona...</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Tema</label>
+          <input type="text" class="form-input" id="resForm_tema" placeholder="Ej: Factorización">
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Título</label>
+        <input type="text" class="form-input" id="resForm_titulo" placeholder="Título del resumen">
+      </div>
+      <div class="form-inline-row">
+        <div class="form-group"><label class="form-label">Páginas</label>
+          <input type="number" class="form-input" id="resForm_paginas" min="1" value="4">
+        </div>
+        <div class="form-group"><label class="form-label">URL PDF</label>
+          <input type="url" class="form-input" id="resForm_url" placeholder="https://...">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('resumenModal')">Cancelar</button>
+      <button class="btn btn-primary btn-sm" id="btnGuardarResumen">💾 Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Pregunta -->
+<div class="modal-overlay" id="preguntaModal">
+  <div class="modal-box" style="max-width:700px;">
+    <div class="modal-header">
+      <div class="modal-title" id="preguntaModalTitle">Nueva Pregunta</div>
+      <button class="modal-close" onclick="closeModal('preguntaModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="preguntaId">
+      <div class="form-inline-row">
+        <div class="form-group"><label class="form-label">Curso</label>
+          <select class="form-select" id="pForm_curso"><option value="">Selecciona...</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Tema</label>
+          <input type="text" class="form-input" id="pForm_tema" placeholder="Subtema">
+        </div>
+        <div class="form-group"><label class="form-label">Área</label>
+          <select class="form-select" id="pForm_area">
+            <option value="CIE">CIE</option>
+            <option value="LETRAS">LETRAS</option>
+            <option value="AMBAS">AMBAS</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Año</label>
+          <input type="number" class="form-input" id="pForm_año" min="2000" max="2030" value="2024">
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Pregunta</label>
+        <textarea class="form-input" id="pForm_pregunta" rows="3" placeholder="Escribe la pregunta aquí..."></textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="form-group"><label class="form-label">A)</label><input type="text" class="form-input" id="pForm_a" placeholder="Opción A"></div>
+        <div class="form-group"><label class="form-label">B)</label><input type="text" class="form-input" id="pForm_b" placeholder="Opción B"></div>
+        <div class="form-group"><label class="form-label">C)</label><input type="text" class="form-input" id="pForm_c" placeholder="Opción C"></div>
+        <div class="form-group"><label class="form-label">D)</label><input type="text" class="form-input" id="pForm_d" placeholder="Opción D"></div>
+        <div class="form-group"><label class="form-label">E)</label><input type="text" class="form-input" id="pForm_e" placeholder="Opción E"></div>
+        <div class="form-group"><label class="form-label">Respuesta correcta</label>
+          <select class="form-select" id="pForm_respuesta">
+            <option value="A">A</option><option value="B">B</option>
+            <option value="C">C</option><option value="D">D</option><option value="E">E</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('preguntaModal')">Cancelar</button>
+      <button class="btn btn-primary btn-sm" id="btnGuardarPregunta">💾 Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Usuario -->
+<div class="modal-overlay" id="usuarioModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="usuarioModalTitle">Nuevo Estudiante</div>
+      <button class="modal-close" onclick="closeModal('usuarioModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="usuarioId">
+      <div class="form-inline-row">
+        <div class="form-group"><label class="form-label">Usuario</label>
+          <input type="text" class="form-input" id="uForm_usuario" placeholder="usuario123">
+        </div>
+        <div class="form-group"><label class="form-label">Contraseña</label>
+          <input type="password" class="form-input" id="uForm_password" placeholder="Contraseña">
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Nombre completo</label>
+        <input type="text" class="form-input" id="uForm_nombre" placeholder="Juan Pérez">
+      </div>
+      <div class="form-inline-row">
+        <div class="form-group"><label class="form-label">Área</label>
+          <select class="form-select" id="uForm_area">
+            <option value="CIE">CIE</option><option value="LETRAS">LETRAS</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Inicio membresía</label>
+          <input type="date" class="form-input" id="uForm_inicio">
+        </div>
+        <div class="form-group"><label class="form-label">Fin membresía</label>
+          <input type="date" class="form-input" id="uForm_fin">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('usuarioModal')">Cancelar</button>
+      <button class="btn btn-success btn-sm" id="btnGuardarUsuario">💾 Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal-box" style="max-width:380px;">
+    <div class="modal-header">
+      <div class="modal-title">⚠️ Confirmar eliminación</div>
+      <button class="modal-close" onclick="closeModal('confirmModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.9rem;color:var(--text-secondary);" id="confirmMsg">¿Estás seguro de eliminar este elemento?</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('confirmModal')">Cancelar</button>
+      <button class="btn btn-danger btn-sm" id="confirmDeleteBtn">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Logout Modal -->
+<div class="modal-overlay" id="logoutModal">
+  <div class="modal-box" style="max-width:400px;">
+    <div class="modal-header"><div class="modal-title">🚪 Cerrar Sesión</div>
+      <button class="modal-close" onclick="closeModal('logoutModal')">✕</button>
+    </div>
+    <div class="modal-body"><p style="font-size:0.92rem;color:var(--text-secondary);">¿Cerrar sesión del panel de administración?</p></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('logoutModal')">Cancelar</button>
+      <button class="btn btn-danger" id="logoutConfirmBtn">Sí, cerrar sesión</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/demo-data.js"></script>
+<script src="../js/sheets-api.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+// ============================================================
+// ADMIN DASHBOARD — LÓGICA
+// ============================================================
+(function() {
+  'use strict';
+
+  // Verificar rol admin
+  const sesion = AUTH.requerirLogin('admin');
+  if (!sesion) return;
+
+  // Init UI
+  document.getElementById('adminName').textContent = sesion.nombre;
+  document.getElementById('adminAvatar').textContent = sesion.nombre.charAt(0).toUpperCase();
+  setTimeout(() => { document.getElementById('loadingOverlay').style.display = 'none'; }, 500);
+
+  // Estado local (mutable)
+  let clases    = [...DEMO_CLASES];
+  let resumenes = [...DEMO_RESUMENES];
+  let preguntas = [...DEMO_PREGUNTAS];
+  let usuarios  = DEMO_USERS.filter(u => u.rol === 'estudiante');
+  let nextId    = 200;
+
+  // ── Navegación ──
+  document.querySelectorAll('.nav-item[data-section]').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById(`section-${item.dataset.section}`).classList.add('active');
+      item.classList.add('active');
+      sidebar.classList.remove('open'); overlay.classList.remove('visible');
+      switch(item.dataset.section) {
+        case 'clases':    renderClasesTable(); break;
+        case 'resumenes': renderResumenesTable(); break;
+        case 'preguntas': renderPreguntasTable(); break;
+        case 'usuarios':  renderUsuariosTable(); break;
+        case 'avance':    renderAvanceAdmin(); break;
+        case 'pagos':     renderPagosTable(); break;
+      }
+    });
+  });
+
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  document.getElementById('menuToggle')?.addEventListener('click', () => {
+    sidebar.classList.add('open'); overlay.classList.add('visible');
+  });
+  overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('visible'); });
+
+  // ── Toast ──
+  function showToast(msg, type = 'success') {
+    const icons = { success:'✅', error:'❌', warning:'⚠️', info:'ℹ️' };
+    const container = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = `toast toast-${type}`;
+    t.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+    container.appendChild(t);
+    setTimeout(() => t.remove(), 3200);
+  }
+
+  // ── Modal helpers ──
+  window.closeModal = (id) => document.getElementById(id).classList.remove('open');
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+  });
+
+  // ── Populate cursosSelect ──
+  function populateCursosSelect(selectEl) {
+    const cursos = CURSOS_POR_AREA.ADMIN;
+    selectEl.innerHTML = `<option value="">Selecciona...</option>` +
+      cursos.map(c => `<option value="${c}">${c}</option>`).join('');
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // CLASES
+  // ─────────────────────────────────────────────────────────
+  function renderClasesTable() {
+    const search   = document.getElementById('searchClases').value.toLowerCase();
+    const filterC  = document.getElementById('filterClasCurso').value;
+    const filterT  = document.getElementById('filterClasTipo').value;
+
+    // Populate filter
+    const cursosFilter = document.getElementById('filterClasCurso');
+    const cursos = [...new Set(clases.map(c => c.curso))];
+    const prevC = cursosFilter.value;
+    cursosFilter.innerHTML = `<option value="">Todos los cursos</option>` + cursos.map(c => `<option value="${c}" ${c===prevC?'selected':''}>${c}</option>`).join('');
+
+    let filtered = clases.filter(c => {
+      const matchS = !search || c.titulo.toLowerCase().includes(search) || c.curso.toLowerCase().includes(search);
+      const matchC = !filterC || c.curso === filterC;
+      const matchT = !filterT || c.tipo === filterT;
+      return matchS && matchC && matchT;
+    });
+
+    const tbody = document.getElementById('clasesTableBody');
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" class="empty-table-msg">No se encontraron clases.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = filtered.map(c => `
+      <tr>
+        <td><span class="badge badge-primary">${c.curso}</span></td>
+        <td>Semana ${c.semana}</td>
+        <td>${c.titulo}</td>
+        <td><span class="badge ${c.tipo==='PDF'?'badge-danger':'badge-info'}">${c.tipo}</span></td>
+        <td class="td-actions">
+          <button class="action-icon-btn action-edit" title="Editar" onclick="editClase(${c.id})">✏️</button>
+          <button class="action-icon-btn action-delete" title="Eliminar" onclick="deleteClase(${c.id})">🗑️</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('searchClases').addEventListener('input', renderClasesTable);
+  document.getElementById('filterClasCurso').addEventListener('change', renderClasesTable);
+  document.getElementById('filterClasTipo').addEventListener('change', renderClasesTable);
+  renderClasesTable();
+
+  document.getElementById('btnAddClase').addEventListener('click', () => {
+    document.getElementById('claseModalTitle').textContent = 'Nueva Clase';
+    document.getElementById('claseId').value = '';
+    ['curso','semana','titulo','tipo','thumbnail','url'].forEach(f => {
+      const el = document.getElementById(`claseForm_${f}`);
+      if (el) el.value = f === 'semana' ? '1' : '';
+    });
+    populateCursosSelect(document.getElementById('claseForm_curso'));
+    openModal('claseModal');
+  });
+
+  window.editClase = (id) => {
+    const c = clases.find(x => x.id === id);
+    if (!c) return;
+    document.getElementById('claseModalTitle').textContent = 'Editar Clase';
+    document.getElementById('claseId').value = id;
+    populateCursosSelect(document.getElementById('claseForm_curso'));
+    document.getElementById('claseForm_curso').value = c.curso;
+    document.getElementById('claseForm_semana').value = c.semana;
+    document.getElementById('claseForm_titulo').value = c.titulo;
+    document.getElementById('claseForm_tipo').value = c.tipo;
+    document.getElementById('claseForm_thumbnail').value = c.thumbnail;
+    document.getElementById('claseForm_url').value = c.url;
+    openModal('claseModal');
+  };
+
+  document.getElementById('btnGuardarClase').addEventListener('click', () => {
+    const id    = document.getElementById('claseId').value;
+    const curso = document.getElementById('claseForm_curso').value;
+    const semana= parseInt(document.getElementById('claseForm_semana').value);
+    const titulo= document.getElementById('claseForm_titulo').value.trim();
+    const tipo  = document.getElementById('claseForm_tipo').value;
+    const thumb = document.getElementById('claseForm_thumbnail').value || '📄';
+    const url   = document.getElementById('claseForm_url').value.trim();
+
+    if (!curso || !titulo || !url) { showToast('Completa todos los campos requeridos', 'warning'); return; }
+
+    if (id) {
+      const idx = clases.findIndex(c => c.id === parseInt(id));
+      if (idx >= 0) clases[idx] = { ...clases[idx], curso, semana, titulo, tipo, thumbnail: thumb, url };
+      showToast('Clase actualizada', 'success');
+    } else {
+      clases.push({ id: nextId++, curso, semana, titulo, tipo, thumbnail: thumb, url });
+      showToast('Clase agregada', 'success');
+    }
+    closeModal('claseModal');
+    renderClasesTable();
+  });
+
+  window.deleteClase = (id) => {
+    document.getElementById('confirmMsg').textContent = '¿Eliminar esta clase del sistema?';
+    document.getElementById('confirmDeleteBtn').onclick = () => {
+      clases = clases.filter(c => c.id !== id);
+      closeModal('confirmModal');
+      renderClasesTable();
+      showToast('Clase eliminada', 'info');
+    };
+    openModal('confirmModal');
+  };
+
+  // ─────────────────────────────────────────────────────────
+  // RESÚMENES
+  // ─────────────────────────────────────────────────────────
+  function renderResumenesTable() {
+    const search  = document.getElementById('searchResumenes').value.toLowerCase();
+    const filterC = document.getElementById('filterResCurso').value;
+    const cursos = [...new Set(resumenes.map(r => r.curso))];
+    const sel = document.getElementById('filterResCurso');
+    const prev = sel.value;
+    sel.innerHTML = `<option value="">Todos los cursos</option>` + cursos.map(c=>`<option value="${c}" ${c===prev?'selected':''}>${c}</option>`).join('');
+
+    let filtered = resumenes.filter(r => {
+      const ms = !search || r.titulo.toLowerCase().includes(search) || r.curso.toLowerCase().includes(search);
+      const mc = !filterC || r.curso === filterC;
+      return ms && mc;
+    });
+
+    const tbody = document.getElementById('resumenesTableBody');
+    tbody.innerHTML = filtered.length === 0
+      ? `<tr><td colspan="5" class="empty-table-msg">No se encontraron resúmenes.</td></tr>`
+      : filtered.map(r => `
+        <tr>
+          <td><span class="badge badge-primary">${r.curso}</span></td>
+          <td>${r.tema}</td>
+          <td>${r.titulo}</td>
+          <td>${r.paginas} pág.</td>
+          <td class="td-actions">
+            <button class="action-icon-btn action-edit" onclick="editResumen(${r.id})">✏️</button>
+            <button class="action-icon-btn action-delete" onclick="deleteResumen(${r.id})">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+  }
+
+  document.getElementById('searchResumenes').addEventListener('input', renderResumenesTable);
+  document.getElementById('filterResCurso').addEventListener('change', renderResumenesTable);
+
+  document.getElementById('btnAddResumen').addEventListener('click', () => {
+    document.getElementById('resumenModalTitle').textContent = 'Nuevo Resumen';
+    document.getElementById('resumenId').value = '';
+    ['curso','tema','titulo','paginas','url'].forEach(f => {
+      const el = document.getElementById(`resForm_${f}`);
+      if (el) el.value = f === 'paginas' ? '4' : '';
+    });
+    populateCursosSelect(document.getElementById('resForm_curso'));
+    openModal('resumenModal');
+  });
+
+  window.editResumen = (id) => {
+    const r = resumenes.find(x => x.id === id);
+    if (!r) return;
+    document.getElementById('resumenModalTitle').textContent = 'Editar Resumen';
+    document.getElementById('resumenId').value = id;
+    populateCursosSelect(document.getElementById('resForm_curso'));
+    document.getElementById('resForm_curso').value = r.curso;
+    document.getElementById('resForm_tema').value = r.tema;
+    document.getElementById('resForm_titulo').value = r.titulo;
+    document.getElementById('resForm_paginas').value = r.paginas;
+    document.getElementById('resForm_url').value = r.url;
+    openModal('resumenModal');
+  };
+
+  document.getElementById('btnGuardarResumen').addEventListener('click', () => {
+    const id    = document.getElementById('resumenId').value;
+    const curso = document.getElementById('resForm_curso').value;
+    const tema  = document.getElementById('resForm_tema').value.trim();
+    const titulo= document.getElementById('resForm_titulo').value.trim();
+    const pags  = parseInt(document.getElementById('resForm_paginas').value) || 4;
+    const url   = document.getElementById('resForm_url').value.trim() || '#';
+    if (!curso || !titulo) { showToast('Completa los campos requeridos', 'warning'); return; }
+    if (id) {
+      const idx = resumenes.findIndex(r => r.id === parseInt(id));
+      if (idx >= 0) resumenes[idx] = { ...resumenes[idx], curso, tema, titulo, paginas: pags, url };
+      showToast('Resumen actualizado');
+    } else {
+      resumenes.push({ id: nextId++, curso, tema, titulo, paginas: pags, url });
+      showToast('Resumen agregado');
+    }
+    closeModal('resumenModal');
+    renderResumenesTable();
+  });
+
+  window.deleteResumen = (id) => {
+    document.getElementById('confirmMsg').textContent = '¿Eliminar este resumen?';
+    document.getElementById('confirmDeleteBtn').onclick = () => {
+      resumenes = resumenes.filter(r => r.id !== id);
+      closeModal('confirmModal');
+      renderResumenesTable();
+      showToast('Resumen eliminado', 'info');
+    };
+    openModal('confirmModal');
+  };
+
+  // ─────────────────────────────────────────────────────────
+  // PREGUNTAS
+  // ─────────────────────────────────────────────────────────
+  function renderPreguntasTable() {
+    const search  = document.getElementById('searchPreguntas').value.toLowerCase();
+    const filterC = document.getElementById('filterPregCurso').value;
+    const filterA = document.getElementById('filterPregArea').value;
+
+    const cursos = [...new Set(preguntas.map(p => p.curso))].sort();
+    const cSel = document.getElementById('filterPregCurso');
+    const prevC = cSel.value;
+    cSel.innerHTML = `<option value="">Todos los cursos</option>` + cursos.map(c=>`<option value="${c}" ${c===prevC?'selected':''}>${c}</option>`).join('');
+
+    let filtered = preguntas.filter(p => {
+      const ms = !search || p.pregunta.toLowerCase().includes(search) || p.curso.toLowerCase().includes(search);
+      const mc = !filterC || p.curso === filterC;
+      const ma = !filterA || p.area === filterA;
+      return ms && mc && ma;
+    });
+
+    // Stats
+    document.getElementById('totalPreguntas').textContent = preguntas.length;
+    document.getElementById('pCIE').textContent = preguntas.filter(p=>p.area==='CIE').length;
+    document.getElementById('pLETRAS').textContent = preguntas.filter(p=>p.area==='LETRAS').length;
+    document.getElementById('pCursos').textContent = [...new Set(preguntas.map(p=>p.curso))].length;
+
+    const tbody = document.getElementById('preguntasTableBody');
+    tbody.innerHTML = filtered.length === 0
+      ? `<tr><td colspan="7" class="empty-table-msg">No se encontraron preguntas.</td></tr>`
+      : filtered.map((p,i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td><span class="badge badge-primary">${p.curso}</span></td>
+          <td><span class="badge badge-info">${p.tema}</span></td>
+          <td><span class="badge ${p.area==='CIE'?'badge-warning':'badge-primary'}">${p.area}</span></td>
+          <td>${p.año || '—'}</td>
+          <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${p.pregunta}">${p.pregunta.substring(0,80)}${p.pregunta.length>80?'...':''}</td>
+          <td class="td-actions">
+            <button class="action-icon-btn action-edit" onclick="editPregunta(${p.id})">✏️</button>
+            <button class="action-icon-btn action-delete" onclick="deletePregunta(${p.id})">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+  }
+
+  document.getElementById('searchPreguntas').addEventListener('input', renderPreguntasTable);
+  document.getElementById('filterPregCurso').addEventListener('change', renderPreguntasTable);
+  document.getElementById('filterPregArea').addEventListener('change', renderPreguntasTable);
+  renderPreguntasTable();
+
+  document.getElementById('btnAddPregunta').addEventListener('click', () => {
+    document.getElementById('preguntaModalTitle').textContent = 'Nueva Pregunta';
+    document.getElementById('preguntaId').value = '';
+    ['curso','tema','area','año','pregunta','a','b','c','d','e','respuesta'].forEach(f => {
+      const el = document.getElementById(`pForm_${f}`);
+      if (el) el.value = f==='año' ? new Date().getFullYear() : f==='area' ? 'CIE' : f==='respuesta' ? 'A' : '';
+    });
+    populateCursosSelect(document.getElementById('pForm_curso'));
+    openModal('preguntaModal');
+  });
+
+  window.editPregunta = (id) => {
+    const p = preguntas.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('preguntaModalTitle').textContent = 'Editar Pregunta';
+    document.getElementById('preguntaId').value = id;
+    populateCursosSelect(document.getElementById('pForm_curso'));
+    ['curso','tema','area','año','pregunta','a','b','c','d','e'].forEach(f => {
+      const el = document.getElementById(`pForm_${f}`);
+      if (el) el.value = p[f] || '';
+    });
+    document.getElementById('pForm_respuesta').value = p.respuesta;
+    openModal('preguntaModal');
+  };
+
+  document.getElementById('btnGuardarPregunta').addEventListener('click', () => {
+    const id = document.getElementById('preguntaId').value;
+    const data = {
+      curso: document.getElementById('pForm_curso').value,
+      tema: document.getElementById('pForm_tema').value.trim(),
+      area: document.getElementById('pForm_area').value,
+      año: parseInt(document.getElementById('pForm_año').value),
+      pregunta: document.getElementById('pForm_pregunta').value.trim(),
+      a: document.getElementById('pForm_a').value.trim(),
+      b: document.getElementById('pForm_b').value.trim(),
+      c: document.getElementById('pForm_c').value.trim(),
+      d: document.getElementById('pForm_d').value.trim(),
+      e: document.getElementById('pForm_e').value.trim(),
+      respuesta: document.getElementById('pForm_respuesta').value
+    };
+    if (!data.curso || !data.pregunta || !data.a || !data.b) {
+      showToast('Completa los campos mínimos (curso, pregunta, A, B)', 'warning'); return;
+    }
+    if (id) {
+      const idx = preguntas.findIndex(p => p.id === parseInt(id));
+      if (idx >= 0) preguntas[idx] = { ...preguntas[idx], ...data };
+      showToast('Pregunta actualizada');
+    } else {
+      preguntas.push({ id: nextId++, ...data });
+      showToast('Pregunta agregada al banco');
+    }
+    closeModal('preguntaModal');
+    renderPreguntasTable();
+  });
+
+  window.deletePregunta = (id) => {
+    document.getElementById('confirmMsg').textContent = '¿Eliminar esta pregunta del banco?';
+    document.getElementById('confirmDeleteBtn').onclick = () => {
+      preguntas = preguntas.filter(p => p.id !== id);
+      closeModal('confirmModal');
+      renderPreguntasTable();
+      showToast('Pregunta eliminada', 'info');
+    };
+    openModal('confirmModal');
+  };
+
+  // ─────────────────────────────────────────────────────────
+  // USUARIOS
+  // ─────────────────────────────────────────────────────────
+  function renderUsuariosTable() {
+    const search  = document.getElementById('searchUsuarios').value.toLowerCase();
+    const filterA = document.getElementById('filterArea').value;
+    const ahora   = new Date();
+
+    let filtered = usuarios.filter(u => {
+      const ms = !search || u.nombre.toLowerCase().includes(search) || u.usuario.toLowerCase().includes(search);
+      const ma = !filterA || u.area === filterA;
+      return ms && ma;
+    });
+
+    const activos  = filtered.filter(u => new Date(u.membresia_fin) >= ahora).length;
+    const vencidos = filtered.filter(u => new Date(u.membresia_fin) < ahora).length;
+    document.getElementById('totalEstudiantes').textContent = usuarios.length;
+    document.getElementById('estudiantesActivos').textContent = activos;
+    document.getElementById('estudiantesVencidos').textContent = vencidos;
+
+    const tbody = document.getElementById('usuariosTableBody');
+    tbody.innerHTML = filtered.length === 0
+      ? `<tr><td colspan="6" class="empty-table-msg">No se encontraron estudiantes.</td></tr>`
+      : filtered.map(u => {
+          const activo = new Date(u.membresia_fin) >= ahora;
+          return `
+            <tr>
+              <td><code>${u.usuario}</code></td>
+              <td>${u.nombre}</td>
+              <td><span class="badge badge-primary">${u.area}</span></td>
+              <td style="font-size:0.78rem;">${u.membresia_inicio || '—'} → ${u.membresia_fin || '—'}</td>
+              <td><span class="${activo ? 'users-status-active' : 'users-status-expired'}">${activo ? '✅ Activa' : '⛔ Vencida'}</span></td>
+              <td class="td-actions">
+                <button class="action-icon-btn action-edit" onclick="editUsuario('${u.usuario}')">✏️</button>
+                <button class="action-icon-btn action-delete" onclick="deleteUsuario('${u.usuario}')">🗑️</button>
+              </td>
+            </tr>`;
+        }).join('');
+  }
+
+  document.getElementById('searchUsuarios').addEventListener('input', renderUsuariosTable);
+  document.getElementById('filterArea').addEventListener('change', renderUsuariosTable);
+
+  document.getElementById('btnAddUsuario').addEventListener('click', () => {
+    document.getElementById('usuarioModalTitle').textContent = 'Nuevo Estudiante';
+    document.getElementById('usuarioId').value = '';
+    ['usuario','password','nombre'].forEach(f => { document.getElementById(`uForm_${f}`).value = ''; });
+    document.getElementById('uForm_area').value = 'CIE';
+    document.getElementById('uForm_inicio').value = new Date().toISOString().split('T')[0];
+    document.getElementById('uForm_fin').value = '';
+    openModal('usuarioModal');
+  });
+
+  window.editUsuario = (user) => {
+    const u = usuarios.find(x => x.usuario === user);
+    if (!u) return;
+    document.getElementById('usuarioModalTitle').textContent = 'Editar Estudiante';
+    document.getElementById('usuarioId').value = user;
+    document.getElementById('uForm_usuario').value = u.usuario;
+    document.getElementById('uForm_password').value = '';
+    document.getElementById('uForm_nombre').value = u.nombre;
+    document.getElementById('uForm_area').value = u.area;
+    document.getElementById('uForm_inicio').value = u.membresia_inicio || '';
+    document.getElementById('uForm_fin').value = u.membresia_fin || '';
+    openModal('usuarioModal');
+  };
+
+  document.getElementById('btnGuardarUsuario').addEventListener('click', () => {
+    const id     = document.getElementById('usuarioId').value;
+    const user   = document.getElementById('uForm_usuario').value.trim();
+    const pass   = document.getElementById('uForm_password').value;
+    const nombre = document.getElementById('uForm_nombre').value.trim();
+    const area   = document.getElementById('uForm_area').value;
+    const inicio = document.getElementById('uForm_inicio').value;
+    const fin    = document.getElementById('uForm_fin').value;
+
+    if (!user || !nombre || !fin) { showToast('Completa los campos requeridos', 'warning'); return; }
+
+    if (id) {
+      const idx = usuarios.findIndex(u => u.usuario === id);
+      if (idx >= 0) {
+        usuarios[idx] = { ...usuarios[idx], usuario: user, nombre, area, membresia_inicio: inicio, membresia_fin: fin };
+        if (pass) usuarios[idx].password = pass;
+      }
+      showToast('Estudiante actualizado');
+    } else {
+      if (!pass) { showToast('La contraseña es requerida para nuevos estudiantes', 'warning'); return; }
+      if (usuarios.find(u => u.usuario === user)) { showToast('Ese usuario ya existe', 'error'); return; }
+      usuarios.push({ usuario: user, password: pass, nombre, area, rol: 'estudiante', membresia_inicio: inicio, membresia_fin: fin });
+      showToast('Estudiante registrado');
+    }
+    closeModal('usuarioModal');
+    renderUsuariosTable();
+  });
+
+  window.deleteUsuario = (user) => {
+    document.getElementById('confirmMsg').textContent = `¿Eliminar al estudiante "${user}"? Esta acción no se puede deshacer.`;
+    document.getElementById('confirmDeleteBtn').onclick = () => {
+      usuarios = usuarios.filter(u => u.usuario !== user);
+      closeModal('confirmModal');
+      renderUsuariosTable();
+      showToast('Estudiante eliminado', 'info');
+    };
+    openModal('confirmModal');
+  };
+
+  // ─────────────────────────────────────────────────────────
+  // AVANCE (Admin view)
+  // ─────────────────────────────────────────────────────────
+  function renderAvanceAdmin() {
+    const historial = JSON.parse(localStorage.getItem('kchimbo_historial') || '[]');
+    const todos = [...DEMO_HISTORIAL, ...historial];
+    const tbody = document.getElementById('progresoTableBody');
+    tbody.innerHTML = todos.length === 0
+      ? `<tr><td colspan="5" class="empty-table-msg">Sin datos de simulacros.</td></tr>`
+      : todos.map(h => `
+          <tr>
+            <td>estudiante01</td>
+            <td>${h.fecha}</td>
+            <td style="color:var(--success);font-weight:600;">${h.correctas}/60</td>
+            <td style="font-weight:700;">${h.puntaje} / 60</td>
+            <td><span class="badge badge-primary">${h.area}</span></td>
+          </tr>`).join('');
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // PAGOS (Admin)
+  // ─────────────────────────────────────────────────────────
+  function renderPagosTable() {
+    const search  = document.getElementById('searchPagos').value.toLowerCase();
+    const filterE = document.getElementById('filterPagoEstado').value;
+    const ahora   = new Date();
+
+    let filtered = usuarios.filter(u => {
+      const ms = !search || u.nombre.toLowerCase().includes(search) || u.usuario.toLowerCase().includes(search);
+      const activo = new Date(u.membresia_fin) >= ahora;
+      const me = !filterE || (filterE === 'activo' ? activo : !activo);
+      return ms && me;
+    });
+
+    const tbody = document.getElementById('pagosTableBody');
+    tbody.innerHTML = filtered.length === 0
+      ? `<tr><td colspan="6" class="empty-table-msg">No hay membresías.</td></tr>`
+      : filtered.map(u => {
+          const activo = new Date(u.membresia_fin) >= ahora;
+          const diasLeft = Math.max(0, Math.ceil((new Date(u.membresia_fin) - ahora) / (1000*60*60*24)));
+          return `
+            <tr>
+              <td><strong>${u.nombre}</strong><br><code style="font-size:0.72rem;">${u.usuario}</code></td>
+              <td><span class="badge badge-primary">${u.area}</span></td>
+              <td>${u.membresia_inicio || '—'}</td>
+              <td>${u.membresia_fin || '—'}</td>
+              <td>${activo ? `<span class="users-status-active">✅ Activa (${diasLeft}d)</span>` : `<span class="users-status-expired">⛔ Vencida</span>`}</td>
+              <td class="td-actions">
+                <button class="action-icon-btn action-edit" onclick="renovarMembresia('${u.usuario}')" title="Renovar">🔄</button>
+              </td>
+            </tr>`;
+        }).join('');
+  }
+
+  document.getElementById('searchPagos').addEventListener('input', renderPagosTable);
+  document.getElementById('filterPagoEstado').addEventListener('change', renderPagosTable);
+
+  window.renovarMembresia = (user) => {
+    const u = usuarios.find(x => x.usuario === user);
+    if (!u) return;
+    const nuevaFin = prompt(`Ingresa la nueva fecha de vencimiento para ${u.nombre} (YYYY-MM-DD):`, u.membresia_fin);
+    if (nuevaFin) {
+      u.membresia_fin = nuevaFin;
+      renderPagosTable();
+      showToast(`Membresía de ${u.nombre} renovada hasta ${nuevaFin}`);
+    }
+  };
+
+  // ── Logout ──
+  document.getElementById('btnLogout').addEventListener('click', () => { openModal('logoutModal'); });
+  document.getElementById('logoutConfirmBtn').addEventListener('click', () => {
+    AUTH.logout();
+    window.location.href = '../admin/admin-login.html';
+  });
+
+})();
+</script>
+</body>
+</html>
