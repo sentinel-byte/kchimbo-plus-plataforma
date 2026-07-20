@@ -547,7 +547,53 @@
     </footer>
   </main>
 
-</div><!-- /dashboard-layout -->
+<!-- Floating + Publicar Button (Padlet style) -->
+<button class="padlet-fab-publish" id="padletFabPublish">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  Publicar
+</button>
+
+<!-- Modal Publicar/Editar Publicación en Padlet -->
+<div class="modal-overlay" id="padletPostModal">
+  <div class="modal-box" style="max-width:520px;">
+    <div class="modal-header">
+      <div class="modal-title" id="padletModalTitle">✏️ Añadir publicación al Mural</div>
+      <button class="modal-close" id="padletModalClose">✕</button>
+    </div>
+    <form id="padletPostForm">
+      <input type="hidden" id="postEditId" value="">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Curso</label>
+          <select class="form-select" id="postCurso" required></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Título de la publicación</label>
+          <input type="text" class="form-input" id="postTitulo" placeholder="Ej: Ejercicios Resueltos - Semana 3" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Semana</label>
+          <input type="number" class="form-input" id="postSemana" min="1" max="20" value="1" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de archivo / Adjunto</label>
+          <select class="form-select" id="postTipo" required>
+            <option value="PDF">Documento PDF</option>
+            <option value="VIDEO">Video en Vivo / YouTube</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">URL del archivo (Google Drive / YouTube)</label>
+          <input type="url" class="form-input" id="postUrl" placeholder="https://drive.google.com/... o https://youtube.com/..." required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" id="padletModalCancel">Cancelar</button>
+        <button type="submit" class="btn btn-primary" id="padletModalSubmit">Publicar</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <!-- Modal para ver PDF / Video -->
 <div class="modal-overlay" id="mediaModal">
@@ -725,41 +771,65 @@
             <span class="padlet-column-count">${matCurso.length} publicaciones</span>
           </div>
           <div class="padlet-column-body">
+            <button class="padlet-column-add-btn" data-curso="${curso}" title="Añadir publicación a ${curso}">
+              +
+            </button>
             ${matCurso.length === 0 ? `
-              <div style="text-align:center;padding:30px 10px;color:var(--text-muted);font-size:0.82rem;">
+              <div style="text-align:center;padding:24px 10px;color:var(--text-muted);font-size:0.82rem;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:8px;opacity:0.5;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                 <div>Sin publicaciones en este curso</div>
               </div>
             ` : matCurso.map(c => `
-              <div class="padlet-post-card" data-id="${c.id}" data-tipo="${c.tipo}" data-url="${c.url}" data-titulo="${c.titulo}">
+              <div class="padlet-post-card" data-id="${c.id}" data-tipo="${c.tipo}" data-url="${c.url}" data-titulo="${c.titulo}" data-curso="${c.curso}" data-semana="${c.semana}">
                 <div class="padlet-post-top" style="background:${colorTheme};"></div>
                 <div class="padlet-post-inner">
-                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;position:relative;">
                     <span class="padlet-post-tag" style="background:${c.tipo === 'PDF' ? 'rgba(231,76,60,0.1)' : 'rgba(142,68,173,0.1)'};color:${c.tipo === 'PDF' ? '#C0392B' : '#8E44AD'};">
                       ${c.tipo === 'PDF' ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>'}
                       ${c.tipo}
                     </span>
-                    <span style="font-size:0.68rem;font-weight:700;color:var(--text-muted);">SEMANA ${c.semana}</span>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <span style="font-size:0.68rem;font-weight:700;color:var(--text-muted);">SEMANA ${c.semana}</span>
+                      <button class="padlet-post-more-btn" data-id="${c.id}" title="Opciones de publicación">⋮</button>
+                      <div class="padlet-options-menu" id="padlet-menu-${c.id}">
+                        <button class="padlet-menu-item opt-open" data-id="${c.id}">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                          Abrir publicación
+                        </button>
+                        <button class="padlet-menu-item opt-copy" data-url="${c.url}">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                          Copiar enlace del adjunto
+                        </button>
+                        <div class="padlet-menu-divider"></div>
+                        <button class="padlet-menu-item opt-edit" data-id="${c.id}">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                          Editar publicación
+                        </button>
+                        <button class="padlet-menu-item danger opt-delete" data-id="${c.id}">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                          Eliminar publicación
+                        </button>
+                      </div>
+                    </div>
                   </div>
                   <div class="padlet-post-title">${c.titulo}</div>
                   <div class="padlet-post-preview">
                     ${c.tipo === 'PDF' ? `
                       <div style="display:flex;align-items:center;gap:10px;color:#C0392B;">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                         <span style="font-size:0.78rem;font-weight:600;">Documento PDF</span>
                       </div>
                     ` : `
                       <div style="display:flex;align-items:center;gap:10px;color:#8E44AD;">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
                         <span style="font-size:0.78rem;font-weight:600;">Video en Vivo</span>
                       </div>
                     `}
                   </div>
                   <div class="padlet-post-footer">
-                    <span>📌 Publicado</span>
-                    <span class="padlet-post-action">
-                      Ver Material
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    <span>📌 Adjunto listo</span>
+                    <span style="color:var(--primary);display:inline-flex;align-items:center;gap:4px;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                     </span>
                   </div>
                 </div>
@@ -773,15 +843,142 @@
     boardHTML += `</div>`;
     content.innerHTML = boardHTML;
 
+    // Event listeners para Padlet Column Add (+) Buttons
+    content.querySelectorAll('.padlet-column-add-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openPadletModal(btn.dataset.curso);
+      });
+    });
+
+    // Event listeners para Three Dots Menu (⋮)
+    content.querySelectorAll('.padlet-post-more-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        const menu = document.getElementById(`padlet-menu-${id}`);
+        const isCurrentOpen = menu.classList.contains('open');
+        document.querySelectorAll('.padlet-options-menu').forEach(m => m.classList.remove('open'));
+        if (!isCurrentOpen) menu.classList.add('open');
+      });
+    });
+
+    // Close menus when clicking outside
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.padlet-options-menu').forEach(m => m.classList.remove('open'));
+    });
+
+    // Menu Item Actions
+    content.querySelectorAll('.opt-open').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = btn.closest('.padlet-post-card');
+        openMedia(card.dataset.titulo, card.dataset.url, card.dataset.tipo);
+      });
+    });
+
+    content.querySelectorAll('.opt-copy').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(btn.dataset.url);
+        showToast('Enlace de adjunto copiado al portapapeles', 'success');
+      });
+    });
+
+    content.querySelectorAll('.opt-edit').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = btn.closest('.padlet-post-card');
+        openPadletModal(card.dataset.curso, {
+          id: card.dataset.id,
+          titulo: card.dataset.titulo,
+          semana: card.dataset.semana,
+          tipo: card.dataset.tipo,
+          url: card.dataset.url
+        });
+      });
+    });
+
+    content.querySelectorAll('.opt-delete').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = parseInt(btn.dataset.id);
+        clases = clases.filter(c => c.id !== id);
+        renderClases();
+        showToast('Publicación eliminada del mural', 'success');
+      });
+    });
+
+    // Card click opens media if not clicking more btn or menu
     content.querySelectorAll('.padlet-post-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const tipo = card.dataset.tipo;
-        const url = card.dataset.url;
-        const tit = card.dataset.titulo;
-        openMedia(tit, url, tipo);
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.padlet-post-more-btn') || e.target.closest('.padlet-options-menu')) return;
+        openMedia(card.dataset.titulo, card.dataset.url, card.dataset.tipo);
       });
     });
   }
+
+  // ── Padlet Post Modal Functions ──
+  function openPadletModal(defaultCurso = null, editData = null) {
+    const modal = document.getElementById('padletPostModal');
+    const form = document.getElementById('padletPostForm');
+    const cursoSelect = document.getElementById('postCurso');
+    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA.CIE;
+
+    cursoSelect.innerHTML = cursosArea.map(c => `<option value="${c}">${c}</option>`).join('');
+
+    if (editData) {
+      document.getElementById('padletModalTitle').textContent = '✏️ Editar publicación';
+      document.getElementById('postEditId').value = editData.id;
+      cursoSelect.value = defaultCurso || editData.curso;
+      document.getElementById('postTitulo').value = editData.titulo;
+      document.getElementById('postSemana').value = editData.semana;
+      document.getElementById('postTipo').value = editData.tipo;
+      document.getElementById('postUrl').value = editData.url;
+      document.getElementById('padletModalSubmit').textContent = 'Guardar Cambios';
+    } else {
+      document.getElementById('padletModalTitle').textContent = '✏️ Añadir publicación al Mural';
+      document.getElementById('postEditId').value = '';
+      form.reset();
+      if (defaultCurso) cursoSelect.value = defaultCurso;
+      document.getElementById('padletModalSubmit').textContent = 'Publicar';
+    }
+
+    modal.classList.add('open');
+  }
+
+  function closePadletModal() {
+    document.getElementById('padletPostModal').classList.remove('open');
+  }
+
+  document.getElementById('padletFabPublish').addEventListener('click', () => openPadletModal());
+  document.getElementById('padletModalClose').addEventListener('click', closePadletModal);
+  document.getElementById('padletModalCancel').addEventListener('click', closePadletModal);
+
+  document.getElementById('padletPostForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const editId = document.getElementById('postEditId').value;
+    const curso = document.getElementById('postCurso').value;
+    const titulo = document.getElementById('postTitulo').value.trim();
+    const semana = parseInt(document.getElementById('postSemana').value) || 1;
+    const tipo = document.getElementById('postTipo').value;
+    const url = document.getElementById('postUrl').value.trim();
+
+    if (editId) {
+      const idx = clases.findIndex(c => c.id === parseInt(editId));
+      if (idx !== -1) {
+        clases[idx] = { ...clases[idx], curso, titulo, semana, tipo, url };
+        showToast('Publicación actualizada en el mural', 'success');
+      }
+    } else {
+      const newId = Date.now();
+      clases.unshift({ id: newId, curso, semana, titulo, tipo, url, color: '#E8521A' });
+      showToast('¡Nueva publicación añadida al mural!', 'success');
+    }
+
+    closePadletModal();
+    renderClases();
+  });
 
   // Tipo filters
   document.querySelectorAll('.tipo-btn').forEach(btn => {
