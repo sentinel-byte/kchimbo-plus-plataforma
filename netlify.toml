@@ -3,6 +3,10 @@
 [build]
   publish = "."
 
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+  NEXT_PLUGIN_FORCE_RUN = "false"
+
 [[redirects]]
   from = "/"
   to = "/index.html"
