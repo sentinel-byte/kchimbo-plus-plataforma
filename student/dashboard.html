@@ -107,6 +107,9 @@
           <div class="sidebar-logo-name">KCHIMBO<span>+</span></div>
           <div class="sidebar-logo-sub">Plataforma Virtual</div>
         </div>
+        <button class="sidebar-toggle-btn" id="sidebarCollapseBtn" title="Contraer / Expandir menú">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
       </div>
 
       <!-- User card -->
@@ -714,9 +717,22 @@
     item.addEventListener('click', () => showSection(item.dataset.section));
   });
 
-  // ── Mobile sidebar ──
+  // ── Sidebar collapse y mobile handlers ──
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebarOverlay');
+  const collapseBtn = document.getElementById('sidebarCollapseBtn');
+
+  if (collapseBtn) {
+    collapseBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      const isCollapsed = sidebar.classList.contains('collapsed');
+      localStorage.setItem('kchimbo_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+    });
+    if (localStorage.getItem('kchimbo_sidebar_collapsed') === 'true') {
+      sidebar.classList.add('collapsed');
+    }
+  }
+
   document.getElementById('menuToggle').addEventListener('click', () => {
     sidebar.classList.add('open');
     overlay.classList.add('visible');
