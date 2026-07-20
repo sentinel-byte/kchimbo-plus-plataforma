@@ -193,35 +193,44 @@
   <main class="main-content">
     <div class="content-area">
 
-      <!-- ════ SECCIÓN: CLASES EN LÍNEA ════ -->
+      <!-- ════ SECCIÓN: CLASES EN LÍNEA (PADLET BOARD) ════ -->
       <div class="section-view active" id="section-clases">
-        <div class="gradient-banner">
-          <h2>📺 Clases en Línea</h2>
-          <p>Accede a tus clases, PDFs y videos por curso — semana a semana</p>
-        </div>
-
-        <div class="tipo-filter-wrap">
-          <button class="tipo-btn active" data-tipo="TODOS">Todos</button>
-          <button class="tipo-btn" data-tipo="PDF">📄 PDFs</button>
-          <button class="tipo-btn" data-tipo="VIDEO">🎬 Videos</button>
-        </div>
-
-        <div class="courses-tabs-wrap">
-          <div class="courses-tabs" id="coursesTabs">
-            <!-- Generado por JS -->
+        <div class="board-header">
+          <div class="board-header-info">
+            <h2>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              Tablero de Clases Virtuales
+            </h2>
+            <p>Mural interactivo estilo Padlet — Explora y accede al material de cada curso por columnas</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <div class="tipo-filter-wrap" style="margin-bottom:0;">
+              <button class="tipo-btn active" data-tipo="TODOS">Todos</button>
+              <button class="tipo-btn" data-tipo="PDF">PDFs</button>
+              <button class="tipo-btn" data-tipo="VIDEO">Videos</button>
+            </div>
+            <div class="board-header-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Padlet Mode
+            </div>
           </div>
         </div>
 
         <div id="clasesContent">
-          <!-- Generado por JS -->
+          <!-- Generado como columnas de Padlet por JS -->
         </div>
       </div>
 
       <!-- ════ SECCIÓN: RESÚMENES ════ -->
       <div class="section-view" id="section-resumenes">
-        <div class="gradient-banner">
-          <h2>📄 Resúmenes por Tema</h2>
-          <p>Repasa los conceptos más importantes con nuestros resúmenes en PDF</p>
+        <div class="board-header">
+          <div class="board-header-info">
+            <h2>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Resúmenes Teóricos por Tema
+            </h2>
+            <p>Repasa los conceptos clave y resúmenes estructurados en formato PDF</p>
+          </div>
         </div>
 
         <div class="filter-row">
@@ -325,9 +334,14 @@
       <div class="section-view" id="section-repasos">
         <!-- Setup -->
         <div id="quizSetup">
-          <div class="gradient-banner">
-            <h2>🔄 Repasos por Curso</h2>
-            <p>Practica con preguntas reales de exámenes de admisión UNA PUNO</p>
+          <div class="board-header">
+            <div class="board-header-info">
+              <h2>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                Repasos y Práctica Guiada
+              </h2>
+              <p>Entrena con preguntas filtradas por curso y tema con evaluación instantánea</p>
+            </div>
           </div>
 
           <div class="card mt-16">
@@ -438,9 +452,14 @@
 
       <!-- ════ SECCIÓN: MI AVANCE ════ -->
       <div class="section-view" id="section-avance">
-        <div class="gradient-banner">
-          <h2>📊 Mi Avance</h2>
-          <p>Revisa tu progreso en simulacros y rendimiento por curso</p>
+        <div class="board-header">
+          <div class="board-header-info">
+            <h2>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              Reporte de Avance Académico
+            </h2>
+            <p>Análisis de tu rendimiento histórico en simulacros y repasos</p>
+          </div>
         </div>
 
         <div class="progress-charts-grid">
@@ -477,9 +496,14 @@
 
       <!-- ════ SECCIÓN: PAGOS ════ -->
       <div class="section-view" id="section-pagos">
-        <div class="gradient-banner">
-          <h2>💳 Pagos y Membresía</h2>
-          <p>Estado y vigencia de tu membresía en la plataforma KCHIMBO+</p>
+        <div class="board-header">
+          <div class="board-header-info">
+            <h2>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              Control de Membresía y Estado de Cuenta
+            </h2>
+            <p>Información de vigencia de tu plan y accesos activados</p>
+          </div>
         </div>
 
         <!-- Membership Card -->
@@ -658,61 +682,102 @@
   }
 
   // ─────────────────────────────────────────────────────────
-  // SECCIÓN: CLASES EN LÍNEA
+  // SECCIÓN: CLASES EN LÍNEA (MURAL PADLET INTERACTIVO)
   // ─────────────────────────────────────────────────────────
   function renderClases() {
     const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA.CIE;
-    const tabsWrap = document.getElementById('coursesTabs');
-    const content  = document.getElementById('clasesContent');
+    const content = document.getElementById('clasesContent');
 
-    if (!currentCursoTab) currentCursoTab = cursosArea[0];
+    const courseColors = {
+      'ÁLGEBRA': '#E8521A',
+      'ARITMÉTICA': '#C0392B',
+      'GEOMETRÍA': '#D35400',
+      'TRIGONOMETRÍA': '#F39C12',
+      'FÍSICA': '#2980B9',
+      'QUÍMICA': '#8E44AD',
+      'BIOLOGÍA': '#27AE60',
+      'LENGUAJE': '#16A085',
+      'LITERATURA': '#2C3E50',
+      'HISTORIA': '#7F8C8D',
+      'GEOGRAFÍA': '#D35400',
+      'FILOSOFÍA': '#8E44AD',
+      'PSICOLOGÍA': '#E74C3C',
+      'ECONOMÍA': '#27AE60'
+    };
 
-    // Render tabs
-    tabsWrap.innerHTML = cursosArea.map(c => `
-      <button class="course-tab ${c === currentCursoTab ? 'active' : ''}" data-curso="${c}">${c}</button>
-    `).join('');
+    let boardHTML = `<div class="padlet-board-container">`;
 
-    tabsWrap.querySelectorAll('.course-tab').forEach(btn => {
-      btn.addEventListener('click', () => {
-        currentCursoTab = btn.dataset.curso;
-        renderClases();
-      });
+    cursosArea.forEach(curso => {
+      let matCurso = clases.filter(c => c.curso === curso);
+      if (tipoFiltro !== 'TODOS') {
+        matCurso = matCurso.filter(c => c.tipo === tipoFiltro);
+      }
+
+      const colorTheme = courseColors[curso] || '#E8521A';
+
+      boardHTML += `
+        <div class="padlet-column">
+          <div class="padlet-column-header">
+            <div class="padlet-column-title">
+              <span style="width:10px;height:10px;border-radius:50%;background:${colorTheme};display:inline-block;"></span>
+              ${curso}
+            </div>
+            <span class="padlet-column-count">${matCurso.length} publicaciones</span>
+          </div>
+          <div class="padlet-column-body">
+            ${matCurso.length === 0 ? `
+              <div style="text-align:center;padding:30px 10px;color:var(--text-muted);font-size:0.82rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:8px;opacity:0.5;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <div>Sin publicaciones en este curso</div>
+              </div>
+            ` : matCurso.map(c => `
+              <div class="padlet-post-card" data-id="${c.id}" data-tipo="${c.tipo}" data-url="${c.url}" data-titulo="${c.titulo}">
+                <div class="padlet-post-top" style="background:${colorTheme};"></div>
+                <div class="padlet-post-inner">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <span class="padlet-post-tag" style="background:${c.tipo === 'PDF' ? 'rgba(231,76,60,0.1)' : 'rgba(142,68,173,0.1)'};color:${c.tipo === 'PDF' ? '#C0392B' : '#8E44AD'};">
+                      ${c.tipo === 'PDF' ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>'}
+                      ${c.tipo}
+                    </span>
+                    <span style="font-size:0.68rem;font-weight:700;color:var(--text-muted);">SEMANA ${c.semana}</span>
+                  </div>
+                  <div class="padlet-post-title">${c.titulo}</div>
+                  <div class="padlet-post-preview">
+                    ${c.tipo === 'PDF' ? `
+                      <div style="display:flex;align-items:center;gap:10px;color:#C0392B;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        <span style="font-size:0.78rem;font-weight:600;">Documento PDF</span>
+                      </div>
+                    ` : `
+                      <div style="display:flex;align-items:center;gap:10px;color:#8E44AD;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                        <span style="font-size:0.78rem;font-weight:600;">Video en Vivo</span>
+                      </div>
+                    `}
+                  </div>
+                  <div class="padlet-post-footer">
+                    <span>📌 Publicado</span>
+                    <span class="padlet-post-action">
+                      Ver Material
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
     });
 
-    // Filtrar
-    let filtered = clases.filter(c => c.curso === currentCursoTab);
-    if (tipoFiltro !== 'TODOS') filtered = filtered.filter(c => c.tipo === tipoFiltro);
+    boardHTML += `</div>`;
+    content.innerHTML = boardHTML;
 
-    if (filtered.length === 0) {
-      content.innerHTML = `
-        <div class="empty-state">
-          <span class="empty-icon">📭</span>
-          <p>No hay material disponible para <strong>${currentCursoTab}</strong> aún.</p>
-        </div>`;
-      return;
-    }
-
-    content.innerHTML = `
-      <div class="material-grid">
-        ${filtered.map(c => `
-          <div class="material-card" data-id="${c.id}" data-tipo="${c.tipo}" data-url="${c.url}" data-titulo="${c.titulo}">
-            <div class="material-card-thumb">
-              <span style="font-size:3rem;">${c.thumbnail}</span>
-              <span class="material-card-type type-${c.tipo.toLowerCase()}">${c.tipo}</span>
-            </div>
-            <div class="material-card-body">
-              <div class="material-card-week">SEMANA ${c.semana}</div>
-              <div class="material-card-title">${c.titulo}</div>
-            </div>
-          </div>
-        `).join('')}
-      </div>`;
-
-    content.querySelectorAll('.material-card').forEach(card => {
+    content.querySelectorAll('.padlet-post-card').forEach(card => {
       card.addEventListener('click', () => {
         const tipo = card.dataset.tipo;
-        const url  = card.dataset.url;
-        const tit  = card.dataset.titulo;
+        const url = card.dataset.url;
+        const tit = card.dataset.titulo;
         openMedia(tit, url, tipo);
       });
     });

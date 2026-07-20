@@ -15,12 +15,21 @@
   --accent:         #F39C12;
   --accent-light:   #FAD390;
 
-  --bg:             #FFFFFF;
-  --bg-warm:        #FFF8F5;
-  --bg-surface:     #FFF2EC;
+  --bg:             #F9FAFB;
+  --bg-warm:        #F3F4F6;
+  --bg-surface:     #FFFFFF;
   --bg-card:        #FFFFFF;
 
-  --sidebar-bg:     #FFFFFF;
+  /* Padlet course color palette */
+  --padlet-orange:  #F97316;
+  --padlet-amber:   #F59E0B;
+  --padlet-emerald: #10B981;
+  --padlet-blue:    #3B82F6;
+  --padlet-indigo:  #6366F1;
+  --padlet-purple:  #8B5CF6;
+  --padlet-rose:    #F43F5E;
+
+  --sidebar-bg:     #111827;
   --sidebar-width:  260px;
 
   --text-primary:   #111827;
@@ -28,23 +37,23 @@
   --text-muted:     #9CA3AF;
   --text-white:     #FFFFFF;
 
-  --border:         #F0E8E4;
-  --border-strong:  #E0D0C8;
+  --border:         #E5E7EB;
+  --border-strong:  #D1D5DB;
 
-  --success:        #27AE60;
-  --warning:        #F39C12;
-  --danger:         #E74C3C;
-  --info:           #2980B9;
+  --success:        #10B981;
+  --warning:        #F59E0B;
+  --danger:         #EF4444;
+  --info:           #3B82F6;
 
-  --shadow-sm:      0 1px 4px rgba(200,80,40,0.08);
-  --shadow-md:      0 4px 16px rgba(200,80,40,0.12);
-  --shadow-lg:      0 8px 32px rgba(200,80,40,0.18);
-  --shadow-xl:      0 16px 48px rgba(200,80,40,0.22);
+  --shadow-sm:      0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md:      0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg:      0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl:      0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
-  --radius-sm:      4px;
-  --radius-md:      6px;
-  --radius-lg:      10px;
-  --radius-xl:      14px;
+  --radius-sm:      6px;
+  --radius-md:      8px;
+  --radius-lg:      12px;
+  --radius-xl:      16px;
   --radius-full:    9999px;
 
   --transition:     all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -661,34 +670,172 @@ h4 { font-size: 1.1rem; }
 .hidden      { display: none !important; }
 .block       { display: block !important; }
 
-/* ── Gradient Header Banner ── */
-.gradient-banner {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 60%, var(--primary-deeper) 100%);
+/* ── Human-Crafted Board Header (Replaces AI Gradient Banners) ── */
+.board-header {
+  background: white;
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 28px 32px;
-  color: white;
-  position: relative;
-  overflow: hidden;
+  padding: 20px 24px;
   margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+  gap: 16px;
 }
-.gradient-banner::before {
-  content: '';
-  position: absolute;
-  top: -30px; right: -30px;
-  width: 200px; height: 200px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 50%;
+.board-header-info h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.gradient-banner::after {
-  content: '';
-  position: absolute;
-  bottom: -50px; left: 40%;
-  width: 150px; height: 150px;
-  background: rgba(255,255,255,0.04);
-  border-radius: 50%;
+.board-header-info p {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
 }
-.gradient-banner h2 { color: white; font-size: 1.4rem; }
-.gradient-banner p  { color: rgba(255,255,255,0.8); font-size: 0.88rem; margin-top: 6px; }
+.board-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(232, 82, 26, 0.1);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ── Padlet Board Layout System ── */
+.padlet-board-container {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 24px;
+  scroll-snap-type: x mandatory;
+  align-items: flex-start;
+}
+.padlet-column {
+  flex: 0 0 320px;
+  min-width: 300px;
+  max-width: 340px;
+  background: rgba(243, 244, 246, 0.75);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  box-shadow: var(--shadow-sm);
+  scroll-snap-align: start;
+}
+.padlet-column-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.padlet-column-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.padlet-column-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--bg-warm);
+  color: var(--text-secondary);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+.padlet-column-body {
+  padding: 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+/* Padlet Post Card */
+.padlet-post-card {
+  background: white;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+.padlet-post-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-strong);
+}
+.padlet-post-top {
+  height: 4px;
+  width: 100%;
+}
+.padlet-post-inner {
+  padding: 16px;
+}
+.padlet-post-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.padlet-post-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+.padlet-post-preview {
+  background: var(--bg-warm);
+  border-radius: var(--radius-sm);
+  padding: 18px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  border: 1px dashed var(--border-strong);
+}
+.padlet-post-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.padlet-post-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary);
+}
 
 /* ── Dev Info Box ── */
 .dev-info {
