@@ -711,27 +711,28 @@ h4 { font-size: 1.1rem; }
   text-transform: uppercase;
 }
 
-/* ── Padlet Board Layout System ── */
+/* ── Padlet Board Layout System (Independent Column Scroll) ── */
 .padlet-board-container {
   display: flex;
   gap: 20px;
   overflow-x: auto;
-  padding-bottom: 24px;
-  scroll-snap-type: x mandatory;
-  align-items: flex-start;
+  overflow-y: hidden;
+  height: calc(100vh - 175px);
+  padding-bottom: 12px;
+  align-items: stretch;
 }
 .padlet-column {
   flex: 0 0 320px;
   min-width: 300px;
   max-width: 340px;
-  background: rgba(243, 244, 246, 0.75);
-  border: 1px solid var(--border);
+  background: #F3F4F6;
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
-  max-height: 80vh;
-  box-shadow: var(--shadow-sm);
-  scroll-snap-align: start;
+  height: 100%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  overflow: hidden;
 }
 .padlet-column-header {
   padding: 14px 16px;
@@ -740,7 +741,7 @@ h4 { font-size: 1.1rem; }
   align-items: center;
   justify-content: space-between;
   background: white;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  flex-shrink: 0;
 }
 .padlet-column-title {
   font-size: 0.92rem;
@@ -749,46 +750,58 @@ h4 { font-size: 1.1rem; }
   display: flex;
   align-items: center;
   gap: 8px;
+  letter-spacing: -0.01em;
 }
 .padlet-column-count {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   background: var(--bg-warm);
   color: var(--text-secondary);
-  padding: 2px 8px;
+  padding: 3px 8px;
   border-radius: var(--radius-full);
 }
 .padlet-column-body {
-  padding: 14px;
+  padding: 12px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   flex: 1;
+}
+.padlet-column-body::-webkit-scrollbar {
+  width: 5px;
+}
+.padlet-column-body::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 4px;
+}
+.padlet-column-body::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }
 
 /* Padlet Post Card */
 .padlet-post-card {
   background: white;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
   overflow: hidden;
   cursor: pointer;
   position: relative;
+  flex-shrink: 0;
 }
 .padlet-post-card:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   border-color: var(--border-strong);
 }
 .padlet-post-top {
-  height: 4px;
+  height: 5px;
   width: 100%;
 }
 .padlet-post-inner {
-  padding: 16px;
+  padding: 14px 16px;
 }
 .padlet-post-tag {
   display: inline-flex;
@@ -800,24 +813,23 @@ h4 { font-size: 1.1rem; }
   border-radius: var(--radius-sm);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 8px;
 }
 .padlet-post-title {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.35;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 .padlet-post-preview {
-  background: var(--bg-warm);
+  background: #F9FAFB;
   border-radius: var(--radius-sm);
-  padding: 18px 14px;
+  padding: 14px 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
-  border: 1px dashed var(--border-strong);
+  border: 1px dashed #D1D5DB;
 }
 .padlet-post-footer {
   display: flex;
@@ -825,14 +837,15 @@ h4 { font-size: 1.1rem; }
   justify-content: space-between;
   padding-top: 10px;
   border-top: 1px solid var(--border);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
+  font-weight: 600;
 }
 .padlet-post-action {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.78rem;
+  gap: 4px;
+  font-size: 0.76rem;
   font-weight: 700;
   color: var(--primary);
 }
