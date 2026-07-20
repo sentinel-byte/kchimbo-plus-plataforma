@@ -555,13 +555,20 @@
 <!-- Logout Modal -->
 <div class="modal-overlay" id="logoutModal">
   <div class="modal-box" style="max-width:400px;">
-    <div class="modal-header"><div class="modal-title">🚪 Cerrar Sesión</div>
+    <div class="modal-header">
+      <div class="modal-title">🚪 Cerrar Sesión</div>
       <button class="modal-close" onclick="closeModal('logoutModal')">✕</button>
     </div>
-    <div class="modal-body"><p style="font-size:0.92rem;color:var(--text-secondary);">¿Cerrar sesión del panel de administración?</p></div>
+    <div class="modal-body">
+      <p style="font-size:0.92rem;color:var(--text-secondary);">¿Cerrar sesión del panel de administración?</p>
+    </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal('logoutModal')">Cancelar</button>
       <button class="btn btn-danger" id="logoutConfirmBtn">Sí, cerrar sesión</button>
+    </div>
+  </div>
+</div>
+
 <!-- Floating + Publicar Button (Padlet style for Admin) -->
 <button class="padlet-fab-publish" id="adminPadletFabPublish">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
