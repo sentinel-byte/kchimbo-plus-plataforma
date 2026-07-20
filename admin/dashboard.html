@@ -143,42 +143,30 @@
   <main class="main-content">
     <div class="content-area">
 
-      <!-- ════ CLASES EN LÍNEA ════ -->
+      <!-- ════ CLASES EN LÍNEA (TABLERO PADLET ADMIN) ════ -->
       <div class="section-view active" id="section-clases">
-        <div class="section-header">
-          <div class="section-title">
-            <div class="icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
+        <div class="board-header">
+          <div class="board-header-info">
+            <h2>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              Tablero de Clases Virtuales — Modo Administrador
+            </h2>
+            <p>Mural interactivo estilo Padlet — Administra, publica y organiza clases por columnas</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <div class="tipo-filter-wrap" style="margin-bottom:0;">
+              <button class="tipo-btn active" data-tipo="TODOS">Todos</button>
+              <button class="tipo-btn" data-tipo="PDF">PDFs</button>
+              <button class="tipo-btn" data-tipo="VIDEO">Videos</button>
             </div>
-            Clases en Línea
+            <button class="btn btn-primary" id="btnAddClaseHeader">
+              + Publicar Clase
+            </button>
           </div>
-          <button class="btn btn-primary" id="btnAddClase">+ Agregar Clase</button>
         </div>
 
-        <div class="admin-actions-bar">
-          <div class="search-input-wrap">
-            <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" id="searchClases" placeholder="Buscar clase...">
-          </div>
-          <select class="form-select" style="width:auto;" id="filterClasCurso">
-            <option value="">Todos los cursos</option>
-          </select>
-          <select class="form-select" style="width:auto;" id="filterClasTipo">
-            <option value="">Todos los tipos</option>
-            <option value="PDF">PDF</option>
-            <option value="VIDEO">VIDEO</option>
-          </select>
-        </div>
-
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Curso</th><th>Semana</th><th>Título</th><th>Tipo</th><th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="clasesTableBody"></tbody>
-          </table>
+        <div id="adminClasesBoard">
+          <!-- Generado como columnas de Padlet por JS -->
         </div>
       </div>
 
@@ -574,6 +562,21 @@
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal('logoutModal')">Cancelar</button>
       <button class="btn btn-danger" id="logoutConfirmBtn">Sí, cerrar sesión</button>
+<!-- Floating + Publicar Button (Padlet style for Admin) -->
+<button class="padlet-fab-publish" id="adminPadletFabPublish">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  Publicar Clase
+</button>
+
+<!-- Modal para ver PDF / Video -->
+<div class="modal-overlay" id="mediaModal">
+  <div class="modal-box" style="max-width:800px;">
+    <div class="modal-header">
+      <div class="modal-title" id="mediaModalTitle">Clase</div>
+      <button class="modal-close" onclick="closeModal('mediaModal')">✕</button>
+    </div>
+    <div class="modal-body" style="padding:0;">
+      <iframe id="mediaModalIframe" class="pdf-viewer-wrap" src="" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>
 </div>
@@ -678,49 +681,189 @@
   // ─────────────────────────────────────────────────────────
   // CLASES
   // ─────────────────────────────────────────────────────────
-  function renderClasesTable() {
-    const search   = document.getElementById('searchClases').value.toLowerCase();
-    const filterC  = document.getElementById('filterClasCurso').value;
-    const filterT  = document.getElementById('filterClasTipo').value;
+  // ─────────────────────────────────────────────────────────
+  // CLASES (TABLERO PADLET MURAL ADMIN)
+  // ─────────────────────────────────────────────────────────
+  let tipoFiltroAdmin = 'TODOS';
 
-    // Populate filter
-    const cursosFilter = document.getElementById('filterClasCurso');
-    const cursos = [...new Set(clases.map(c => c.curso))];
-    const prevC = cursosFilter.value;
-    cursosFilter.innerHTML = `<option value="">Todos los cursos</option>` + cursos.map(c => `<option value="${c}" ${c===prevC?'selected':''}>${c}</option>`).join('');
-
-    let filtered = clases.filter(c => {
-      const matchS = !search || c.titulo.toLowerCase().includes(search) || c.curso.toLowerCase().includes(search);
-      const matchC = !filterC || c.curso === filterC;
-      const matchT = !filterT || c.tipo === filterT;
-      return matchS && matchC && matchT;
-    });
-
-    const tbody = document.getElementById('clasesTableBody');
-    if (filtered.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="5" class="empty-table-msg">No se encontraron clases.</td></tr>`;
-      return;
-    }
-    tbody.innerHTML = filtered.map(c => `
-      <tr>
-        <td><span class="badge badge-primary">${c.curso}</span></td>
-        <td>Semana ${c.semana}</td>
-        <td>${c.titulo}</td>
-        <td><span class="badge ${c.tipo==='PDF'?'badge-danger':'badge-info'}">${c.tipo}</span></td>
-        <td class="td-actions">
-          <button class="action-icon-btn action-edit" title="Editar" onclick="editClase(${c.id})">✏️</button>
-          <button class="action-icon-btn action-delete" title="Eliminar" onclick="deleteClase(${c.id})">🗑️</button>
-        </td>
-      </tr>
-    `).join('');
+  function openMediaAdmin(titulo, url) {
+    document.getElementById('mediaModalTitle').textContent = titulo;
+    document.getElementById('mediaModalIframe').src = url;
+    openModal('mediaModal');
   }
 
-  document.getElementById('searchClases').addEventListener('input', renderClasesTable);
-  document.getElementById('filterClasCurso').addEventListener('change', renderClasesTable);
-  document.getElementById('filterClasTipo').addEventListener('change', renderClasesTable);
-  renderClasesTable();
+  function renderClasesBoard() {
+    const cursosArea = CURSOS_POR_AREA.ADMIN;
+    const container = document.getElementById('adminClasesBoard');
+    if (!container) return;
 
-  document.getElementById('btnAddClase').addEventListener('click', () => {
+    const courseColors = {
+      'ÁLGEBRA': '#F97316',
+      'ARITMÉTICA': '#10B981',
+      'GEOMETRÍA': '#3B82F6',
+      'TRIGONOMETRÍA': '#8B5CF6',
+      'FÍSICA': '#6366F1',
+      'QUÍMICA': '#14B8A6',
+      'BIOLOGÍA': '#F43F5E',
+      'LENGUAJE': '#D97706',
+      'LITERATURA': '#06B6D4',
+      'HISTORIA': '#E11D48',
+      'GEOGRAFÍA': '#475569',
+      'FILOSOFÍA': '#7C3AED',
+      'PSICOLOGÍA': '#EC4899',
+      'ECONOMÍA': '#059669'
+    };
+
+    let boardHTML = `<div class="padlet-board-container">`;
+
+    cursosArea.forEach(curso => {
+      let matCurso = clases.filter(c => c.curso === curso);
+      if (tipoFiltroAdmin !== 'TODOS') {
+        matCurso = matCurso.filter(c => c.tipo === tipoFiltroAdmin);
+      }
+
+      const colorTheme = courseColors[curso] || '#E8521A';
+
+      boardHTML += `
+        <div class="padlet-column">
+          <div class="padlet-column-header">
+            <div class="padlet-column-title">
+              <span style="width:10px;height:10px;border-radius:50%;background:${colorTheme};display:inline-block;"></span>
+              ${curso}
+            </div>
+            <span class="padlet-column-count">${matCurso.length} publicaciones</span>
+          </div>
+          <div class="padlet-column-body">
+            <button class="padlet-column-add-btn" data-curso="${curso}" title="Añadir publicación a ${curso}">
+              +
+            </button>
+            ${matCurso.length === 0 ? `
+              <div style="text-align:center;padding:24px 10px;color:var(--text-muted);font-size:0.82rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:8px;opacity:0.5;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <div>Sin publicaciones en este curso</div>
+              </div>
+            ` : matCurso.map(c => `
+              <div class="padlet-post-card" data-id="${c.id}" data-tipo="${c.tipo}" data-url="${c.url}" data-titulo="${c.titulo}" data-curso="${c.curso}">
+                <div class="padlet-post-top" style="background:${colorTheme};"></div>
+                <div class="padlet-post-inner">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;position:relative;">
+                    <span class="padlet-post-tag" style="background:${c.tipo === 'PDF' ? 'rgba(231,76,60,0.1)' : 'rgba(142,68,173,0.1)'};color:${c.tipo === 'PDF' ? '#C0392B' : '#8E44AD'};">
+                      ${c.tipo === 'PDF' ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>'}
+                      ${c.tipo}
+                    </span>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <span style="font-size:0.68rem;font-weight:700;color:var(--text-muted);">SEMANA ${c.semana}</span>
+                      <button class="padlet-post-more-btn" data-id="${c.id}" title="Opciones de administración">⋮</button>
+                      <div class="padlet-options-menu" id="padlet-menu-admin-${c.id}">
+                        <button class="padlet-menu-item opt-open" data-id="${c.id}">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                          Abrir publicación
+                        </button>
+                        <button class="padlet-menu-item opt-copy" data-url="${c.url}">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                          Copiar enlace del adjunto
+                        </button>
+                        <div class="padlet-menu-divider"></div>
+                        <button class="padlet-menu-item opt-edit" data-id="${c.id}">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                          Editar clase
+                        </button>
+                        <button class="padlet-menu-item danger opt-delete" data-id="${c.id}">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                          Eliminar clase
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="padlet-post-title">${c.titulo}</div>
+                  <div class="padlet-post-preview">
+                    ${c.tipo === 'PDF' ? `
+                      <div style="display:flex;align-items:center;gap:10px;color:#C0392B;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        <span style="font-size:0.78rem;font-weight:600;">Documento PDF</span>
+                      </div>
+                    ` : `
+                      <div style="display:flex;align-items:center;gap:10px;color:#8E44AD;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                        <span style="font-size:0.78rem;font-weight:600;">Video en Vivo</span>
+                      </div>
+                    `}
+                  </div>
+                  <div class="padlet-post-footer">
+                    <span>📌 Publicado</span>
+                    <span style="color:var(--primary);display:inline-flex;align-items:center;gap:4px;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    });
+
+    boardHTML += `</div>`;
+    container.innerHTML = boardHTML;
+
+    // Handlers
+    container.querySelectorAll('.padlet-column-add-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openClaseModalForCurso(btn.dataset.curso);
+      });
+    });
+
+    container.querySelectorAll('.padlet-post-more-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        const menu = document.getElementById(`padlet-menu-admin-${id}`);
+        const isCurrentOpen = menu.classList.contains('open');
+        document.querySelectorAll('.padlet-options-menu').forEach(m => m.classList.remove('open'));
+        if (!isCurrentOpen) menu.classList.add('open');
+      });
+    });
+
+    container.querySelectorAll('.opt-open').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = btn.closest('.padlet-post-card');
+        openMediaAdmin(card.dataset.titulo, card.dataset.url);
+      });
+    });
+
+    container.querySelectorAll('.opt-copy').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(btn.dataset.url);
+        showToast('Enlace copiado al portapapeles', 'success');
+      });
+    });
+
+    container.querySelectorAll('.opt-edit').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        editClase(parseInt(btn.dataset.id));
+      });
+    });
+
+    container.querySelectorAll('.opt-delete').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteClase(parseInt(btn.dataset.id));
+      });
+    });
+
+    container.querySelectorAll('.padlet-post-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.padlet-post-more-btn') || e.target.closest('.padlet-options-menu')) return;
+        openMediaAdmin(card.dataset.titulo, card.dataset.url);
+      });
+    });
+  }
+
+  function openClaseModalForCurso(curso = null) {
     document.getElementById('claseModalTitle').textContent = 'Nueva Clase';
     document.getElementById('claseId').value = '';
     ['curso','semana','titulo','tipo','thumbnail','url'].forEach(f => {
@@ -728,8 +871,24 @@
       if (el) el.value = f === 'semana' ? '1' : '';
     });
     populateCursosSelect(document.getElementById('claseForm_curso'));
+    if (curso) document.getElementById('claseForm_curso').value = curso;
     openModal('claseModal');
+  }
+
+  // Filter tipo buttons
+  document.querySelectorAll('.tipo-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      tipoFiltroAdmin = btn.dataset.tipo;
+      renderClasesBoard();
+    });
   });
+
+  renderClasesBoard();
+
+  document.getElementById('btnAddClaseHeader')?.addEventListener('click', () => openClaseModalForCurso());
+  document.getElementById('adminPadletFabPublish')?.addEventListener('click', () => openClaseModalForCurso());
 
   window.editClase = (id) => {
     const c = clases.find(x => x.id === id);
@@ -766,7 +925,7 @@
       showToast('Clase agregada', 'success');
     }
     closeModal('claseModal');
-    renderClasesTable();
+    renderClasesBoard();
   });
 
   window.deleteClase = (id) => {
@@ -774,7 +933,7 @@
     document.getElementById('confirmDeleteBtn').onclick = () => {
       clases = clases.filter(c => c.id !== id);
       closeModal('confirmModal');
-      renderClasesTable();
+      renderClasesBoard();
       showToast('Clase eliminada', 'info');
     };
     openModal('confirmModal');
