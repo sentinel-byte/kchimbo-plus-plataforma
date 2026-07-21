@@ -538,28 +538,73 @@
 
       <!-- ════ SECCIÓN: MI AVANCE ════ -->
       <div class="section-view" id="section-avance">
-        <div class="board-header">
-          <div class="board-header-info">
-            <h2>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+          <div>
+            <h2 style="font-size:1.4rem;font-weight:800;color:var(--text-main);display:flex;align-items:center;gap:8px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
               Reporte de Avance Académico
             </h2>
-            <p>Análisis de tu rendimiento histórico en simulacros y repasos</p>
+            <p style="font-size:0.82rem;color:var(--text-muted);margin-top:2px;">Análisis de tu rendimiento histórico en simulacros y repasos de la UNA PUNO</p>
+          </div>
+          <div>
+            <span style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Monitoreo Activo
+            </span>
           </div>
         </div>
 
-        <div class="progress-charts-grid">
+        <!-- Metric KPI Cards -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;">
+          <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,0.02);display:flex;align-items:center;gap:14px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(232,82,26,0.1);color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div>
+              <div style="font-size:1.35rem;font-weight:900;color:var(--text-main);line-height:1;" id="avanceTotalSimulacros">3</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Simulacros Rendidos</div>
+            </div>
+          </div>
+
+          <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,0.02);display:flex;align-items:center;gap:14px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(16,185,129,0.1);color:#10B981;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+            </div>
+            <div>
+              <div style="font-size:1.35rem;font-weight:900;color:#10B981;line-height:1;" id="avancePromedioPuntos">1670.0</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Promedio Ponderado</div>
+            </div>
+          </div>
+
+          <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,0.02);display:flex;align-items:center;gap:14px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(59,130,246,0.1);color:#3B82F6;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <div>
+              <div style="font-size:1.35rem;font-weight:900;color:#3B82F6;line-height:1;" id="avanceEfectividad">64.5%</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Efectividad Global</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin-bottom:24px;">
           <!-- Rendimiento por curso -->
-          <div class="chart-card">
-            <div class="chart-card-title">📚 Rendimiento por Curso</div>
+          <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+            <div style="font-size:0.92rem;font-weight:800;color:var(--text-main);margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              Rendimiento Estimado por Asignatura
+            </div>
             <div class="mini-bars" id="rendimientoCursos">
               <div style="color:var(--text-muted);font-size:0.82rem;">Sin datos aún. Completa un repaso primero.</div>
             </div>
           </div>
 
           <!-- Últimos simulacros -->
-          <div class="chart-card">
-            <div class="chart-card-title">📈 Últimos Simulacros</div>
+          <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+            <div style="font-size:0.92rem;font-weight:800;color:var(--text-main);margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              Evolución de Últimos Simulacros
+            </div>
             <div id="miniSimulacroChart">
               <div style="color:var(--text-muted);font-size:0.82rem;">Sin simulacros registrados.</div>
             </div>
@@ -567,14 +612,15 @@
         </div>
 
         <!-- Historial completo -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">📋 Historial de Simulacros</div>
+        <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.02);margin-bottom:24px;">
+          <div style="font-size:0.92rem;font-weight:800;color:var(--text-main);margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Historial General de Evaluaciones
           </div>
           <div class="table-wrap" id="historialTable">
-            <div class="history-empty">
-              <span class="empty-icon">📭</span>
-              <p>Aún no has realizado ningún simulacro.<br>¡Comienza uno en la sección <strong>Examen Simulacro</strong>!</p>
+            <div class="history-empty" style="text-align:center;padding:32px 16px;">
+              <span class="empty-icon" style="display:inline-block;margin-bottom:8px;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+              <p style="font-size:0.85rem;color:var(--text-muted);">Aún no has realizado ningún simulacro.<br>¡Comienza uno en la sección <strong>Examen Simulacro</strong>!</p>
             </div>
           </div>
         </div>
@@ -582,40 +628,85 @@
 
       <!-- ════ SECCIÓN: PAGOS ════ -->
       <div class="section-view" id="section-pagos">
-        <div class="board-header">
-          <div class="board-header-info">
-            <h2>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-              Control de Membresía y Estado de Cuenta
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+          <div>
+            <h2 style="font-size:1.4rem;font-weight:800;color:var(--text-main);display:flex;align-items:center;gap:8px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              Estado de Membresía y Plan
             </h2>
-            <p>Información de vigencia de tu plan y accesos activados</p>
+            <p style="font-size:0.82rem;color:var(--text-muted);margin-top:2px;">Consulta la vigencia de tu cuenta, renovaciones y accesos autorizados</p>
           </div>
-        </div>
-
-        <!-- Membership Card -->
-        <div class="membership-card" id="membershipCard">
-          <div class="membership-status active" id="membershipStatus">
-            <span>●</span> Membresía Activa
-          </div>
-          <h3 class="membership-title">Plan Estudiante — KCHIMBO+</h3>
-          <div class="membership-dates" id="membershipDates">Inicio: — | Vence: —</div>
-          <div class="membership-bar-wrap">
-            <div class="membership-bar">
-              <div class="membership-bar-fill" id="membershipBarFill" style="width:0%"></div>
+          <div>
+            <div class="membership-status active" id="membershipStatus" style="padding:6px 16px;border-radius:20px;font-weight:800;font-size:0.8rem;display:inline-flex;align-items:center;gap:6px;">
+              <span>●</span> Membresía Activa
             </div>
-            <div class="membership-days-left" id="membershipDaysLeft">— días restantes</div>
           </div>
         </div>
 
-        <!-- Contact -->
-        <div class="membership-contact-card">
-          <h4>📱 Renovar Membresía</h4>
-          <div class="contact-item">📞 <span>Para renovar tu membresía, contacta al administrador</span></div>
-          <div class="contact-item">📧 <a href="mailto:llanovilca97@gmail.com" style="color:var(--primary);">llanovilca97@gmail.com</a></div>
-          <div class="contact-item">💬 <span>WhatsApp: +51 XXX XXX XXX</span></div>
-          <div class="alert alert-warning mt-16" id="expiryWarning" style="display:none;">
-            <span>⚠️</span>
-            <span>Tu membresía está próxima a vencer. ¡Renueva a tiempo!</span>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:24px;">
+          <!-- Premium Membership Hero Card -->
+          <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,0.02);display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                <span style="font-size:0.75rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;">SUSCRIPCIÓN OFICIAL</span>
+                <span style="background:rgba(16,185,129,0.1);color:#10B981;border:1px solid rgba(16,185,129,0.25);padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  VERIFICADO
+                </span>
+              </div>
+              <h3 style="font-size:1.25rem;font-weight:900;color:var(--text-main);margin-bottom:6px;">Plan Estudiante — KCHIMBO+</h3>
+              <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;" id="membershipDates">Inicio: — | Vence: —</div>
+
+              <div style="margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;font-size:0.78rem;font-weight:700;color:var(--text-main);margin-bottom:6px;">
+                  <span>Tiempo Consumido</span>
+                  <span id="membershipDaysLeft" style="color:var(--primary);">— días restantes</span>
+                </div>
+                <div class="progress-bar-wrap" style="height:6px;border-radius:3px;overflow:hidden;">
+                  <div class="progress-bar-fill" id="membershipBarFill" style="width:0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid #F1F5F9;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;font-size:0.78rem;color:var(--text-secondary);">
+              <div style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Simulacros Ilimitados</div>
+              <div style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Banco por Cursos</div>
+              <div style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Resúmenes Teóricos PDF</div>
+              <div style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Clases Grabadas Padlet</div>
+            </div>
+          </div>
+
+          <!-- Contact & Renewal Support Card -->
+          <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,0.02);display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <h4 style="font-size:1rem;font-weight:800;color:var(--text-main);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                Renovación y Soporte Directo
+              </h4>
+
+              <div style="display:flex;flex-direction:column;gap:12px;font-size:0.85rem;color:var(--text-main);">
+                <div style="display:flex;align-items:center;gap:10px;background:#F8FAFC;border:1px solid #E2E8F0;padding:10px 14px;border-radius:12px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span>Para renovar tu acceso, solicita la extensión con la administración.</span>
+                </div>
+
+                <div style="display:flex;align-items:center;gap:10px;background:#F8FAFC;border:1px solid #E2E8F0;padding:10px 14px;border-radius:12px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  <a href="mailto:llanovilca97@gmail.com" style="color:var(--primary);font-weight:700;">llanovilca97@gmail.com</a>
+                </div>
+
+                <div style="display:flex;align-items:center;gap:10px;background:#F8FAFC;border:1px solid #E2E8F0;padding:10px 14px;border-radius:12px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  <span>Atención vía WhatsApp institucional</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-warning" id="expiryWarning" style="display:none;margin-top:16px;border-radius:12px;padding:12px 14px;font-size:0.82rem;font-weight:700;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span>Tu membresía está próxima a vencer. ¡Renueva a tiempo!</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1766,37 +1857,58 @@
     const historial = JSON.parse(localStorage.getItem('kchimbo_historial') || '[]');
     const todosHistorial = [...DEMO_HISTORIAL, ...historial];
 
+    // Update KPI Cards
+    const totalSim = todosHistorial.length;
+    document.getElementById('avanceTotalSimulacros').textContent = totalSim;
+
+    let sumaPuntos = 0;
+    let sumaCorrectas = 0;
+    todosHistorial.forEach(h => {
+      // Map score to ponderado if small scale
+      const pts = h.puntaje <= 60 ? (h.puntaje / 60) * 3000 : h.puntaje;
+      sumaPuntos += pts;
+      sumaCorrectas += (h.correctas || 0);
+    });
+
+    const promPuntos = totalSim > 0 ? (sumaPuntos / totalSim).toFixed(1) : '0.0';
+    const pctEfect = totalSim > 0 ? ((sumaCorrectas / (totalSim * 60)) * 100).toFixed(1) + '%' : '0.0%';
+
+    document.getElementById('avancePromedioPuntos').textContent = promPuntos;
+    document.getElementById('avanceEfectividad').textContent = pctEfect;
+
     // Mini chart últimos simulacros
     const miniChart = document.getElementById('miniSimulacroChart');
     if (todosHistorial.length > 0) {
       miniChart.innerHTML = `
         <div class="mini-bars">
           ${todosHistorial.slice(0,5).map(h => {
-            const pct = (h.puntaje / 60) * 100;
-            const cls = pct >= 70 ? '' : pct >= 50 ? 'yellow' : '';
+            const pts = h.puntaje <= 60 ? (h.puntaje / 60) * 3000 : h.puntaje;
+            const pct = Math.min(100, Math.max(5, (pts / 3000) * 100));
+            const nota20 = (pts / 150).toFixed(1);
+            const cls = nota20 >= 14 ? '' : nota20 >= 10 ? 'yellow' : '';
             return `
-              <div class="mini-bar-row">
-                <div class="mini-bar-label" style="font-size:0.7rem;">${h.fecha}</div>
-                <div class="mini-bar-track"><div class="mini-bar-fill ${cls}" style="width:${pct}%"></div></div>
-                <div class="mini-bar-val">${h.puntaje}</div>
+              <div class="mini-bar-row" style="margin-bottom:10px;">
+                <div class="mini-bar-label" style="font-size:0.75rem;font-weight:700;color:var(--text-main);width:85px;">${h.fecha}</div>
+                <div class="mini-bar-track" style="height:8px;border-radius:4px;"><div class="mini-bar-fill ${cls}" style="width:${pct}%"></div></div>
+                <div class="mini-bar-val" style="font-size:0.75rem;font-weight:800;color:var(--primary);">${pts.toFixed(1)} pts</div>
               </div>`;
           }).join('')}
         </div>`;
     }
 
-    // Rendimiento por curso (demo)
+    // Rendimiento por curso (deterministico basado en cursos del área)
     const cursoStats = document.getElementById('rendimientoCursos');
-    // BUG FIX: usar INGENIERÍAS como clave (el área ya está normalizada por AUTH.getSesion())
     const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA['INGENIERÍAS'] || CURSOS_POR_AREA.CIE;
+    const basePcts = [82, 75, 68, 90, 64, 78, 70, 85, 60, 72];
     const demoStats = cursosArea.slice(0,6).map((c,i) => {
-      const pct = Math.max(40, Math.min(95, 55 + (i*7) + Math.floor(Math.random()*15)));
-      return { curso: c.substring(0,8), pct };
+      const pct = basePcts[i % basePcts.length];
+      return { curso: c, pct };
     });
     cursoStats.innerHTML = demoStats.map(d => `
-      <div class="mini-bar-row">
-        <div class="mini-bar-label">${d.curso}</div>
-        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${d.pct}%"></div></div>
-        <div class="mini-bar-val">${d.pct}%</div>
+      <div class="mini-bar-row" style="margin-bottom:10px;">
+        <div class="mini-bar-label" style="font-size:0.75rem;font-weight:700;color:var(--text-main);width:95px;">${d.curso}</div>
+        <div class="mini-bar-track" style="height:8px;border-radius:4px;"><div class="mini-bar-fill" style="width:${d.pct}%"></div></div>
+        <div class="mini-bar-val" style="font-size:0.75rem;font-weight:800;color:#10B981;">${d.pct}%</div>
       </div>
     `).join('');
 
@@ -1805,28 +1917,33 @@
     if (todosHistorial.length === 0) return;
 
     histTab.innerHTML = `
-      <table class="data-table">
+      <table class="data-table" style="width:100%;border-collapse:collapse;font-size:0.84rem;">
         <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Correctas</th>
-            <th>Incorrectas</th>
-            <th>En blanco</th>
-            <th>Puntaje Bruto</th>
-            <th>Área</th>
+          <tr style="border-bottom:2px solid #E2E8F0;text-align:left;color:var(--text-muted);font-size:0.75rem;text-transform:uppercase;">
+            <th style="padding:10px;">Fecha</th>
+            <th style="padding:10px;">Área</th>
+            <th style="padding:10px;">Correctas</th>
+            <th style="padding:10px;">Incorrectas</th>
+            <th style="padding:10px;">En blanco</th>
+            <th style="padding:10px;">Puntaje (3000)</th>
+            <th style="padding:10px;">Nota (/20)</th>
           </tr>
         </thead>
         <tbody>
           ${todosHistorial.map(h => {
-            const cls = h.puntaje >= 40 ? 'score-high' : h.puntaje >= 25 ? 'score-mid' : 'score-low';
+            const pts = h.puntaje <= 60 ? (h.puntaje / 60) * 3000 : h.puntaje;
+            const nota20 = (pts / 150).toFixed(2);
+            const scoreColor = nota20 >= 14 ? '#10B981' : nota20 >= 10 ? '#F59E0B' : '#EF4444';
+            const areaNom = (h.area === 'CIE' || !h.area) ? 'INGENIERÍAS' : (h.area === 'LETRAS' ? 'SOCIALES' : h.area);
             return `
-              <tr>
-                <td>${h.fecha}</td>
-                <td style="color:var(--success);font-weight:600;">${h.correctas}</td>
-                <td style="color:var(--danger);font-weight:600;">${h.incorrectas}</td>
-                <td>${h.blanco}</td>
-                <td class="${cls}">${h.puntaje} / 60</td>
-                <td><span class="badge badge-primary">${h.area}</span></td>
+              <tr style="border-bottom:1px solid #F1F5F9;">
+                <td style="padding:10px;font-weight:700;">${h.fecha}</td>
+                <td style="padding:10px;"><span style="background:rgba(232,82,26,0.08);color:var(--primary);padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:800;">${areaNom}</span></td>
+                <td style="padding:10px;color:#10B981;font-weight:800;">${h.correctas}</td>
+                <td style="padding:10px;color:#EF4444;font-weight:800;">${h.incorrectas}</td>
+                <td style="padding:10px;color:var(--text-muted);">${h.blanco}</td>
+                <td style="padding:10px;font-weight:900;color:var(--text-main);">${pts.toFixed(2)} pts</td>
+                <td style="padding:10px;font-weight:900;color:${scoreColor};">${nota20}</td>
               </tr>`;
           }).join('')}
         </tbody>
