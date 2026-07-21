@@ -1026,6 +1026,23 @@
   // ─────────────────────────────────────────────────────────
   // MEDIA MODAL (PDF / Video)
   // ─────────────────────────────────────────────────────────
+  function parseGoogleDriveUrl(url) {
+    if (!url) return { preview: '', download: '' };
+    const match = url.match(/\/file\/d\/([^\/\?]+)/) || url.match(/[?&]id=([^&]+)/);
+    if (match && match[1]) {
+      const fileId = match[1];
+      return {
+        preview: `https://drive.google.com/file/d/${fileId}/preview`,
+        download: `https://drive.google.com/uc?export=download&id=${fileId}`
+      };
+    }
+    const cleanUrl = url.replace(/\/view(\?.*)?$/, '').replace(/\/preview(\?.*)?$/, '');
+    return {
+      preview: `${cleanUrl}/preview`,
+      download: `${cleanUrl}/uc?export=download`
+    };
+  }
+
   function openMedia(titulo, url, tipo = 'PDF') {
     document.getElementById('mediaModalTitle').textContent = `${tipo === 'PDF' ? '📄' : '🎬'} ${titulo}`;
     const iframe = document.getElementById('mediaModalIframe');
@@ -1037,22 +1054,12 @@
     const isPdf = tipo === 'PDF' || url.includes('.pdf') || url.includes('drive.google.com');
 
     if (isPdf) {
+      const driveInfo = url.includes('drive.google.com') ? parseGoogleDriveUrl(url) : null;
       if (extBtn) {
         extBtn.style.display = 'inline-flex';
-        let downloadUrl = url;
-        if (url.includes('drive.google.com')) {
-          downloadUrl = url.replace('/view', '/uc?export=download').replace('/preview', '/uc?export=download');
-        }
-        extBtn.href = downloadUrl;
+        extBtn.href = driveInfo ? driveInfo.download : url;
       }
-
-      let viewerUrl = url;
-      if (url.includes('drive.google.com')) {
-        viewerUrl = url.replace('/view', '/preview');
-      } else {
-        viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
-      }
-      iframe.src = viewerUrl;
+      iframe.src = driveInfo ? driveInfo.preview : `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
     } else {
       // VIDEO
       if (extBtn) extBtn.style.display = 'none';
