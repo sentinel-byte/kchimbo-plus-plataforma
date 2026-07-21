@@ -192,7 +192,7 @@
         </div>
       </div>
 
-      <!-- ════ BANCO DE PREGUNTAS (PADLET BOARD ADMIN) ════ -->
+      <!-- ════ BANCO DE PREGUNTAS (EXPLORADOR MODERNO ADMIN) ════ -->
       <div class="section-view" id="section-preguntas">
         <div class="board-header">
           <div class="board-header-info">
@@ -201,22 +201,32 @@
               Banco de Preguntas <span style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-left:6px;">(Admin)</span>
             </h2>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <div class="search-input-wrap" style="width:200px;margin-bottom:0;">
-              <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-              <input type="text" class="search-input" id="searchPreguntasPadlet" placeholder="Buscar pregunta..." style="padding:5px 10px 5px 30px;font-size:0.8rem;">
-            </div>
-            <select class="form-select" style="width:auto;padding:4px 10px;font-size:0.78rem;" id="filterPregAreaPadlet">
-              <option value="">Todas las áreas</option>
-              <option value="INGENIERÍAS">INGENIERÍAS</option>
-              <option value="BIOMÉDICAS">BIOMÉDICAS</option>
-              <option value="SOCIALES">SOCIALES</option>
-            </select>
-          </div>
+          <button class="btn btn-primary" id="btnAddPreguntaTop" style="font-size:0.82rem;padding:6px 14px;display:inline-flex;align-items:center;gap:6px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nueva Pregunta
+          </button>
         </div>
 
-        <div id="adminPreguntasBoard">
-          <!-- Generado como columnas de Padlet por JS -->
+        <!-- Barra de cursos (Tabs horizontales) -->
+        <div class="curso-tabs-bar" id="pregCursosTabs" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;">
+          <!-- Generado por JS -->
+        </div>
+
+        <div class="admin-actions-bar" style="margin-bottom:16px;">
+          <div class="search-input-wrap" style="flex:1;">
+            <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+            <input type="text" class="search-input" id="searchPreguntasPadlet" placeholder="Buscar pregunta por texto, tema o curso...">
+          </div>
+          <select class="form-select" style="width:auto;" id="filterPregAreaPadlet">
+            <option value="">Todas las áreas</option>
+            <option value="INGENIERÍAS">INGENIERÍAS</option>
+            <option value="BIOMÉDICAS">BIOMÉDICAS</option>
+            <option value="SOCIALES">SOCIALES</option>
+          </select>
+        </div>
+
+        <div id="adminPreguntasBoard" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(340px, 1fr));gap:16px;align-items:start;">
+          <!-- Generado como tarjetas modernas por JS -->
         </div>
       </div>
 
@@ -1409,210 +1419,125 @@
           <button class="action-icon-btn action-edit opt-preg-edit" data-id="${p.id}" title="Editar" style="padding:3px 6px;">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </button>
-          <button class="action-icon-btn action-delete opt-preg-delete" data-id="${p.id}" title="Eliminar" style="padding:3px 6px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-          </button>
-        </div>
-      </div>
-      <div style="font-size:0.8rem;color:var(--text-main);line-height:1.35;margin-bottom:6px;font-weight:500;">
-        ${p.pregunta}
-      </div>
-      <div style="font-size:0.72rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;padding-top:4px;border-top:1px dashed #E2E8F0;">
-        <span>Clave de respuesta: <strong style="color:var(--primary);">${p.respuesta}) ${p[p.respuesta.toLowerCase()] || ''}</strong></span>
-      </div>
-    `;
-  }
-
-  function bindPreguntaDetailButtons(parent) {
-    parent.querySelectorAll('.opt-preg-edit').forEach(btn => {
-      btn.onclick = (e) => {
-        e.stopPropagation();
-        editPregunta(parseInt(btn.dataset.id));
-      };
-    });
-    parent.querySelectorAll('.opt-preg-delete').forEach(btn => {
-      btn.onclick = (e) => {
-        e.stopPropagation();
-        deletePregunta(parseInt(btn.dataset.id));
-      };
-    });
-  }
+          <button class="action-icon-btn action-  let selectedPregCursoTab = 'TODOS';
 
   function renderPreguntasBoard() {
-    const cursosArea = CURSOS_POR_AREA.ADMIN;
     const container = document.getElementById('adminPreguntasBoard');
+    const tabsContainer = document.getElementById('pregCursosTabs');
     if (!container) return;
 
     const searchEl = document.getElementById('searchPreguntasPadlet');
     const searchTerm = (searchEl ? searchEl.value : '').toLowerCase().trim();
     const areaFilter = (document.getElementById('filterPregAreaPadlet')?.value || '').trim();
 
-    const courseColors = {
-      'ÁLGEBRA': '#F97316',
-      'ARITMÉTICA': '#10B981',
-      'GEOMETRÍA': '#3B82F6',
-      'TRIGONOMETRÍA': '#8B5CF6',
-      'FÍSICA': '#6366F1',
-      'QUÍMICA': '#14B8A6',
-      'BIOLOGÍA': '#F43F5E',
-      'LENGUAJE': '#D97706',
-      'LITERATURA': '#06B6D4',
-      'HISTORIA': '#E11D48',
-      'GEOGRAFÍA': '#475569',
-      'FILOSOFÍA': '#7C3AED',
-      'PSICOLOGÍA': '#EC4899',
-      'ECONOMÍA': '#059669'
-    };
+    // Render course tabs
+    const cursosDisponibles = ['TODOS', ...CURSOS_POR_AREA.ADMIN];
+    if (tabsContainer) {
+      tabsContainer.innerHTML = cursosDisponibles.map(c => `
+        <button class="tipo-btn ${selectedPregCursoTab === c ? 'active' : ''}" data-curso="${c}" style="font-size:0.78rem;padding:5px 12px;white-space:nowrap;border-radius:20px;">
+          ${c === 'TODOS' ? '🌐 Todos los cursos' : c}
+        </button>
+      `).join('');
 
-    let boardHTML = `<div class="padlet-board-container">`;
-
-    cursosArea.forEach((curso, cursoIdx) => {
-      let matCurso = preguntas.filter(p => p.curso === curso);
-      if (searchTerm) {
-        matCurso = matCurso.filter(p =>
-          p.pregunta.toLowerCase().includes(searchTerm) ||
-          p.tema.toLowerCase().includes(searchTerm)
-        );
-      }
-      if (areaFilter) {
-        matCurso = matCurso.filter(p => p.area === areaFilter);
-      }
-
-      // Group questions by TEMA within this course
-      const temasMap = {};
-      matCurso.forEach(p => {
-        const temaKey = p.tema || 'General';
-        if (!temasMap[temaKey]) temasMap[temaKey] = [];
-        temasMap[temaKey].push(p);
-      });
-
-      const temasList = Object.keys(temasMap);
-      const colorTheme = courseColors[curso] || '#E8521A';
-
-      boardHTML += `
-        <div class="padlet-column">
-          <div class="padlet-column-header">
-            <div class="padlet-column-title">
-              <span style="width:10px;height:10px;border-radius:50%;background:${colorTheme};display:inline-block;"></span>
-              ${curso}
-            </div>
-            <span class="padlet-column-count">${matCurso.length} preguntas (${temasList.length} temas)</span>
-          </div>
-          <div class="padlet-column-body">
-            <button class="padlet-column-add-btn padlet-preg-add-btn" data-curso="${curso}" title="Añadir nueva pregunta/tema a ${curso}">
-              +
-            </button>
-            ${temasList.length === 0 ? `
-              <div style="text-align:center;padding:24px 10px;color:var(--text-muted);font-size:0.82rem;">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:8px;opacity:0.5;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                <div>Sin preguntas ni temas</div>
-              </div>
-            ` : temasList.map((temaName, tIdx) => {
-              const pregsTema = temasMap[temaName];
-              const temaId = `c${cursoIdx}_t${tIdx}`;
-              const firstPreg = pregsTema[0];
-
-              return `
-                <div class="padlet-post-card" style="margin-bottom:14px;">
-                  <div class="padlet-post-top" style="background:${colorTheme};"></div>
-                  <div class="padlet-post-inner" style="padding:12px;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1.5px solid #F1F5F9;">
-                      <span style="font-size:0.88rem;font-weight:800;color:var(--text-main);">📌 ${temaName}</span>
-                      <span class="padlet-post-tag" style="background:rgba(232,82,26,0.1);color:var(--primary);font-weight:700;">
-                        ${pregsTema.length} ${pregsTema.length === 1 ? 'pregunta' : 'preguntas'}
-                      </span>
-                    </div>
-
-                    <!-- Desplegable para seleccionar qué pregunta visualizar -->
-                    <div style="margin-bottom:8px;">
-                      <select class="form-select select-preg-selector" data-tema-id="${temaId}" style="width:100%;font-size:0.75rem;padding:4px 8px;border-radius:var(--radius-sm);background:#FFFFFF;border:1px solid #CBD5E1;">
-                        ${pregsTema.map((p, idx) => `
-                          <option value="${p.id}">P${idx + 1} [${p.area} ${p.año || ''}]: ${p.pregunta.substring(0, 38)}...</option>
-                        `).join('')}
-                      </select>
-                    </div>
-
-                    <!-- Contenedor del detalle de la pregunta elegida -->
-                    <div id="preg-detail-${temaId}" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:var(--radius-sm);padding:8px 10px;">
-                      ${renderPreguntaDetailHTML(firstPreg, 1, pregsTema.length)}
-                    </div>
-
-                    <button class="btn btn-sm padlet-preg-add-tema-btn" data-curso="${curso}" data-tema="${temaName}" style="width:100%;margin-top:10px;background:rgba(232,82,26,0.06);color:var(--primary);border:1px dashed rgba(232,82,26,0.3);font-size:0.74rem;font-weight:700;padding:6px;border-radius:var(--radius-sm);cursor:pointer;">
-                      + Agregar pregunta a "${temaName}"
-                    </button>
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
-      `;
-    });
-
-    // Card estilo columna Padlet para añadir un nuevo curso
-    boardHTML += `
-      <div class="padlet-add-column-card" id="btnAddCourseCardPreguntas" title="Añadir un nuevo curso al mural">
-        <div class="padlet-add-course-inner">
-          <div class="add-course-plus-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </div>
-          <span>+ Añadir Curso</span>
-        </div>
-      </div>
-    `;
-
-    boardHTML += `</div>`;
-    container.innerHTML = boardHTML;
-
-    // Handlers
-    container.querySelectorAll('.select-preg-selector').forEach(select => {
-      select.addEventListener('change', () => {
-        const temaId = select.dataset.temaId;
-        const pregId = parseInt(select.value);
-        const detailContainer = document.getElementById(`preg-detail-${temaId}`);
-        const preg = preguntas.find(p => p.id === pregId);
-
-        const idx = select.selectedIndex + 1;
-        const total = select.options.length;
-
-        if (detailContainer && preg) {
-          detailContainer.innerHTML = renderPreguntaDetailHTML(preg, idx, total);
-          bindPreguntaDetailButtons(detailContainer);
-        }
-      });
-    });
-
-    bindPreguntaDetailButtons(container);
-
-    const addCourseCard = container.querySelector('#btnAddCourseCardPreguntas');
-    if (addCourseCard) {
-      addCourseCard.addEventListener('click', () => {
-        const nuevoCurso = prompt('Ingresa el nombre del nuevo curso:');
-        if (nuevoCurso && nuevoCurso.trim()) {
-          const nombreClean = nuevoCurso.trim().toUpperCase();
-          if (!CURSOS_POR_AREA.ADMIN.includes(nombreClean)) {
-            CURSOS_POR_AREA.ADMIN.push(nombreClean);
-            showToast(`Curso "${nombreClean}" añadido al mural`, 'success');
-            renderPreguntasBoard();
-          }
-        }
+      tabsContainer.querySelectorAll('.tipo-btn').forEach(btn => {
+        btn.onclick = () => {
+          selectedPregCursoTab = btn.dataset.curso;
+          renderPreguntasBoard();
+        };
       });
     }
 
-    container.querySelectorAll('.padlet-preg-add-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openPreguntaModalForCurso(btn.dataset.curso);
-      });
+    // Filter questions
+    let filtered = preguntas.filter(p => {
+      const matchCurso = selectedPregCursoTab === 'TODOS' || p.curso === selectedPregCursoTab;
+      const matchArea = !areaFilter || p.area === areaFilter;
+      const matchSearch = !searchTerm ||
+        p.pregunta.toLowerCase().includes(searchTerm) ||
+        p.tema.toLowerCase().includes(searchTerm) ||
+        p.curso.toLowerCase().includes(searchTerm);
+      return matchCurso && matchArea && matchSearch;
     });
 
-    container.querySelectorAll('.padlet-preg-add-tema-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openPreguntaModalForCurso(btn.dataset.curso, btn.dataset.tema);
-      });
-    });
+    const areaColors = {
+      'INGENIERÍAS': { bg: 'rgba(41,128,185,0.1)', color: '#2980B9' },
+      'BIOMÉDICAS': { bg: 'rgba(16,185,129,0.1)', color: '#10B981' },
+      'SOCIALES': { bg: 'rgba(142,68,173,0.1)', color: '#8E44AD' }
+    };
+
+    const courseBadgeColors = {
+      'ÁLGEBRA': '#F97316', 'ARITMÉTICA': '#10B981', 'GEOMETRÍA': '#3B82F6',
+      'TRIGONOMETRÍA': '#8B5CF6', 'FÍSICA': '#6366F1', 'QUÍMICA': '#14B8A6',
+      'BIOLOGÍA': '#F43F5E', 'LENGUAJE': '#D97706', 'LITERATURA': '#06B6D4',
+      'HISTORIA': '#E11D48', 'GEOGRAFÍA': '#475569', 'FILOSOFÍA': '#7C3AED',
+      'PSICOLOGÍA': '#EC4899', 'ECONOMÍA': '#059669'
+    };
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div style="grid-column: 1 / -1; padding: 40px; text-align: center; background: white; border-radius: 12px; border: 1px solid #E2E8F0; color: var(--text-muted);">
+          <div style="font-size: 2rem; margin-bottom: 8px;">🔍</div>
+          <div style="font-weight: 700; font-size: 1rem; color: var(--text-main);">No se encontraron preguntas</div>
+          <div style="font-size: 0.8rem; margin-top: 4px;">Intenta cambiar el término de búsqueda o seleccionar otro curso.</div>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = filtered.map((p) => {
+      const aStyle = areaColors[p.area] || { bg: 'rgba(232,82,26,0.1)', color: '#E8521A' };
+      const cColor = courseBadgeColors[p.curso] || '#E8521A';
+
+      const opciones = ['A', 'B', 'C', 'D', 'E'].map(opt => {
+        const texto = p[opt.toLowerCase()];
+        if (!texto) return '';
+        const isCorrect = p.respuesta === opt;
+        return `
+          <div style="padding: 6px 10px; border-radius: 8px; font-size: 0.78rem; background: ${isCorrect ? 'rgba(16,185,129,0.12)' : '#F8FAFC'}; border: 1px solid ${isCorrect ? '#10B981' : '#E2E8F0'}; color: ${isCorrect ? '#047857' : 'var(--text-main)'}; font-weight: ${isCorrect ? '700' : '400'}; display: flex; align-items: center; justify-content: space-between;">
+            <span><strong>${opt})</strong> ${texto}</span>
+            ${isCorrect ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+          </div>`;
+      }).join('');
+
+      return `
+        <div class="card" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:space-between; transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px; background: white;" onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(0,0,0,0.06)'" onmouseleave="this.style.transform='translateY(0)';this.style.boxShadow='none'">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px;">
+              <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                <span style="background:${cColor}; color:white; font-size:0.65rem; font-weight:800; padding:2px 8px; border-radius:6px; text-transform:uppercase;">
+                  ${p.curso}
+                </span>
+                <span style="font-size:0.72rem; font-weight:700; color:#475569; background:#F1F5F9; padding:2px 8px; border-radius:6px;">
+                  📌 ${p.tema}
+                </span>
+                <span class="padlet-post-tag" style="background:${aStyle.bg}; color:${aStyle.color}; padding:2px 6px; font-size:0.65rem; font-weight:700;">
+                  ${p.area}
+                </span>
+                <span style="font-size:0.68rem; font-weight:600; color:var(--text-muted);">${p.año || 2024}</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:4px;">
+                <button class="action-icon-btn action-edit" onclick="editPregunta(${p.id})" title="Editar pregunta" style="padding:4px 8px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button class="action-icon-btn action-delete" onclick="deletePregunta(${p.id})" title="Eliminar pregunta" style="padding:4px 8px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div style="font-size:0.88rem; font-weight:600; color:var(--text-main); line-height:1.4; margin-bottom:12px;">
+              ${p.pregunta}
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr; gap:6px; margin-bottom:10px;">
+              ${opciones}
+            </div>
+          </div>
+        </div>`;
+    }).join('');
   }
+
+  document.getElementById('btnAddPreguntaTop')?.addEventListener('click', () => {
+    openPreguntaModalForCurso();
+  });
 
   document.getElementById('searchPreguntasPadlet')?.addEventListener('input', renderPreguntasBoard);
   document.getElementById('filterPregAreaPadlet')?.addEventListener('change', renderPreguntasBoard);
