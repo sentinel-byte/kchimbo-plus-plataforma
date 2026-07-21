@@ -106,12 +106,12 @@
         </span>
         <span class="nav-item-text">Banco de Preguntas</span>
       </div>
-      <div class="nav-section-label">Usuarios</div>
+      <div class="nav-section-label">Matrículas y Usuarios</div>
       <div class="nav-item" data-section="usuarios" id="nav-usuarios">
         <span class="nav-item-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M9 21v-2a4 4 0 0 1 3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M8 3.13a4 4 0 0 0 0 7.75"/></svg>
         </span>
-        <span class="nav-item-text">Estudiantes</span>
+        <span class="nav-item-text">Matrículas</span>
       </div>
       <div class="nav-item" data-section="avance" id="nav-avance">
         <span class="nav-item-icon">
@@ -233,18 +233,18 @@
         </div>
       </div>
 
-      <!-- ════ USUARIOS / ESTUDIANTES ════ -->
+      <!-- ════ USUARIOS / MATRÍCULAS ════ -->
       <div class="section-view" id="section-usuarios">
         <div class="board-header">
           <div class="board-header-info">
             <h2>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              Gestión de Estudiantes <span style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-left:6px;">(Admin)</span>
+              Gestión de Matrículas <span style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-left:6px;">(Admin)</span>
             </h2>
           </div>
           <button class="btn btn-primary" id="btnAddUsuario" style="font-size:0.82rem;padding:6px 14px;display:inline-flex;align-items:center;gap:6px;">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Nuevo Estudiante
+            Nueva Matrícula
           </button>
         </div>
 
@@ -598,7 +598,7 @@
 <div class="modal-overlay" id="usuarioModal">
   <div class="modal-box">
     <div class="modal-header">
-      <div class="modal-title" id="usuarioModalTitle">Nuevo Estudiante</div>
+      <div class="modal-title" id="usuarioModalTitle">Nueva Matrícula</div>
       <button class="modal-close" onclick="closeModal('usuarioModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -1742,10 +1742,10 @@
   document.getElementById('filterArea').addEventListener('change', renderUsuariosTable);
 
   document.getElementById('btnAddUsuario').addEventListener('click', () => {
-    document.getElementById('usuarioModalTitle').textContent = 'Nuevo Estudiante';
+    document.getElementById('usuarioModalTitle').textContent = 'Nueva Matrícula';
     document.getElementById('usuarioId').value = '';
     ['usuario','password','nombre'].forEach(f => { document.getElementById(`uForm_${f}`).value = ''; });
-    document.getElementById('uForm_area').value = 'CIE';
+    document.getElementById('uForm_area').value = 'INGENIERÍAS';
     document.getElementById('uForm_inicio').value = new Date().toISOString().split('T')[0];
     document.getElementById('uForm_fin').value = '';
     openModal('usuarioModal');
@@ -1754,7 +1754,7 @@
   window.editUsuario = (user) => {
     const u = usuarios.find(x => x.usuario === user);
     if (!u) return;
-    document.getElementById('usuarioModalTitle').textContent = 'Editar Estudiante';
+    document.getElementById('usuarioModalTitle').textContent = 'Editar Matrícula';
     document.getElementById('usuarioId').value = user;
     document.getElementById('uForm_usuario').value = u.usuario;
     document.getElementById('uForm_password').value = '';
