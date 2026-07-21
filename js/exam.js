@@ -90,47 +90,66 @@ class ExamenSimulacro {
     this.respuestasUsuario[idx] = opcion;
   }
 
-  // ── Calcular puntaje UNA PUNO ──
+  // ── Calcular puntaje ponderado oficial UNA PUNO (Puntaje Máximo = 3000 pts) ──
   calcularPuntaje() {
     let correctas = 0, incorrectas = 0, blancos = 0;
+    let puntajePonderadoTotal = 0;
     const detalle = [];
+
+    const areaPonderaciones = (typeof PONDERACIONES_UNA_PUNO !== 'undefined' && PONDERACIONES_UNA_PUNO[this.area])
+      ? PONDERACIONES_UNA_PUNO[this.area]
+      : (PONDERACIONES_UNA_PUNO ? PONDERACIONES_UNA_PUNO.INGENIERÍAS : {});
 
     this.preguntasExamen.forEach((pregunta, idx) => {
       const respuesta = this.respuestasUsuario[idx];
       const correcta = pregunta.respuesta;
+      const cursoNombre = pregunta.curso;
+
+      // Ponderación por asignatura
+      const ponderacion = areaPonderaciones[cursoNombre] || 4.0;
+      const valCorrecta = 10.0 * ponderacion;
+      const valIncorrecta = -0.25 * valCorrecta;
 
       let estado = 'blanco';
+      let ptsPregunta = 0;
+
       if (respuesta === null || respuesta === undefined) {
         blancos++;
         estado = 'blanco';
+        ptsPregunta = 0;
       } else if (respuesta === correcta) {
         correctas++;
         estado = 'correcta';
+        ptsPregunta = valCorrecta;
       } else {
         incorrectas++;
         estado = 'incorrecta';
+        ptsPregunta = valIncorrecta;
       }
+
+      puntajePonderadoTotal += ptsPregunta;
 
       detalle.push({
         pregunta,
         respuestaUsuario: respuesta,
         respuestaCorrecta: correcta,
-        estado
+        estado,
+        ponderacion,
+        ptsPregunta: parseFloat(ptsPregunta.toFixed(3))
       });
     });
 
-    // Puntaje bruto (con penalización)
-    const puntajeBruto = correctas - (incorrectas * 0.25);
-    // Convertir a escala de 20
-    const puntaje20 = ((puntajeBruto / 60) * 20).toFixed(2);
-    // Porcentaje de aciertos
+    const total3000 = Math.max(0, puntajePonderadoTotal);
+    // Escala de 20: 3000 / 150 = 20.00
+    const puntaje20 = (total3000 / 150.0).toFixed(2);
     const porcentaje = ((correctas / 60) * 100).toFixed(1);
 
     this.resultado = {
       correctas,
       incorrectas,
       blancos,
-      puntajeBruto: Math.max(0, puntajeBruto).toFixed(2),
+      puntajePonderado: total3000.toFixed(2),
+      puntajeBruto: total3000.toFixed(2),
       puntaje20: Math.max(0, parseFloat(puntaje20)).toFixed(2),
       porcentaje,
       detalle,

@@ -340,23 +340,98 @@ const DEMO_PREGUNTAS = [
    a:"Empresas individuales", b:"Comportamiento del consumidor", c:"La economía global y nacional", d:"Precios de productos específicos", e:"Decisiones familiares", respuesta:"C", año:2021},
 ];
 
-// ── DISTRIBUCIÓN EXAMEN UNA PUNO (3 ÁREAS OFICIALES) ─────
-const DISTRIBUCION_EXAMEN = {
-  INGENIERÍAS: {
-    "ÁLGEBRA": 8, "ARITMÉTICA": 6, "GEOMETRÍA": 6, "TRIGONOMETRÍA": 5, "FÍSICA": 8, "QUÍMICA": 8, "BIOLOGÍA": 8, "LENGUAJE": 5, "HISTORIA": 3, "GEOGRAFÍA": 3
-  },
+// ── PONDERACIONES OFICIALES UNA PUNO (Puntaje Máximo = 3000 pts) ──
+const PONDERACIONES_UNA_PUNO = {
   BIOMÉDICAS: {
-    "BIOLOGÍA": 12, "QUÍMICA": 10, "FÍSICA": 6, "ÁLGEBRA": 6, "ARITMÉTICA": 6, "GEOMETRÍA": 4, "TRIGONOMETRÍA": 4, "LENGUAJE": 5, "HISTORIA": 4, "GEOGRAFÍA": 3
+    "Aritmética": 3.331, "ARITMÉTICA": 3.331,
+    "Álgebra": 3.202, "ÁLGEBRA": 3.202,
+    "Geometría": 3.301, "GEOMETRÍA": 3.301,
+    "Trigonometría": 3.404, "TRIGONOMETRÍA": 3.404,
+    "Física": 5.505, "FÍSICA": 5.505,
+    "Química": 6.623, "QUÍMICA": 6.623,
+    "Biología y Anatomía": 7.816, "BIOLOGÍA": 7.816,
+    "Psicología y Filosofía": 4.006, "FILOSOFÍA": 4.006, "PSICOLOGÍA": 4.006,
+    "Geografía": 2.800, "GEOGRAFÍA": 2.800,
+    "Historia": 3.302, "HISTORIA": 3.302,
+    "Educación Cívica": 3.571, "CÍVICA": 3.571,
+    "Economía": 3.406, "ECONOMÍA": 3.406,
+    "Comunicación": 3.302, "LENGUAJE": 3.302,
+    "Literatura": 2.805, "LITERATURA": 2.805,
+    "Razonamiento Matemático": 7.201, "RAZ. MATEMÁTICO": 7.201,
+    "Razonamiento Verbal": 7.201, "RAZ. VERBAL": 7.201,
+    "Ingles": 4.087, "INGLÉS": 4.087,
+    "Quechua y aimara": 4.087, "QUECHUA": 4.087
   },
   SOCIALES: {
-    "LENGUAJE": 12, "LITERATURA": 8, "HISTORIA": 8, "GEOGRAFÍA": 8, "FILOSOFÍA": 8, "ECONOMÍA": 6, "ÁLGEBRA": 4, "ARITMÉTICA": 3, "GEOMETRÍA": 3
+    "Aritmética": 3.331, "ARITMÉTICA": 3.331,
+    "Álgebra": 3.185, "ÁLGEBRA": 3.185,
+    "Geometría": 3.120, "GEOMETRÍA": 3.120,
+    "Trigonometría": 3.120, "TRIGONOMETRÍA": 3.120,
+    "Física": 2.302, "FÍSICA": 2.302,
+    "Química": 2.404, "QUÍMICA": 2.404,
+    "Biología y Anatomía": 2.504, "BIOLOGÍA": 2.504,
+    "Psicología y Filosofía": 4.807, "FILOSOFÍA": 4.807, "PSICOLOGÍA": 4.807,
+    "Geografía": 4.907, "GEOGRAFÍA": 4.907,
+    "Historia": 5.805, "HISTORIA": 5.805,
+    "Educación Cívica": 6.576, "CÍVICA": 6.576,
+    "Economía": 4.607, "ECONOMÍA": 4.607,
+    "Comunicación": 6.090, "LENGUAJE": 6.090,
+    "Literatura": 4.300, "LITERATURA": 4.300,
+    "Razonamiento Matemático": 7.203, "RAZ. MATEMÁTICO": 7.203,
+    "Razonamiento Verbal": 7.603, "RAZ. VERBAL": 7.603,
+    "Ingles": 4.087, "INGLÉS": 4.087,
+    "Quechua y aimara": 4.087, "QUECHUA": 4.087
   },
-  // Aliases para retrocompatibilidad
+  INGENIERÍAS: {
+    "Aritmética": 5.201, "ARITMÉTICA": 5.201,
+    "Álgebra": 5.202, "ÁLGEBRA": 5.202,
+    "Geometría": 5.303, "GEOMETRÍA": 5.303,
+    "Trigonometría": 5.404, "TRIGONOMETRÍA": 5.404,
+    "Física": 5.905, "FÍSICA": 5.905,
+    "Química": 5.406, "QUÍMICA": 5.406,
+    "Biología y Anatomía": 3.177, "BIOLOGÍA": 3.177,
+    "Psicología y Filosofía": 3.802, "FILOSOFÍA": 3.802, "PSICOLOGÍA": 3.802,
+    "Geografía": 2.576, "GEOGRAFÍA": 2.576,
+    "Historia": 3.701, "HISTORIA": 3.701,
+    "Educación Cívica": 3.101, "CÍVICA": 3.101,
+    "Economía": 3.502, "ECONOMÍA": 3.502,
+    "Comunicación": 3.352, "LENGUAJE": 3.352,
+    "Literatura": 2.501, "LITERATURA": 2.501,
+    "Razonamiento Matemático": 7.603, "RAZ. MATEMÁTICO": 7.603,
+    "Razonamiento Verbal": 7.103, "RAZ. VERBAL": 7.103,
+    "Ingles": 4.087, "INGLÉS": 4.087,
+    "Quechua y aimara": 4.087, "QUECHUA": 4.087
+  }
+};
+PONDERACIONES_UNA_PUNO.CIE = PONDERACIONES_UNA_PUNO.INGENIERÍAS;
+PONDERACIONES_UNA_PUNO.LETRAS = PONDERACIONES_UNA_PUNO.SOCIALES;
+
+// ── DISTRIBUCIÓN EXAMEN UNA PUNO (60 Preguntas) ───────────
+const DISTRIBUCION_EXAMEN = {
+  INGENIERÍAS: {
+    "ARITMÉTICA": 4, "ÁLGEBRA": 4, "GEOMETRÍA": 4, "TRIGONOMETRÍA": 4,
+    "FÍSICA": 4, "QUÍMICA": 4, "BIOLOGÍA": 2, "FILOSOFÍA": 2, "PSICOLOGÍA": 2,
+    "GEOGRAFÍA": 2, "HISTORIA": 2, "ECONOMÍA": 2, "LENGUAJE": 4, "LITERATURA": 2
+  },
+  BIOMÉDICAS: {
+    "BIOLOGÍA": 6, "QUÍMICA": 5, "FÍSICA": 3, "ARITMÉTICA": 3, "ÁLGEBRA": 3,
+    "GEOMETRÍA": 3, "TRIGONOMETRÍA": 3, "FILOSOFÍA": 2, "PSICOLOGÍA": 2,
+    "GEOGRAFÍA": 2, "HISTORIA": 2, "ECONOMÍA": 2, "LENGUAJE": 4, "LITERATURA": 2
+  },
+  SOCIALES: {
+    "LENGUAJE": 4, "LITERATURA": 4, "HISTORIA": 4, "GEOGRAFÍA": 4, "FILOSOFÍA": 2, "PSICOLOGÍA": 2,
+    "ECONOMÍA": 4, "ARITMÉTICA": 3, "ÁLGEBRA": 3, "GEOMETRÍA": 2, "TRIGONOMETRÍA": 2,
+    "FÍSICA": 2, "QUÍMICA": 2, "BIOLOGÍA": 2
+  },
   CIE: {
-    "ÁLGEBRA": 8, "ARITMÉTICA": 6, "GEOMETRÍA": 6, "TRIGONOMETRÍA": 5, "FÍSICA": 8, "QUÍMICA": 8, "BIOLOGÍA": 8, "LENGUAJE": 5, "HISTORIA": 3, "GEOGRAFÍA": 3
+    "ARITMÉTICA": 4, "ÁLGEBRA": 4, "GEOMETRÍA": 4, "TRIGONOMETRÍA": 4,
+    "FÍSICA": 4, "QUÍMICA": 4, "BIOLOGÍA": 2, "FILOSOFÍA": 2, "PSICOLOGÍA": 2,
+    "GEOGRAFÍA": 2, "HISTORIA": 2, "ECONOMÍA": 2, "LENGUAJE": 4, "LITERATURA": 2
   },
   LETRAS: {
-    "LENGUAJE": 12, "LITERATURA": 8, "HISTORIA": 8, "GEOGRAFÍA": 8, "FILOSOFÍA": 8, "ECONOMÍA": 6, "ÁLGEBRA": 4, "ARITMÉTICA": 3, "GEOMETRÍA": 3
+    "LENGUAJE": 4, "LITERATURA": 4, "HISTORIA": 4, "GEOGRAFÍA": 4, "FILOSOFÍA": 2, "PSICOLOGÍA": 2,
+    "ECONOMÍA": 4, "ARITMÉTICA": 3, "ÁLGEBRA": 3, "GEOMETRÍA": 2, "TRIGONOMETRÍA": 2,
+    "FÍSICA": 2, "QUÍMICA": 2, "BIOLOGÍA": 2
   }
 };
 
