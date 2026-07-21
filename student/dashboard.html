@@ -342,29 +342,27 @@
 
         <!-- Exam Active (oculto hasta iniciar) -->
         <div id="examActive" class="hidden">
-          <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
-            <div>
-              <div style="font-size:0.75rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Simulacro UNA PUNO</div>
-              <div style="font-size:0.95rem;font-weight:800;color:var(--text-main);margin-top:2px;">
+          <!-- Integrated Top Header Bar -->
+          <div style="background:white;border:1px solid #E2E8F0;border-radius:12px;padding:8px 16px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;box-shadow:0 2px 6px rgba(0,0,0,0.02);">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="font-size:0.88rem;font-weight:800;color:var(--text-main);">
                 Pregunta <strong id="examQNum" style="color:var(--primary);">1</strong> / <strong>60</strong>
               </div>
+              <div style="height:12px;width:1px;background:#E2E8F0;"></div>
+              <span id="examAnsweredCount" style="font-size:0.75rem;font-weight:700;color:var(--text-muted);">0 / 60 respondidas</span>
             </div>
-            <div style="background:rgba(232,82,26,0.08);border:1px solid rgba(232,82,26,0.2);border-radius:20px;padding:6px 18px;display:flex;align-items:center;gap:8px;" id="examTimerBox">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <div style="font-size:1.1rem;font-weight:900;color:var(--primary);letter-spacing:0.5px;" id="examTimer">02:00:00</div>
+            
+            <div style="background:rgba(232,82,26,0.08);border:1px solid rgba(232,82,26,0.2);border-radius:20px;padding:4px 14px;display:flex;align-items:center;gap:6px;" id="examTimerBox">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <div style="font-size:0.95rem;font-weight:900;color:var(--primary);letter-spacing:0.5px;" id="examTimer">02:00:00</div>
             </div>
-            <button class="btn btn-outline btn-danger btn-sm" id="btnTerminarExamen" style="border-radius:12px;font-weight:700;">Finalizar Examen</button>
+
+            <button class="btn btn-outline btn-danger btn-sm" id="btnTerminarExamen" style="border-radius:10px;font-weight:700;padding:5px 12px;font-size:0.78rem;">Finalizar Examen</button>
           </div>
 
           <!-- Progress bar -->
-          <div style="margin-bottom:12px;">
-            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:6px;">
-              <span>Progreso del Examen</span>
-              <span id="examAnsweredCount" style="font-weight:700;color:var(--text-main);">0 / 60 respondidas</span>
-            </div>
-            <div class="progress-bar-wrap" style="height:6px;">
-              <div class="progress-bar-fill" id="examProgressBar" style="width:1.6%;"></div>
-            </div>
+          <div class="progress-bar-wrap" style="height:4px;border-radius:3px;margin-bottom:6px;overflow:hidden;">
+            <div class="progress-bar-fill" id="examProgressBar" style="width:1.6%;"></div>
           </div>
 
           <!-- Navigator Strip (Sleek Horizontal Track) -->
@@ -377,8 +375,8 @@
 
           <!-- Exam Footer Controls -->
           <div class="exam-nav" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-            <button class="btn btn-outline" id="btnPrevQ" style="border-radius:12px;padding:10px 20px;">← Anterior</button>
-            <button class="btn btn-primary" id="btnNextQ" style="border-radius:12px;padding:10px 24px;font-weight:800;">Siguiente →</button>
+            <button class="btn btn-outline" id="btnPrevQ" style="border-radius:10px;padding:8px 16px;font-size:0.85rem;">← Anterior</button>
+            <button class="btn btn-primary" id="btnNextQ" style="border-radius:10px;padding:8px 20px;font-weight:800;font-size:0.85rem;">Siguiente →</button>
           </div>
         </div>
 
