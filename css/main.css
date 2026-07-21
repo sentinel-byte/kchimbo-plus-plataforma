@@ -764,7 +764,7 @@ h4 { font-size: 1.1rem; }
   overflow-x: auto !important;
   overflow-y: hidden !important;
   height: 100%;
-  padding-bottom: 8px;
+  padding: 4px 0 8px 0;
   align-items: stretch;
   width: 100%;
   max-width: 100%;
@@ -1024,8 +1024,7 @@ h4 { font-size: 1.1rem; }
 .padlet-add-column-card:hover {
   background: white !important;
   border-color: var(--primary) !important;
-  box-shadow: 0 6px 20px rgba(232, 82, 26, 0.12);
-  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(232, 82, 26, 0.12);
 }
 .padlet-add-course-inner {
   display: flex;
