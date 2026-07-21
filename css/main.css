@@ -1108,6 +1108,145 @@ h4 { font-size: 1.1rem; }
   margin-top: 2px;
 }
 
+/* ── Distraction-Free Active Exam Navigator ── */
+.question-navigator {
+  display: flex !important;
+  gap: 6px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 8px 4px 12px 4px !important;
+  margin-bottom: 16px !important;
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+.question-navigator::-webkit-scrollbar {
+  height: 4px;
+}
+.question-navigator::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+.q-nav-dot {
+  flex: 0 0 36px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  border: 1.5px solid #E2E8F0 !important;
+  background: white !important;
+  color: #64748B !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  user-select: none;
+}
+.q-nav-dot:hover {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+  transform: translateY(-2px);
+}
+.q-nav-dot.answered {
+  background: rgba(16, 185, 129, 0.1) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  color: #059669 !important;
+}
+.q-nav-dot.current {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+  border-color: var(--primary) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(232, 82, 26, 0.35) !important;
+  transform: scale(1.08) !important;
+}
+
+/* ── Exam Question & Options Card ── */
+.question-card {
+  background: white !important;
+  border: 1.5px solid #E2E8F0 !important;
+  border-radius: 20px !important;
+  padding: 28px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+  margin-bottom: 20px !important;
+}
+.question-number-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(232, 82, 26, 0.08);
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.question-text {
+  font-size: 1.12rem !important;
+  font-weight: 700 !important;
+  color: #0F172A !important;
+  line-height: 1.6 !important;
+  margin-bottom: 24px !important;
+}
+.question-options {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+.option-btn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  width: 100% !important;
+  padding: 14px 18px !important;
+  border-radius: 14px !important;
+  border: 1.5px solid #E2E8F0 !important;
+  background: white !important;
+  color: #334155 !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.option-btn:hover {
+  border-color: var(--primary) !important;
+  background: rgba(232, 82, 26, 0.03) !important;
+  transform: translateX(4px);
+}
+.option-btn.selected {
+  border-color: var(--primary) !important;
+  background: rgba(232, 82, 26, 0.06) !important;
+  color: var(--primary) !important;
+  box-shadow: 0 4px 14px rgba(232, 82, 26, 0.12) !important;
+}
+.option-letter {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 10px !important;
+  background: #F1F5F9 !important;
+  color: #64748B !important;
+  font-size: 0.88rem !important;
+  font-weight: 800 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  transition: all 0.2s ease !important;
+}
+.option-btn:hover .option-letter {
+  background: rgba(232, 82, 26, 0.15) !important;
+  color: var(--primary) !important;
+}
+.option-btn.selected .option-letter {
+  background: var(--primary) !important;
+  color: white !important;
+  box-shadow: 0 2px 8px rgba(232, 82, 26, 0.3) !important;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   :root { --sidebar-width: 0px; }
