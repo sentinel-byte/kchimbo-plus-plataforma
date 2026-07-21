@@ -9,6 +9,8 @@ const DEMO_USERS = [
     password: "abc12345",
     nombre: "Jose Carlos Llano Vilca",
     area: "INGENIERÍAS",
+    ciclos: ["Ciclo Matecero", "Ciclo Formativo"],
+    areas: ["INGENIERÍAS", "BIOMÉDICAS", "SOCIALES"],
     rol: "estudiante",
     membresia_inicio: "2026-06-01",
     membresia_fin: "2026-08-31",
@@ -20,6 +22,8 @@ const DEMO_USERS = [
     password: "Admin@2026",
     nombre: "Carlos Llano",
     area: "ADMIN",
+    ciclos: ["TODOS"],
+    areas: ["INGENIERÍAS", "BIOMÉDICAS", "SOCIALES"],
     rol: "admin",
     membresia_inicio: "2026-01-01",
     membresia_fin: "2099-12-31",
@@ -28,118 +32,44 @@ const DEMO_USERS = [
   }
 ];
 
+// ── CICLOS ACADÉMICOS DEMO ─────────────────────────────────
+const DEMO_CICLOS = ["Ciclo Matecero", "Ciclo Formativo", "Ciclo Intensivo"];
+
 // ── CLASES (PDFs y Videos) ──────────────────────────────────
 const DEMO_CLASES = [
   // ÁLGEBRA
-  { id:1, curso:"ÁLGEBRA", semana:1, titulo:"Conjuntos y Operaciones", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E8521A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`, color:"#E8521A" },
-  { id:2, curso:"ÁLGEBRA", semana:1, titulo:"Conjuntos - Clase en Vivo", tipo:"VIDEO",
-    url:"https://www.youtube.com/embed/dQw4w9WgXcQ",
-    thumbnail:`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E8521A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>`, color:"#E8521A" },
-  { id:3, curso:"ÁLGEBRA", semana:2, titulo:"Expresiones Algebraicas", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E8521A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`, color:"#E8521A" },
-  { id:4, curso:"ÁLGEBRA", semana:2, titulo:"Factorización", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E8521A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`, color:"#E8521A" },
-  { id:21, curso:"ÁLGEBRA", semana:3, titulo:"Radicación y Potenciación", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E8521A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`, color:"#E8521A" },
-  { id:22, curso:"ÁLGEBRA", semana:3, titulo:"Ecuaciones de Primer Grado", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E8521A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`, color:"#E8521A" },
-  { id:23, curso:"ÁLGEBRA", semana:4, titulo:"Ecuaciones Cuadráticas - Video", tipo:"VIDEO",
-    url:"https://www.youtube.com/embed/dQw4w9WgXcQ",
-    thumbnail:`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E8521A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>`, color:"#E8521A" },
-  // ARITMÉTICA
-  { id:5, curso:"ARITMÉTICA", semana:1, titulo:"Números Naturales", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`, color:"#C0392B" },
-  { id:6, curso:"ARITMÉTICA", semana:1, titulo:"Divisibilidad - Video", tipo:"VIDEO",
-    url:"https://www.youtube.com/embed/dQw4w9WgXcQ",
-    thumbnail:`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>`, color:"#C0392B" },
-  { id:7, curso:"ARITMÉTICA", semana:2, titulo:"MCD y MCM", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"🔢", color:"#C0392B" },
-  // GEOMETRÍA
-  { id:8, curso:"GEOMETRÍA", semana:1, titulo:"Ángulos y Rectas", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"📏", color:"#A04000" },
-  { id:9, curso:"GEOMETRÍA", semana:2, titulo:"Triángulos y Propiedades", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"📏", color:"#A04000" },
-  { id:10, curso:"GEOMETRÍA", semana:2, titulo:"Geometría - Clase Video", tipo:"VIDEO",
-    url:"https://www.youtube.com/embed/dQw4w9WgXcQ",
-    thumbnail:"📏", color:"#A04000" },
-  // TRIGONOMETRÍA
-  { id:11, curso:"TRIGONOMETRÍA", semana:1, titulo:"Razones Trigonométricas", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"📊", color:"#884EA0" },
-  { id:12, curso:"TRIGONOMETRÍA", semana:2, titulo:"Identidades Trigonométricas", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"📊", color:"#884EA0" },
-  // FÍSICA
-  { id:13, curso:"FÍSICA", semana:1, titulo:"Cinemática", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"⚡", color:"#2980B9" },
-  { id:14, curso:"FÍSICA", semana:1, titulo:"Dinámica - Video", tipo:"VIDEO",
-    url:"https://www.youtube.com/embed/dQw4w9WgXcQ",
-    thumbnail:"⚡", color:"#2980B9" },
-  // QUÍMICA
-  { id:15, curso:"QUÍMICA", semana:1, titulo:"Tabla Periódica", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"🧪", color:"#27AE60" },
-  { id:16, curso:"QUÍMICA", semana:2, titulo:"Estequiometría", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"🧪", color:"#27AE60" },
-  // BIOLOGÍA
-  { id:17, curso:"BIOLOGÍA", semana:1, titulo:"La Célula", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"🔬", color:"#F39C12" },
-  { id:18, curso:"BIOLOGÍA", semana:2, titulo:"Genética Mendeliana", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"🔬", color:"#F39C12" },
-  // LENGUAJE
-  { id:19, curso:"LENGUAJE", semana:1, titulo:"Comprensión Lectora", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"📚", color:"#E74C3C" },
-  // HISTORIA
-  { id:20, curso:"HISTORIA", semana:1, titulo:"Perú Pre-Inca", tipo:"PDF",
-    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing",
-    thumbnail:"🏛️", color:"#8E44AD" },
+  { id:1, curso:"ÁLGEBRA", ciclo:"Ciclo Matecero", semana:1, titulo:"Conjuntos y Operaciones", tipo:"PDF",
+    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing", color:"#E8521A" },
+  { id:2, curso:"ÁLGEBRA", ciclo:"Ciclo Matecero", semana:1, titulo:"Conjuntos - Clase en Vivo", tipo:"VIDEO",
+    url:"https://www.youtube.com/embed/dQw4w9WgXcQ", color:"#E8521A" },
+  { id:3, curso:"ÁLGEBRA", ciclo:"Ciclo Formativo", semana:2, titulo:"Expresiones Algebraicas", tipo:"PDF",
+    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing", color:"#E8521A" },
+  { id:4, curso:"ÁLGEBRA", ciclo:"Ciclo Formativo", semana:2, titulo:"Factorización", tipo:"PDF",
+    url:"https://drive.google.com/file/d/19MI4rz0BhrVoPGuFXPFXO4ujFQkLQZM-/view?usp=sharing", color:"#E8521A" }
 ];
 
 // ── RESÚMENES ──────────────────────────────────────────────
 const DEMO_RESUMENES = [
-  { id:1, curso:"ÁLGEBRA", tema:"Conjuntos", titulo:"Resumen: Conjuntos y Operaciones", url:"#", paginas:4 },
-  { id:2, curso:"ÁLGEBRA", tema:"Factorización", titulo:"Resumen: Técnicas de Factorización", url:"#", paginas:6 },
-  { id:3, curso:"ARITMÉTICA", tema:"Divisibilidad", titulo:"Resumen: Criterios de Divisibilidad", url:"#", paginas:3 },
-  { id:4, curso:"ARITMÉTICA", tema:"Fracciones", titulo:"Resumen: Operaciones con Fracciones", url:"#", paginas:5 },
-  { id:5, curso:"GEOMETRÍA", tema:"Triángulos", titulo:"Resumen: Propiedades de Triángulos", url:"#", paginas:7 },
-  { id:6, curso:"TRIGONOMETRÍA", tema:"Identidades", titulo:"Resumen: Identidades Trigonométricas", url:"#", paginas:4 },
-  { id:7, curso:"FÍSICA", tema:"Cinemática", titulo:"Resumen: Movimiento Rectilíneo", url:"#", paginas:8 },
-  { id:8, curso:"QUÍMICA", tema:"Estequiometría", titulo:"Resumen: Cálculos Estequiométricos", url:"#", paginas:6 },
-  { id:9, curso:"BIOLOGÍA", tema:"Célula", titulo:"Resumen: Estructura Celular", url:"#", paginas:5 },
-  { id:10, curso:"LENGUAJE", tema:"Ortografía", titulo:"Resumen: Reglas Ortográficas", url:"#", paginas:4 },
-  { id:11, curso:"HISTORIA", tema:"Imperio Inca", titulo:"Resumen: Organización del Tahuantinsuyo", url:"#", paginas:6 },
-  { id:12, curso:"GEOGRAFÍA", tema:"Relieve", titulo:"Resumen: Regiones Naturales del Perú", url:"#", paginas:5 },
+  { id:1, curso:"ÁLGEBRA", ciclo:"Ciclo Matecero", tema:"Conjuntos", titulo:"Resumen: Conjuntos y Operaciones", url:"#", paginas:4 },
+  { id:2, curso:"ÁLGEBRA", ciclo:"Ciclo Matecero", tema:"Factorización", titulo:"Resumen: Técnicas de Factorización", url:"#", paginas:6 },
+  { id:3, curso:"ARITMÉTICA", ciclo:"Ciclo Formativo", tema:"Divisibilidad", titulo:"Resumen: Criterios de Divisibilidad", url:"#", paginas:3 },
+  { id:4, curso:"ARITMÉTICA", ciclo:"Ciclo Formativo", tema:"Fracciones", titulo:"Resumen: Operaciones con Fracciones", url:"#", paginas:5 },
+  { id:5, curso:"GEOMETRÍA", ciclo:"Ciclo Matecero", tema:"Triángulos", titulo:"Resumen: Propiedades de Triángulos", url:"#", paginas:7 },
+  { id:6, curso:"TRIGONOMETRÍA", ciclo:"Ciclo Formativo", tema:"Identidades", titulo:"Resumen: Identidades Trigonométricas", url:"#", paginas:4 },
+  { id:7, curso:"FÍSICA", ciclo:"Ciclo Intensivo", tema:"Cinemática", titulo:"Resumen: Movimiento Rectilíneo", url:"#", paginas:8 },
+  { id:8, curso:"QUÍMICA", ciclo:"Ciclo Intensivo", tema:"Estequiometría", titulo:"Resumen: Cálculos Estequiométricos", url:"#", paginas:6 }
 ];
 
-// ── HORARIO DE CLASES DEMO ─────────────────────────────────
+// ── HORARIO DE CLASES DEMO (100% Virtual, Lunes a Domingo, Por Ciclo) ─────────────────
 const DEMO_HORARIO = [
-  { id: 1, dia: "LUNES", horaInicio: "07:00", horaFin: "08:30", curso: "ÁLGEBRA", docente: "Prof. Carlos Llano", aula: "Aula Virtual 1 (Zoom)", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://zoom.us" },
-  { id: 2, dia: "LUNES", horaInicio: "08:30", horaFin: "10:00", curso: "ARITMÉTICA", docente: "Mg. Juan Mamani", aula: "Aula Virtual 1 (Meet)", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://meet.google.com" },
-  { id: 3, dia: "LUNES", horaInicio: "10:15", horaFin: "11:45", curso: "FÍSICA", docente: "Ing. Roberto Quispe", aula: "Laboratorio Virtual", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://zoom.us" },
-  { id: 4, dia: "MARTES", horaInicio: "07:00", horaFin: "08:30", curso: "GEOMETRÍA", docente: "Prof. Carlos Llano", aula: "Aula Virtual 2", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://zoom.us" },
-  { id: 5, dia: "MARTES", horaInicio: "08:30", horaFin: "10:00", curso: "TRIGONOMETRÍA", docente: "Mg. Sonia Apaza", aula: "Aula Virtual 2", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://zoom.us" },
-  { id: 6, dia: "MARTES", horaInicio: "10:15", horaFin: "11:45", curso: "QUÍMICA", docente: "Dr. Walter Canaza", aula: "Laboratorio Virtual", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://zoom.us" },
-  { id: 7, dia: "MIÉRCOLES", horaInicio: "07:00", horaFin: "08:30", curso: "BIOLOGÍA", docente: "Dra. Elena Vargas", aula: "Aula Virtual Biomédicas", area: "BIOMÉDICAS", tipo: "EN VIVO", url: "https://zoom.us" },
-  { id: 8, dia: "MIÉRCOLES", horaInicio: "08:30", horaFin: "10:00", curso: "QUÍMICA", docente: "Dr. Walter Canaza", aula: "Aula Virtual Biomédicas", area: "BIOMÉDICAS", tipo: "EN VIVO", url: "https://zoom.us" },
-  { id: 9, dia: "JUEVES", horaInicio: "07:00", horaFin: "08:30", curso: "LENGUAJE", docente: "Lic. Maria Paredes", aula: "Aula Virtual Sociales", area: "SOCIALES", tipo: "EN VIVO", url: "https://zoom.us" },
-  { id: 10, dia: "JUEVES", horaInicio: "08:30", horaFin: "10:00", curso: "HISTORIA", docente: "Lic. Jose Pari", aula: "Aula Virtual Sociales", area: "SOCIALES", tipo: "EN VIVO", url: "https://zoom.us" },
-  { id: 11, dia: "VIERNES", horaInicio: "07:00", horaFin: "08:30", curso: "GEOGRAFÍA", docente: "Lic. Jose Pari", aula: "Aula Virtual Sociales", area: "SOCIALES", tipo: "EN VIVO", url: "https://zoom.us" },
-  { id: 12, dia: "SÁBADO", horaInicio: "08:00", horaFin: "12:00", curso: "SIMULACRO GENERAL", docente: "Equipo Académico UNA", aula: "Plataforma KCHIMBO+", area: "TODAS", tipo: "EVALUACIÓN", url: "#" }
+  { id: 1, dia: "LUNES", horaInicio: "07:00", horaFin: "08:30", curso: "ÁLGEBRA", docente: "Prof. Carlos Llano", ciclo: "Ciclo Matecero", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 2, dia: "LUNES", horaInicio: "08:30", horaFin: "10:00", curso: "ARITMÉTICA", docente: "Mg. Juan Mamani", ciclo: "Ciclo Matecero", tipo: "EN VIVO", url: "https://meet.google.com" },
+  { id: 3, dia: "MARTES", horaInicio: "07:00", horaFin: "08:30", curso: "GEOMETRÍA", docente: "Prof. Carlos Llano", ciclo: "Ciclo Formativo", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 4, dia: "MIÉRCOLES", horaInicio: "08:30", horaFin: "10:00", curso: "FÍSICA", docente: "Ing. Roberto Quispe", ciclo: "Ciclo Formativo", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 5, dia: "JUEVES", horaInicio: "07:00", horaFin: "08:30", curso: "QUÍMICA", docente: "Dr. Walter Canaza", ciclo: "Ciclo Intensivo", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 6, dia: "VIERNES", horaInicio: "07:00", horaFin: "08:30", curso: "BIOLOGÍA", docente: "Dra. Elena Vargas", ciclo: "Ciclo Intensivo", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 7, dia: "SÁBADO", horaInicio: "08:00", horaFin: "12:00", curso: "SIMULACRO GENERAL", docente: "Equipo Académico KCHIMBO+", ciclo: "TODOS LOS CICLOS", tipo: "EVALUACIÓN", url: "#" },
+  { id: 8, dia: "DOMINGO", horaInicio: "09:00", horaFin: "11:00", curso: "ASESORÍA Y REPASO", docente: "Plana Docente KCHIMBO+", ciclo: "TODOS LOS CICLOS", tipo: "ASESORÍA", url: "https://meet.google.com" }
 ];
 
 // ── BANCO DE PREGUNTAS DEMO ────────────────────────────────

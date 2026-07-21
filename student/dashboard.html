@@ -251,7 +251,7 @@
           </div>
         </div>
 
-        <!-- Filter Row: Days of Week + Area Filter -->
+        <!-- Filter Row: Days of Week + Ciclo Filter -->
         <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:14px;margin-bottom:20px;box-shadow:0 2px 6px rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <!-- Day Filter Buttons -->
           <div style="display:flex;gap:6px;flex-wrap:wrap;" id="horarioDaysFilter">
@@ -262,16 +262,17 @@
             <button class="tipo-btn" data-dia="JUEVES">Jueves</button>
             <button class="tipo-btn" data-dia="VIERNES">Viernes</button>
             <button class="tipo-btn" data-dia="SÁBADO">Sábado</button>
+            <button class="tipo-btn" data-dia="DOMINGO">Domingo</button>
           </div>
 
-          <!-- Area Selector -->
+          <!-- Ciclo Selector -->
           <div style="display:flex;align-items:center;gap:8px;">
-            <label style="font-size:0.75rem;font-weight:800;color:var(--text-muted);letter-spacing:0.5px;">ÁREA:</label>
-            <select class="form-select" id="horarioAreaSelect" style="height:36px;border-radius:10px;font-size:0.8rem;font-weight:700;padding:4px 10px;">
-              <option value="TODAS">Todas las Áreas</option>
-              <option value="INGENIERÍAS">INGENIERÍAS</option>
-              <option value="BIOMÉDICAS">BIOMÉDICAS</option>
-              <option value="SOCIALES">SOCIALES</option>
+            <label style="font-size:0.75rem;font-weight:800;color:var(--text-muted);letter-spacing:0.5px;">CICLO:</label>
+            <select class="form-select" id="horarioCicloSelect" style="height:36px;border-radius:10px;font-size:0.8rem;font-weight:700;padding:4px 10px;">
+              <option value="TODOS">Todos los Ciclos</option>
+              <option value="Ciclo Matecero">Ciclo Matecero</option>
+              <option value="Ciclo Formativo">Ciclo Formativo</option>
+              <option value="Ciclo Intensivo">Ciclo Intensivo</option>
             </select>
           </div>
         </div>
@@ -878,15 +879,16 @@
               <option value="JUEVES">Jueves</option>
               <option value="VIERNES">Viernes</option>
               <option value="SÁBADO">Sábado</option>
+              <option value="DOMINGO">Domingo</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Área Dirigida</label>
-            <select class="form-select" id="horarioArea" required>
-              <option value="TODAS">Todas las áreas</option>
-              <option value="INGENIERÍAS">INGENIERÍAS</option>
-              <option value="BIOMÉDICAS">BIOMÉDICAS</option>
-              <option value="SOCIALES">SOCIALES</option>
+            <label class="form-label">Ciclo Asignado</label>
+            <select class="form-select" id="horarioCiclo" required>
+              <option value="TODOS LOS CICLOS">Todos los Ciclos</option>
+              <option value="Ciclo Matecero">Ciclo Matecero</option>
+              <option value="Ciclo Formativo">Ciclo Formativo</option>
+              <option value="Ciclo Intensivo">Ciclo Intensivo</option>
             </select>
           </div>
         </div>
@@ -902,25 +904,15 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label">Asignatura / Curso</label>
-          <input type="text" class="form-input" id="horarioCurso" placeholder="Ej: ÁLGEBRA" required>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Docente / Profesor</label>
-          <input type="text" class="form-input" id="horarioDocente" placeholder="Ej: Prof. Carlos Llano" required>
-        </div>
-
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
           <div class="form-group">
-            <label class="form-label">Aula / Medio</label>
-            <input type="text" class="form-input" id="horarioAula" placeholder="Ej: Aula Virtual 1 (Zoom)" required>
+            <label class="form-label">Asignatura / Curso</label>
+            <input type="text" class="form-input" id="horarioCurso" placeholder="Ej: ÁLGEBRA" required>
           </div>
           <div class="form-group">
             <label class="form-label">Tipo de sesión</label>
             <select class="form-select" id="horarioTipo" required>
-              <option value="EN VIVO">Clase en Vivo</option>
+              <option value="EN VIVO">Clase en Vivo (Zoom/Meet)</option>
               <option value="ASESORÍA">Asesoría / Consultas</option>
               <option value="EVALUACIÓN">Simulacro / Evaluación</option>
             </select>
@@ -928,8 +920,13 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">URL / Enlace de Transmisión (Zoom/Meet/YouTube)</label>
-          <input type="url" class="form-input" id="horarioUrl" placeholder="https://zoom.us/j/..." required>
+          <label class="form-label">Docente / Profesor</label>
+          <input type="text" class="form-input" id="horarioDocente" placeholder="Ej: Prof. Carlos Llano" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Enlace de Transmisión Virtual (Meet/Zoom)</label>
+          <input type="url" class="form-input" id="horarioUrl" placeholder="https://zoom.us/j/... o https://meet.google.com/..." required>
         </div>
       </div>
       <div class="modal-footer">
@@ -1361,7 +1358,6 @@
       });
     });
 
-    // Card click opens media if not clicking more btn or menu
     content.querySelectorAll('.padlet-post-card').forEach(card => {
       card.addEventListener('click', (e) => {
         if (e.target.closest('.padlet-post-more-btn') || e.target.closest('.padlet-options-menu')) return;
@@ -1371,10 +1367,10 @@
   }
 
   // ─────────────────────────────────────────────────────────
-  // SECCIÓN: HORARIO DE CLASES Y ASESORÍAS
+  // SECCIÓN: HORARIO DE CLASES Y ASESORÍAS (100% VIRTUAL)
   // ─────────────────────────────────────────────────────────
   let diaHorarioFiltro = 'TODOS';
-  let areaHorarioFiltro = 'TODAS';
+  let cicloHorarioFiltro = 'TODOS';
 
   function getHorariosData() {
     const raw = localStorage.getItem('kchimbo_horarios');
@@ -1403,9 +1399,9 @@
     if (diaHorarioFiltro !== 'TODOS') {
       horarios = horarios.filter(h => h.dia === diaHorarioFiltro);
     }
-    // Filter by Area
-    if (areaHorarioFiltro !== 'TODAS') {
-      horarios = horarios.filter(h => h.area === areaHorarioFiltro || h.area === 'TODAS');
+    // Filter by Ciclo
+    if (cicloHorarioFiltro !== 'TODOS') {
+      horarios = horarios.filter(h => h.ciclo === cicloHorarioFiltro || h.ciclo === 'TODOS LOS CICLOS');
     }
 
     if (horarios.length === 0) {
@@ -1415,7 +1411,7 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 16 14"/></svg>
           </div>
           <div style="font-size:0.95rem;font-weight:800;color:var(--text-main);">No hay clases programadas para esta selección</div>
-          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Intenta seleccionando otro día o área en los filtros superiores.</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Intenta seleccionando otro día o ciclo en los filtros superiores.</div>
         </div>
       `;
       return;
@@ -1436,10 +1432,11 @@
       'FILOSOFÍA': '#7C3AED',
       'PSICOLOGÍA': '#EC4899',
       'ECONOMÍA': '#059669',
-      'SIMULACRO GENERAL': '#E8521A'
+      'SIMULACRO GENERAL': '#E8521A',
+      'ASESORÍA Y REPASO': '#10B981'
     };
 
-    const diasOrden = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO'];
+    const diasOrden = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'];
     let html = `<div style="display:flex;flex-direction:column;gap:16px;">`;
 
     horarios.sort((a, b) => {
@@ -1460,7 +1457,7 @@
             <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:10px 14px;text-align:center;flex-shrink:0;min-width:110px;">
               <div style="font-size:0.68rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;">${h.dia}</div>
               <div style="font-size:0.92rem;font-weight:900;color:var(--text-main);margin-top:2px;display:flex;align-items:center;justify-content:center;gap:4px;">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 16 14"/></svg>
                 ${h.horaInicio} - ${h.horaFin}
               </div>
             </div>
@@ -1469,13 +1466,12 @@
             <div style="flex:1;min-width:0;">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
                 <span style="background:${colorTheme}15;color:${colorTheme};border:1px solid ${colorTheme}30;padding:2px 8px;border-radius:8px;font-size:0.7rem;font-weight:800;">${h.curso}</span>
-                <span style="background:rgba(0,0,0,0.05);color:var(--text-secondary);padding:2px 8px;border-radius:8px;font-size:0.7rem;font-weight:700;">${h.area}</span>
-                ${esVivo ? `<span style="background:rgba(239,68,68,0.1);color:#EF4444;border:1px solid rgba(239,68,68,0.25);padding:2px 8px;border-radius:8px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#EF4444;"></span>EN VIVO</span>` : ''}
+                <span style="background:rgba(232,82,26,0.08);color:var(--primary);border:1px solid rgba(232,82,26,0.2);padding:2px 8px;border-radius:8px;font-size:0.7rem;font-weight:800;">${h.ciclo || 'TODOS LOS CICLOS'}</span>
+                ${esVivo ? `<span style="background:rgba(239,68,68,0.1);color:#EF4444;border:1px solid rgba(239,68,68,0.25);padding:2px 8px;border-radius:8px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#EF4444;"></span>EN VIVO VIRTUAL</span>` : ''}
               </div>
               <h3 style="font-size:1.05rem;font-weight:900;color:var(--text-main);margin:0 0 4px 0;">${h.curso}</h3>
               <div style="font-size:0.8rem;color:var(--text-secondary);display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
                 <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${h.docente}</span>
-                <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ${h.aula}</span>
               </div>
             </div>
           </div>
@@ -1485,7 +1481,7 @@
             ${h.url && h.url !== '#' ? `
               <a href="${h.url}" target="_blank" class="btn btn-primary btn-sm" style="border-radius:10px;font-weight:800;font-size:0.78rem;padding:7px 16px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                Ingresar a Clase
+                Ingresar a Clase (Zoom/Meet)
               </a>
             ` : ''}
 
@@ -1529,10 +1525,10 @@
     });
   }
 
-  const areaSelect = document.getElementById('horarioAreaSelect');
-  if (areaSelect) {
-    areaSelect.addEventListener('change', () => {
-      areaHorarioFiltro = areaSelect.value;
+  const cicloSelect = document.getElementById('horarioCicloSelect');
+  if (cicloSelect) {
+    cicloSelect.addEventListener('change', () => {
+      cicloHorarioFiltro = cicloSelect.value;
       renderHorario();
     });
   }
@@ -1555,12 +1551,11 @@
         document.getElementById('horarioModalTitle').textContent = 'Editar Programación de Clase';
         document.getElementById('horarioEditId').value = item.id;
         document.getElementById('horarioDia').value = item.dia;
-        document.getElementById('horarioArea').value = item.area;
+        document.getElementById('horarioCiclo').value = item.ciclo || 'TODOS LOS CICLOS';
         document.getElementById('horarioInicio').value = item.horaInicio;
         document.getElementById('horarioFin').value = item.horaFin;
         document.getElementById('horarioCurso').value = item.curso;
         document.getElementById('horarioDocente').value = item.docente;
-        document.getElementById('horarioAula').value = item.aula;
         document.getElementById('horarioTipo').value = item.tipo;
         document.getElementById('horarioUrl').value = item.url;
       }
@@ -1587,12 +1582,11 @@
       const newItem = {
         id: editId ? parseInt(editId) : Date.now(),
         dia: document.getElementById('horarioDia').value,
-        area: document.getElementById('horarioArea').value,
+        ciclo: document.getElementById('horarioCiclo').value,
         horaInicio: document.getElementById('horarioInicio').value.trim(),
         horaFin: document.getElementById('horarioFin').value.trim(),
         curso: document.getElementById('horarioCurso').value.trim().toUpperCase(),
         docente: document.getElementById('horarioDocente').value.trim(),
-        aula: document.getElementById('horarioAula').value.trim(),
         tipo: document.getElementById('horarioTipo').value,
         url: document.getElementById('horarioUrl').value.trim()
       };
@@ -1606,7 +1600,7 @@
 
       saveHorariosData(horarios);
       closeModal('horarioModal');
-      showToast(editId ? 'Horario actualizado con éxito' : 'Nueva clase programada con éxito', 'success');
+      showToast(editId ? 'Enlace / Horario actualizado con éxito en tiempo real' : 'Nueva clase virtual programada con éxito', 'success');
       renderHorario();
     });
   }

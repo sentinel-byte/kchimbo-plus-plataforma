@@ -188,7 +188,7 @@
           </div>
         </div>
 
-        <!-- Filter Row: Days of Week + Area Filter -->
+        <!-- Filter Row: Days of Week + Ciclo Filter -->
         <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:14px;margin-bottom:20px;box-shadow:0 2px 6px rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <!-- Day Filter Buttons -->
           <div style="display:flex;gap:6px;flex-wrap:wrap;" id="horarioDaysFilter">
@@ -199,16 +199,17 @@
             <button class="tipo-btn" data-dia="JUEVES">Jueves</button>
             <button class="tipo-btn" data-dia="VIERNES">Viernes</button>
             <button class="tipo-btn" data-dia="SÁBADO">Sábado</button>
+            <button class="tipo-btn" data-dia="DOMINGO">Domingo</button>
           </div>
 
-          <!-- Area Selector -->
+          <!-- Ciclo Selector -->
           <div style="display:flex;align-items:center;gap:8px;">
-            <label style="font-size:0.75rem;font-weight:800;color:var(--text-muted);letter-spacing:0.5px;">FILTRAR ÁREA:</label>
-            <select class="form-select" id="horarioAreaSelect" style="height:36px;border-radius:10px;font-size:0.8rem;font-weight:700;padding:4px 10px;">
-              <option value="TODAS">Todas las Áreas</option>
-              <option value="INGENIERÍAS">INGENIERÍAS</option>
-              <option value="BIOMÉDICAS">BIOMÉDICAS</option>
-              <option value="SOCIALES">SOCIALES</option>
+            <label style="font-size:0.75rem;font-weight:800;color:var(--text-muted);letter-spacing:0.5px;">FILTRAR CICLO:</label>
+            <select class="form-select" id="horarioCicloSelect" style="height:36px;border-radius:10px;font-size:0.8rem;font-weight:700;padding:4px 10px;">
+              <option value="TODOS">Todos los Ciclos</option>
+              <option value="Ciclo Matecero">Ciclo Matecero</option>
+              <option value="Ciclo Formativo">Ciclo Formativo</option>
+              <option value="Ciclo Intensivo">Ciclo Intensivo</option>
             </select>
           </div>
         </div>
@@ -666,35 +667,63 @@
 
 <!-- Modal Usuario / Matrícula -->
 <div class="modal-overlay" id="usuarioModal">
-  <div class="modal-box">
+  <div class="modal-box" style="max-width:600px;">
     <div class="modal-header">
       <div class="modal-title" id="usuarioModalTitle" style="display:flex;align-items:center;gap:8px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M9 21v-2a4 4 0 0 1 3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M8 3.13a4 4 0 0 0 0 7.75"/></svg>
-        Nueva Matrícula
+        Nueva Matrícula de Estudiante
       </div>
       <button class="modal-close" onclick="closeModal('usuarioModal')">✕</button>
     </div>
     <div class="modal-body">
       <input type="hidden" id="usuarioId">
       <div class="form-inline-row">
-        <div class="form-group"><label class="form-label">Usuario</label>
-          <input type="text" class="form-input" id="uForm_usuario" placeholder="usuario123">
+        <div class="form-group"><label class="form-label">Usuario / DNI</label>
+          <input type="text" class="form-input" id="uForm_usuario" placeholder="estudiante01">
         </div>
         <div class="form-group"><label class="form-label">Contraseña</label>
           <input type="password" class="form-input" id="uForm_password" placeholder="Contraseña">
         </div>
       </div>
-      <div class="form-group"><label class="form-label">Nombre completo</label>
-        <input type="text" class="form-input" id="uForm_nombre" placeholder="Juan Pérez">
+      <div class="form-group"><label class="form-label">Nombre Completo del Estudiante</label>
+        <input type="text" class="form-input" id="uForm_nombre" placeholder="Jose Carlos Llano Vilca">
       </div>
-      <div class="form-inline-row">
-        <div class="form-group"><label class="form-label">Área</label>
-          <select class="form-select" id="uForm_area">
-            <option value="INGENIERÍAS">INGENIERÍAS</option>
-            <option value="BIOMÉDICAS">BIOMÉDICAS</option>
-            <option value="SOCIALES">SOCIALES</option>
-          </select>
+
+      <!-- Selección de Ciclos Académicos (Multi-select) -->
+      <div class="form-group" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:12px;margin-bottom:14px;">
+        <label class="form-label" style="font-weight:800;color:var(--text-main);margin-bottom:6px;display:block;">1. Ciclo(s) Académico(s) Matriculado(s)</label>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin:0 0 8px 0;">El estudiante podrá ver el horario y resúmenes de los ciclos seleccionados:</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <label style="font-size:0.82rem;font-weight:700;color:var(--text-main);display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" class="uForm_ciclo_cb" value="Ciclo Matecero" checked style="accent-color:var(--primary);width:16px;height:16px;"> Ciclo Matecero
+          </label>
+          <label style="font-size:0.82rem;font-weight:700;color:var(--text-main);display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" class="uForm_ciclo_cb" value="Ciclo Formativo" checked style="accent-color:var(--primary);width:16px;height:16px;"> Ciclo Formativo
+          </label>
+          <label style="font-size:0.82rem;font-weight:700;color:var(--text-main);display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" class="uForm_ciclo_cb" value="Ciclo Intensivo" style="accent-color:var(--primary);width:16px;height:16px;"> Ciclo Intensivo
+          </label>
         </div>
+      </div>
+
+      <!-- Selección de Áreas Autorizadas (Multi-select) -->
+      <div class="form-group" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:12px;margin-bottom:14px;">
+        <label class="form-label" style="font-weight:800;color:var(--text-main);margin-bottom:6px;display:block;">2. Acceso a Banco de Preguntas por Área(s)</label>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin:0 0 8px 0;">Habilita acceso a 1, 2 o los 3 paquetes completos de preguntas:</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <label style="font-size:0.82rem;font-weight:700;color:var(--text-main);display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" class="uForm_area_cb" value="INGENIERÍAS" checked style="accent-color:var(--primary);width:16px;height:16px;"> INGENIERÍAS
+          </label>
+          <label style="font-size:0.82rem;font-weight:700;color:var(--text-main);display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" class="uForm_area_cb" value="BIOMÉDICAS" checked style="accent-color:var(--primary);width:16px;height:16px;"> BIOMÉDICAS
+          </label>
+          <label style="font-size:0.82rem;font-weight:700;color:var(--text-main);display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" class="uForm_area_cb" value="SOCIALES" checked style="accent-color:var(--primary);width:16px;height:16px;"> SOCIALES
+          </label>
+        </div>
+      </div>
+
+      <div class="form-inline-row">
         <div class="form-group"><label class="form-label">Inicio membresía</label>
           <input type="date" class="form-input" id="uForm_inicio">
         </div>
@@ -832,15 +861,16 @@
               <option value="JUEVES">Jueves</option>
               <option value="VIERNES">Viernes</option>
               <option value="SÁBADO">Sábado</option>
+              <option value="DOMINGO">Domingo</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Área Dirigida</label>
-            <select class="form-select" id="horarioArea" required>
-              <option value="TODAS">Todas las áreas</option>
-              <option value="INGENIERÍAS">INGENIERÍAS</option>
-              <option value="BIOMÉDICAS">BIOMÉDICAS</option>
-              <option value="SOCIALES">SOCIALES</option>
+            <label class="form-label">Ciclo Asignado</label>
+            <select class="form-select" id="horarioCiclo" required>
+              <option value="TODOS LOS CICLOS">Todos los Ciclos</option>
+              <option value="Ciclo Matecero">Ciclo Matecero</option>
+              <option value="Ciclo Formativo">Ciclo Formativo</option>
+              <option value="Ciclo Intensivo">Ciclo Intensivo</option>
             </select>
           </div>
         </div>
@@ -856,25 +886,15 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label">Asignatura / Curso</label>
-          <input type="text" class="form-input" id="horarioCurso" placeholder="Ej: ÁLGEBRA" required>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Docente / Profesor</label>
-          <input type="text" class="form-input" id="horarioDocente" placeholder="Ej: Prof. Carlos Llano" required>
-        </div>
-
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
           <div class="form-group">
-            <label class="form-label">Aula / Medio</label>
-            <input type="text" class="form-input" id="horarioAula" placeholder="Ej: Aula Virtual 1 (Zoom)" required>
+            <label class="form-label">Asignatura / Curso</label>
+            <input type="text" class="form-input" id="horarioCurso" placeholder="Ej: ÁLGEBRA" required>
           </div>
           <div class="form-group">
             <label class="form-label">Tipo de sesión</label>
             <select class="form-select" id="horarioTipo" required>
-              <option value="EN VIVO">Clase en Vivo</option>
+              <option value="EN VIVO">Clase en Vivo (Zoom/Meet)</option>
               <option value="ASESORÍA">Asesoría / Consultas</option>
               <option value="EVALUACIÓN">Simulacro / Evaluación</option>
             </select>
@@ -882,8 +902,13 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">URL / Enlace de Transmisión (Zoom/Meet/YouTube)</label>
-          <input type="url" class="form-input" id="horarioUrl" placeholder="https://zoom.us/j/..." required>
+          <label class="form-label">Docente / Profesor</label>
+          <input type="text" class="form-input" id="horarioDocente" placeholder="Ej: Prof. Carlos Llano" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Enlace de Transmisión Virtual (Meet/Zoom)</label>
+          <input type="url" class="form-input" id="horarioUrl" placeholder="https://zoom.us/j/... o https://meet.google.com/..." required>
         </div>
       </div>
       <div class="modal-footer">
@@ -1308,10 +1333,10 @@
   }
 
   // ─────────────────────────────────────────────────────────
-  // SECCIÓN: HORARIO DE CLASES Y ASESORÍAS (ADMIN)
+  // SECCIÓN: HORARIO DE CLASES Y ASESORÍAS (ADMIN - 100% VIRTUAL)
   // ─────────────────────────────────────────────────────────
   let diaHorarioAdminFiltro = 'TODOS';
-  let areaHorarioAdminFiltro = 'TODAS';
+  let cicloHorarioAdminFiltro = 'TODOS';
 
   function getHorariosData() {
     const raw = localStorage.getItem('kchimbo_horarios');
@@ -1336,9 +1361,9 @@
     if (diaHorarioAdminFiltro !== 'TODOS') {
       horarios = horarios.filter(h => h.dia === diaHorarioAdminFiltro);
     }
-    // Filter by Area
-    if (areaHorarioAdminFiltro !== 'TODAS') {
-      horarios = horarios.filter(h => h.area === areaHorarioAdminFiltro || h.area === 'TODAS');
+    // Filter by Ciclo
+    if (cicloHorarioAdminFiltro !== 'TODOS') {
+      horarios = horarios.filter(h => h.ciclo === cicloHorarioAdminFiltro || h.ciclo === 'TODOS LOS CICLOS');
     }
 
     if (horarios.length === 0) {
@@ -1369,10 +1394,11 @@
       'FILOSOFÍA': '#7C3AED',
       'PSICOLOGÍA': '#EC4899',
       'ECONOMÍA': '#059669',
-      'SIMULACRO GENERAL': '#E8521A'
+      'SIMULACRO GENERAL': '#E8521A',
+      'ASESORÍA Y REPASO': '#10B981'
     };
 
-    const diasOrden = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO'];
+    const diasOrden = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'];
     let html = `<div style="display:flex;flex-direction:column;gap:16px;">`;
 
     horarios.sort((a, b) => {
@@ -1402,13 +1428,12 @@
             <div style="flex:1;min-width:0;">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
                 <span style="background:${colorTheme}15;color:${colorTheme};border:1px solid ${colorTheme}30;padding:2px 8px;border-radius:8px;font-size:0.7rem;font-weight:800;">${h.curso}</span>
-                <span style="background:rgba(0,0,0,0.05);color:var(--text-secondary);padding:2px 8px;border-radius:8px;font-size:0.7rem;font-weight:700;">${h.area}</span>
-                ${esVivo ? `<span style="background:rgba(239,68,68,0.1);color:#EF4444;border:1px solid rgba(239,68,68,0.25);padding:2px 8px;border-radius:8px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#EF4444;"></span>EN VIVO</span>` : ''}
+                <span style="background:rgba(232,82,26,0.08);color:var(--primary);border:1px solid rgba(232,82,26,0.2);padding:2px 8px;border-radius:8px;font-size:0.7rem;font-weight:800;">${h.ciclo || 'TODOS LOS CICLOS'}</span>
+                ${esVivo ? `<span style="background:rgba(239,68,68,0.1);color:#EF4444;border:1px solid rgba(239,68,68,0.25);padding:2px 8px;border-radius:8px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#EF4444;"></span>EN VIVO VIRTUAL</span>` : ''}
               </div>
               <h3 style="font-size:1.05rem;font-weight:900;color:var(--text-main);margin:0 0 4px 0;">${h.curso}</h3>
               <div style="font-size:0.8rem;color:var(--text-secondary);display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
                 <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${h.docente}</span>
-                <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ${h.aula}</span>
               </div>
             </div>
           </div>
@@ -1418,13 +1443,13 @@
             ${h.url && h.url !== '#' ? `
               <a href="${h.url}" target="_blank" class="btn btn-primary btn-sm" style="border-radius:10px;font-weight:800;font-size:0.78rem;padding:7px 14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                Ver Enlace
+                Ver Enlace (Zoom/Meet)
               </a>
             ` : ''}
 
             <button class="btn btn-outline btn-sm btn-edit-horario-admin" data-id="${h.id}" style="border-radius:10px;padding:6px 12px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;gap:4px;">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              Editar
+              Editar Enlace / Datos
             </button>
             <button class="btn btn-outline btn-danger btn-sm btn-del-horario-admin" data-id="${h.id}" style="border-radius:10px;padding:6px 12px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;gap:4px;">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
@@ -1465,10 +1490,10 @@
       });
     }
 
-    const areaSelect = document.getElementById('horarioAreaSelect');
-    if (areaSelect) {
-      areaSelect.addEventListener('change', () => {
-        areaHorarioAdminFiltro = areaSelect.value;
+    const cicloSelect = document.getElementById('horarioCicloSelect');
+    if (cicloSelect) {
+      cicloSelect.addEventListener('change', () => {
+        cicloHorarioAdminFiltro = cicloSelect.value;
         renderHorarioAdmin();
       });
     }
@@ -1491,12 +1516,11 @@
         document.getElementById('horarioModalTitle').textContent = 'Editar Programación de Clase';
         document.getElementById('horarioEditId').value = item.id;
         document.getElementById('horarioDia').value = item.dia;
-        document.getElementById('horarioArea').value = item.area;
+        document.getElementById('horarioCiclo').value = item.ciclo || 'TODOS LOS CICLOS';
         document.getElementById('horarioInicio').value = item.horaInicio;
         document.getElementById('horarioFin').value = item.horaFin;
         document.getElementById('horarioCurso').value = item.curso;
         document.getElementById('horarioDocente').value = item.docente;
-        document.getElementById('horarioAula').value = item.aula;
         document.getElementById('horarioTipo').value = item.tipo;
         document.getElementById('horarioUrl').value = item.url;
       }
@@ -1518,12 +1542,11 @@
       const newItem = {
         id: editId ? parseInt(editId) : Date.now(),
         dia: document.getElementById('horarioDia').value,
-        area: document.getElementById('horarioArea').value,
+        ciclo: document.getElementById('horarioCiclo').value,
         horaInicio: document.getElementById('horarioInicio').value.trim(),
         horaFin: document.getElementById('horarioFin').value.trim(),
         curso: document.getElementById('horarioCurso').value.trim().toUpperCase(),
         docente: document.getElementById('horarioDocente').value.trim(),
-        aula: document.getElementById('horarioAula').value.trim(),
         tipo: document.getElementById('horarioTipo').value,
         url: document.getElementById('horarioUrl').value.trim()
       };
@@ -1537,7 +1560,7 @@
 
       saveHorariosData(horarios);
       closeModal('horarioModal');
-      showToast(editId ? 'Horario actualizado con éxito' : 'Nueva clase programada con éxito', 'success');
+      showToast(editId ? 'Enlace de transmisión actualizado con éxito en tiempo real' : 'Nueva clase virtual programada con éxito', 'success');
       renderHorarioAdmin();
     });
   }
@@ -2137,6 +2160,9 @@
   // ─────────────────────────────────────────────────────────
   // USUARIOS
   // ─────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────
+  // USUARIOS / MATRÍCULAS
+  // ─────────────────────────────────────────────────────────
   function renderUsuariosTable() {
     const search  = document.getElementById('searchUsuarios').value.toLowerCase();
     const filterA = document.getElementById('filterArea').value;
@@ -2144,7 +2170,8 @@
 
     let filtered = usuarios.filter(u => {
       const ms = !search || u.nombre.toLowerCase().includes(search) || u.usuario.toLowerCase().includes(search);
-      const ma = !filterA || u.area === filterA;
+      const userAreas = u.areas || [u.area || 'INGENIERÍAS'];
+      const ma = !filterA || userAreas.includes(filterA);
       return ms && ma;
     });
 
@@ -2159,20 +2186,19 @@
       ? `<tr><td colspan="6" class="empty-table-msg">No se encontraron estudiantes.</td></tr>`
       : filtered.map(u => {
           const activo = new Date(u.membresia_fin) >= ahora;
-          const areaColors = {
-            'INGENIERÍAS': { bg: 'rgba(41,128,185,0.1)', color: '#2980B9' },
-            'BIOMÉDICAS': { bg: 'rgba(16,185,129,0.1)', color: '#10B981' },
-            'SOCIALES': { bg: 'rgba(142,68,173,0.1)', color: '#8E44AD' }
-          };
-          const aStyle = areaColors[u.area] || { bg: 'rgba(232,82,26,0.1)', color: '#E8521A' };
+          const ciclosList = u.ciclos && u.ciclos.length ? u.ciclos.join(', ') : 'Ciclo Matecero, Ciclo Formativo';
+          const areasList = u.areas && u.areas.length ? u.areas.join(', ') : (u.area || 'INGENIERÍAS');
 
           return `
             <tr>
               <td><code>${u.usuario}</code></td>
-              <td><strong>${u.nombre}</strong></td>
               <td>
-                <span class="padlet-post-tag" style="background:${aStyle.bg};color:${aStyle.color};padding:2px 8px;font-size:0.72rem;font-weight:700;">
-                  ${u.area}
+                <strong style="color:var(--text-main);">${u.nombre}</strong>
+                <div style="font-size:0.72rem;color:var(--primary);font-weight:700;margin-top:2px;">📚 ${ciclosList}</div>
+              </td>
+              <td>
+                <span class="padlet-post-tag" style="background:rgba(232,82,26,0.1);color:var(--primary);padding:2px 8px;font-size:0.72rem;font-weight:700;">
+                  📌 ${areasList}
                 </span>
               </td>
               <td style="font-size:0.78rem;">${u.membresia_inicio || '—'} → ${u.membresia_fin || '—'}</td>
@@ -2205,10 +2231,13 @@
   document.getElementById('filterArea').addEventListener('change', renderUsuariosTable);
 
   document.getElementById('btnAddUsuario').addEventListener('click', () => {
-    document.getElementById('usuarioModalTitle').textContent = 'Nueva Matrícula';
+    document.getElementById('usuarioModalTitle').textContent = 'Nueva Matrícula de Estudiante';
     document.getElementById('usuarioId').value = '';
     ['usuario','password','nombre'].forEach(f => { document.getElementById(`uForm_${f}`).value = ''; });
-    document.getElementById('uForm_area').value = 'INGENIERÍAS';
+
+    document.querySelectorAll('.uForm_ciclo_cb').forEach(cb => cb.checked = (cb.value === 'Ciclo Matecero' || cb.value === 'Ciclo Formativo'));
+    document.querySelectorAll('.uForm_area_cb').forEach(cb => cb.checked = true);
+
     document.getElementById('uForm_inicio').value = new Date().toISOString().split('T')[0];
     document.getElementById('uForm_fin').value = '';
     openModal('usuarioModal');
@@ -2217,12 +2246,22 @@
   window.editUsuario = (user) => {
     const u = usuarios.find(x => x.usuario === user);
     if (!u) return;
-    document.getElementById('usuarioModalTitle').textContent = 'Editar Matrícula';
+    document.getElementById('usuarioModalTitle').textContent = 'Editar Matrícula de Estudiante';
     document.getElementById('usuarioId').value = user;
     document.getElementById('uForm_usuario').value = u.usuario;
     document.getElementById('uForm_password').value = '';
     document.getElementById('uForm_nombre').value = u.nombre;
-    document.getElementById('uForm_area').value = u.area;
+
+    const userCiclos = u.ciclos || ['Ciclo Matecero', 'Ciclo Formativo'];
+    document.querySelectorAll('.uForm_ciclo_cb').forEach(cb => {
+      cb.checked = userCiclos.includes(cb.value);
+    });
+
+    const userAreas = u.areas || [u.area || 'INGENIERÍAS'];
+    document.querySelectorAll('.uForm_area_cb').forEach(cb => {
+      cb.checked = userAreas.includes(cb.value);
+    });
+
     document.getElementById('uForm_inicio').value = u.membresia_inicio || '';
     document.getElementById('uForm_fin').value = u.membresia_fin || '';
     openModal('usuarioModal');
@@ -2233,24 +2272,49 @@
     const user   = document.getElementById('uForm_usuario').value.trim();
     const pass   = document.getElementById('uForm_password').value;
     const nombre = document.getElementById('uForm_nombre').value.trim();
-    const area   = document.getElementById('uForm_area').value;
     const inicio = document.getElementById('uForm_inicio').value;
     const fin    = document.getElementById('uForm_fin').value;
 
+    const selectedCiclos = Array.from(document.querySelectorAll('.uForm_ciclo_cb:checked')).map(cb => cb.value);
+    const selectedAreas = Array.from(document.querySelectorAll('.uForm_area_cb:checked')).map(cb => cb.value);
+
     if (!user || !nombre || !fin) { showToast('Completa los campos requeridos', 'warning'); return; }
+    if (selectedCiclos.length === 0) { showToast('Selecciona al menos 1 ciclo académico', 'warning'); return; }
+    if (selectedAreas.length === 0) { showToast('Selecciona al menos 1 área de acceso', 'warning'); return; }
+
+    const areaPrincipal = selectedAreas[0] || 'INGENIERÍAS';
 
     if (id) {
       const idx = usuarios.findIndex(u => u.usuario === id);
       if (idx >= 0) {
-        usuarios[idx] = { ...usuarios[idx], usuario: user, nombre, area, membresia_inicio: inicio, membresia_fin: fin };
+        usuarios[idx] = {
+          ...usuarios[idx],
+          usuario: user,
+          nombre,
+          area: areaPrincipal,
+          ciclos: selectedCiclos,
+          areas: selectedAreas,
+          membresia_inicio: inicio,
+          membresia_fin: fin
+        };
         if (pass) usuarios[idx].password = pass;
       }
-      showToast('Estudiante actualizado');
+      showToast('Matrícula de estudiante actualizada');
     } else {
       if (!pass) { showToast('La contraseña es requerida para nuevos estudiantes', 'warning'); return; }
       if (usuarios.find(u => u.usuario === user)) { showToast('Ese usuario ya existe', 'error'); return; }
-      usuarios.push({ usuario: user, password: pass, nombre, area, rol: 'estudiante', membresia_inicio: inicio, membresia_fin: fin });
-      showToast('Estudiante registrado');
+      usuarios.push({
+        usuario: user,
+        password: pass,
+        nombre,
+        area: areaPrincipal,
+        ciclos: selectedCiclos,
+        areas: selectedAreas,
+        rol: 'estudiante',
+        membresia_inicio: inicio,
+        membresia_fin: fin
+      });
+      showToast('Estudiante matriculado con éxito');
     }
     closeModal('usuarioModal');
     renderUsuariosTable();

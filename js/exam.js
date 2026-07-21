@@ -27,30 +27,17 @@ class ExamenSimulacro {
     let seleccionadas = [];
 
     for (const [curso, cantidad] of Object.entries(distribucion)) {
-      const disponibles = this.todasPreguntas.filter(
-        p => p.curso === curso && (
-          p.area === this.area ||
-          p.area === 'AMBAS' ||
-          (this.area === 'INGENIERÍAS' && p.area === 'CIE') ||
-          (this.area === 'SOCIALES' && p.area === 'LETRAS')
-        )
-      );
+      const disponibles = this.todasPreguntas.filter(p => p.curso === curso);
       const shuffled = this.shuffle([...disponibles]);
       // Si hay menos preguntas que las requeridas, usar todas las disponibles
       const tomadas = shuffled.slice(0, Math.min(cantidad, shuffled.length));
       seleccionadas.push(...tomadas);
     }
 
-    // Completar hasta 60 si falta (con preguntas extra del área)
+    // Completar hasta 60 si falta (con preguntas extra de cualquier curso)
     if (seleccionadas.length < 60) {
       const ids = new Set(seleccionadas.map(p => p.id));
-      const extras = this.todasPreguntas
-        .filter(p => !ids.has(p.id) && (
-          p.area === this.area ||
-          p.area === 'AMBAS' ||
-          (this.area === 'INGENIERÍAS' && p.area === 'CIE') ||
-          (this.area === 'SOCIALES' && p.area === 'LETRAS')
-        ));
+      const extras = this.todasPreguntas.filter(p => !ids.has(p.id));
       const shuffledExtras = this.shuffle(extras);
       seleccionadas.push(...shuffledExtras.slice(0, 60 - seleccionadas.length));
     }
