@@ -334,19 +334,52 @@
 
       <!-- ════ MEMBRESÍAS Y PAGOS ════ -->
       <div class="section-view" id="section-pagos">
-        <div class="section-header">
-          <div class="section-title"><div class="icon-wrap">💳</div> Membresías y Pagos</div>
+        <div class="board-header">
+          <div class="board-header-info">
+            <h2>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              Membresías y Pagos <span style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-left:6px;">(Admin)</span>
+            </h2>
+          </div>
+        </div>
+
+        <div class="admin-stats-row">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:linear-gradient(135deg,#10B981,#059669);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="stat-info"><div class="stat-value" id="statPagosActivas">0</div><div class="stat-label">Membresías activas</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-info"><div class="stat-value" id="statPagosPorVencer">0</div><div class="stat-label">Por vencer (7 días)</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:linear-gradient(135deg,#EF4444,#DC2626);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            </div>
+            <div class="stat-info"><div class="stat-value" id="statPagosVencidas">0</div><div class="stat-label">Membresías vencidas</div></div>
+          </div>
         </div>
 
         <div class="admin-actions-bar">
           <div class="search-input-wrap">
             <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-            <input type="text" class="search-input" id="searchPagos" placeholder="Buscar estudiante...">
+            <input type="text" class="search-input" id="searchPagos" placeholder="Buscar por estudiante o usuario...">
           </div>
           <select class="form-select" style="width:auto;" id="filterPagoEstado">
             <option value="">Todos los estados</option>
-            <option value="activo">Activo</option>
-            <option value="vencido">Vencido</option>
+            <option value="activo">Solo activas</option>
+            <option value="porVencer">Por vencer (7 días)</option>
+            <option value="vencido">Solo vencidas</option>
+          </select>
+          <select class="form-select" style="width:auto;" id="filterPagoArea">
+            <option value="">Todas las áreas</option>
+            <option value="INGENIERÍAS">INGENIERÍAS</option>
+            <option value="BIOMÉDICAS">BIOMÉDICAS</option>
+            <option value="SOCIALES">SOCIALES</option>
           </select>
         </div>
 
@@ -1799,32 +1832,108 @@
   // PAGOS (Admin)
   // ─────────────────────────────────────────────────────────
   function renderPagosTable() {
-    const search  = document.getElementById('searchPagos').value.toLowerCase();
-    const filterE = document.getElementById('filterPagoEstado').value;
+    const search  = (document.getElementById('searchPagos')?.value || '').toLowerCase().trim();
+    const filterE = document.getElementById('filterPagoEstado')?.value || '';
+    const filterA = document.getElementById('filterPagoArea')?.value || '';
     const ahora   = new Date();
+
+    // Calculate global stats for payments
+    let countActivas = 0;
+    let countPorVencer = 0;
+    let countVencidas = 0;
+
+    usuarios.forEach(u => {
+      const fin = new Date(u.membresia_fin);
+      const activo = fin >= ahora;
+      const diasLeft = Math.ceil((fin - ahora) / (1000*60*60*24));
+
+      if (activo) {
+        if (diasLeft <= 7) {
+          countPorVencer++;
+        } else {
+          countActivas++;
+        }
+      } else {
+        countVencidas++;
+      }
+    });
+
+    if (document.getElementById('statPagosActivas')) document.getElementById('statPagosActivas').textContent = countActivas;
+    if (document.getElementById('statPagosPorVencer')) document.getElementById('statPagosPorVencer').textContent = countPorVencer;
+    if (document.getElementById('statPagosVencidas')) document.getElementById('statPagosVencidas').textContent = countVencidas;
 
     let filtered = usuarios.filter(u => {
       const ms = !search || u.nombre.toLowerCase().includes(search) || u.usuario.toLowerCase().includes(search);
-      const activo = new Date(u.membresia_fin) >= ahora;
-      const me = !filterE || (filterE === 'activo' ? activo : !activo);
-      return ms && me;
+      const ma = !filterA || u.area === filterA;
+
+      const fin = new Date(u.membresia_fin);
+      const activo = fin >= ahora;
+      const diasLeft = Math.ceil((fin - ahora) / (1000*60*60*24));
+
+      let me = true;
+      if (filterE === 'activo') me = activo && diasLeft > 7;
+      else if (filterE === 'porVencer') me = activo && diasLeft <= 7;
+      else if (filterE === 'vencido') me = !activo;
+
+      return ms && ma && me;
     });
 
+    const areaColors = {
+      'INGENIERÍAS': { bg: 'rgba(41,128,185,0.1)', color: '#2980B9' },
+      'BIOMÉDICAS': { bg: 'rgba(16,185,129,0.1)', color: '#10B981' },
+      'SOCIALES': { bg: 'rgba(142,68,173,0.1)', color: '#8E44AD' },
+      'CIE': { bg: 'rgba(41,128,185,0.1)', color: '#2980B9' },
+      'LETRAS': { bg: 'rgba(142,68,173,0.1)', color: '#8E44AD' }
+    };
+
     const tbody = document.getElementById('pagosTableBody');
+    if (!tbody) return;
+
     tbody.innerHTML = filtered.length === 0
-      ? `<tr><td colspan="6" class="empty-table-msg">No hay membresías.</td></tr>`
+      ? `<tr><td colspan="6" class="empty-table-msg">No se encontraron membresías.</td></tr>`
       : filtered.map(u => {
-          const activo = new Date(u.membresia_fin) >= ahora;
-          const diasLeft = Math.max(0, Math.ceil((new Date(u.membresia_fin) - ahora) / (1000*60*60*24)));
+          const fin = new Date(u.membresia_fin);
+          const activo = fin >= ahora;
+          const diasLeft = Math.max(0, Math.ceil((fin - ahora) / (1000*60*60*24)));
+          const aStyle = areaColors[u.area] || { bg: 'rgba(232,82,26,0.1)', color: '#E8521A' };
+
+          let statusHTML = '';
+          if (activo && diasLeft > 7) {
+            statusHTML = `
+              <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(16,185,129,0.1);color:#10B981;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:700;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Activa (${diasLeft}d)
+              </span>`;
+          } else if (activo && diasLeft <= 7) {
+            statusHTML = `
+              <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(245,158,11,0.1);color:#D97706;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:700;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Por Vencer (${diasLeft}d)
+              </span>`;
+          } else {
+            statusHTML = `
+              <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(239,68,68,0.1);color:#EF4444;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:700;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                Vencida
+              </span>`;
+          }
+
           return `
             <tr>
-              <td><strong>${u.nombre}</strong><br><code style="font-size:0.72rem;">${u.usuario}</code></td>
-              <td><span class="badge badge-primary">${u.area}</span></td>
-              <td>${u.membresia_inicio || '—'}</td>
-              <td>${u.membresia_fin || '—'}</td>
-              <td>${activo ? `<span class="users-status-active">✅ Activa (${diasLeft}d)</span>` : `<span class="users-status-expired">⛔ Vencida</span>`}</td>
+              <td>
+                <strong>${u.nombre}</strong><br>
+                <code style="font-size:0.72rem;color:var(--text-muted);">${u.usuario}</code>
+              </td>
+              <td>
+                <span class="padlet-post-tag" style="background:${aStyle.bg};color:${aStyle.color};padding:2px 8px;font-size:0.72rem;font-weight:700;">
+                  ${u.area}
+                </span>
+              </td>
+              <td style="font-size:0.78rem;color:var(--text-secondary);">${u.membresia_inicio || '—'}</td>
+              <td style="font-size:0.78rem;font-weight:600;">${u.membresia_fin || '—'}</td>
+              <td>${statusHTML}</td>
               <td class="td-actions">
-                <button class="action-icon-btn action-edit" onclick="renovarMembresia('${u.usuario}')" title="Renovar">
+                <button class="action-icon-btn action-edit" onclick="renovarMembresia('${u.usuario}')" title="Modificar fecha de vencimiento" style="padding:4px 8px;font-size:0.75rem;">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
                 </button>
               </td>
@@ -1832,8 +1941,9 @@
         }).join('');
   }
 
-  document.getElementById('searchPagos').addEventListener('input', renderPagosTable);
-  document.getElementById('filterPagoEstado').addEventListener('change', renderPagosTable);
+  document.getElementById('searchPagos')?.addEventListener('input', renderPagosTable);
+  document.getElementById('filterPagoEstado')?.addEventListener('change', renderPagosTable);
+  document.getElementById('filterPagoArea')?.addEventListener('change', renderPagosTable);
 
   window.renovarMembresia = (user) => {
     const u = usuarios.find(x => x.usuario === user);
