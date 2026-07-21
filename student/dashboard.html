@@ -1346,9 +1346,9 @@
     document.getElementById('questionCard').innerHTML = `
       <div class="question-number-badge">
         <span>Pregunta ${idx+1} de ${examenObj.totalPreguntas}</span>
-        <span>•</span>
+        <span style="opacity:0.4;font-weight:300;">|</span>
         <span>${p.curso}</span>
-        ${p.año ? `<span>• Examen UNA ${p.año}</span>` : ''}
+        ${p.año ? `<span style="opacity:0.4;font-weight:300;">|</span><span>Examen UNA ${p.año}</span>` : ''}
       </div>
       <div class="question-text">${p.pregunta}</div>
       <div class="question-options">
