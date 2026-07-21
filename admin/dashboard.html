@@ -875,14 +875,22 @@
       `;
     });
 
-    // Card para añadir un nuevo curso al final del mural Padlet
+    // Card estilo columna Padlet para añadir un nuevo curso al final del mural
     boardHTML += `
-      <div class="padlet-add-course-card" id="btnAddCourseCard" title="Añadir un nuevo curso al mural">
-        <div class="padlet-add-course-inner">
-          <div class="add-course-icon-circle">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <div class="padlet-column padlet-add-column-card" id="btnAddCourseCard" title="Añadir un nuevo curso al mural">
+        <div class="padlet-column-header" style="background:#F8FAFC;border-bottom:1px solid #E2E8F0;">
+          <div class="padlet-column-title" style="color:var(--primary);font-weight:800;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Añadir Curso
           </div>
-          <div class="add-course-text">Añadir Curso</div>
+        </div>
+        <div class="padlet-column-body" style="justify-content:center;align-items:center;padding:30px 20px;">
+          <div class="padlet-add-course-btn-inner">
+            <div class="add-course-plus-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <span>Nuevo Curso</span>
+          </div>
         </div>
       </div>
     `;
