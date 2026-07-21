@@ -541,13 +541,42 @@
     <!-- Footer -->
     <footer class="main-footer">
       <div>Copyright © 2026 <span class="footer-brand">KCHIMBO+</span> | Plataforma Virtual UNA PUNO</div>
-      <div class="footer-links">
-        <a href="#">Facebook</a>
-        <a href="#">TikTok</a>
+      <div class="footer-links" style="display:flex;align-items:center;gap:12px;">
+        <a href="https://facebook.com" target="_blank">Facebook</a>
+        <a href="https://tiktok.com" target="_blank">TikTok</a>
         <a href="mailto:llanovilca97@gmail.com">Contactenos</a>
+        <button class="footer-about-btn" onclick="openModal('aboutModal')" title="Ver información del desarrollador" style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:all 0.2s ease;">
+          ℹ️ Créditos
+        </button>
       </div>
     </footer>
   </main>
+
+<!-- Modal Acerca de / Desarrollador -->
+<div class="modal-overlay" id="aboutModal">
+  <div class="modal-box" style="max-width:380px;text-align:center;padding:24px;">
+    <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--primary),#C0392B);display:inline-flex;align-items:center;justify-content:center;color:white;font-size:1.5rem;font-weight:900;box-shadow:0 4px 15px rgba(232,82,26,0.3);margin:0 auto 12px auto;">
+      K+
+    </div>
+    <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:4px;">KCHIMBO+ Plataforma</h3>
+    <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:16px;">Plataforma Educativa Preuniversitaria UNA PUNO</p>
+
+    <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:14px;margin-bottom:16px;text-align:left;">
+      <div style="font-size:0.68rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Desarrollado por</div>
+      <div style="font-size:0.95rem;font-weight:800;color:var(--text-main);">Carlos Llano</div>
+      <div style="font-size:0.8rem;color:var(--primary);font-weight:600;margin-top:6px;display:flex;align-items:center;gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:llanovilca97@gmail.com" style="color:inherit;text-decoration:none;">llanovilca97@gmail.com</a>
+      </div>
+    </div>
+
+    <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:16px;">
+      Copyright © 2026 <strong>KCHIMBO+</strong>. Todos los derechos reservados.
+    </div>
+
+    <button class="btn btn-primary" onclick="closeModal('aboutModal')" style="width:100%;">Cerrar</button>
+  </div>
+</div>
 
 <!-- Modal Publicar/Editar Publicación en Padlet -->
 <div class="modal-overlay" id="padletPostModal">
