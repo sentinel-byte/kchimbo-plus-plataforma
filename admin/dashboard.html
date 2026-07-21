@@ -1382,14 +1382,14 @@
   };
 
   // ─────────────────────────────────────────────────────────
-  // PREGUNTAS
+  // PREGUNTAS (EXPLORADOR MODERNO ADMIN)
   // ─────────────────────────────────────────────────────────
   function openPreguntaModalForCurso(curso = null, tema = null) {
     document.getElementById('preguntaModalTitle').textContent = tema ? `Nueva Pregunta (${tema})` : 'Nueva Pregunta';
     document.getElementById('preguntaId').value = '';
     ['curso','tema','area','año','pregunta','a','b','c','d','e','respuesta'].forEach(f => {
       const el = document.getElementById(`pForm_${f}`);
-      if (el) el.value = f==='año' ? new Date().getFullYear() : f==='area' ? 'CIE' : f==='respuesta' ? 'A' : '';
+      if (el) el.value = f==='año' ? new Date().getFullYear() : f==='area' ? 'INGENIERÍAS' : f==='respuesta' ? 'A' : '';
     });
     populateCursosSelect(document.getElementById('pForm_curso'));
     if (curso) document.getElementById('pForm_curso').value = curso;
@@ -1397,29 +1397,7 @@
     openModal('preguntaModal');
   }
 
-  function renderPreguntaDetailHTML(p, idx, total) {
-    if (!p) return '<div style="font-size:0.75rem;color:var(--text-muted);">Sin pregunta seleccionada</div>';
-    const areaColors = {
-      'INGENIERÍAS': { bg: 'rgba(41,128,185,0.1)', color: '#2980B9' },
-      'BIOMÉDICAS': { bg: 'rgba(16,185,129,0.1)', color: '#10B981' },
-      'SOCIALES': { bg: 'rgba(142,68,173,0.1)', color: '#8E44AD' }
-    };
-    const aStyle = areaColors[p.area] || { bg: 'rgba(232,82,26,0.1)', color: '#E8521A' };
-
-    return `
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="font-size:0.68rem;font-weight:800;color:var(--primary);">Pregunta ${idx}/${total}</span>
-          <span class="padlet-post-tag" style="background:${aStyle.bg};color:${aStyle.color};padding:1px 5px;font-size:0.65rem;">
-            ${p.area}
-          </span>
-          <span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);">${p.año || 2024}</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:4px;">
-          <button class="action-icon-btn action-edit opt-preg-edit" data-id="${p.id}" title="Editar" style="padding:3px 6px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          </button>
-          <button class="action-icon-btn action-  let selectedPregCursoTab = 'TODOS';
+  let selectedPregCursoTab = 'TODOS';
 
   function renderPreguntasBoard() {
     const container = document.getElementById('adminPreguntasBoard');
