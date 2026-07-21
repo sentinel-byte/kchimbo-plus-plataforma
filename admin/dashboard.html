@@ -1418,7 +1418,6 @@
     const searchEl = document.getElementById('searchPreguntasPadlet');
     const searchTerm = (searchEl ? searchEl.value : '').toLowerCase().trim();
     const areaFilter = (document.getElementById('filterPregAreaPadlet')?.value || '').trim();
-    const temaFilter = (temaSelect ? temaSelect.value : '').trim();
 
     // Render course tabs
     const cursosDisponibles = ['TODOS', ...CURSOS_POR_AREA.ADMIN];
@@ -1432,6 +1431,7 @@
       tabsContainer.querySelectorAll('.tipo-btn').forEach(btn => {
         btn.onclick = () => {
           selectedPregCursoTab = btn.dataset.curso;
+          if (temaSelect) temaSelect.value = '';
           renderPreguntasBoard();
         };
       });
