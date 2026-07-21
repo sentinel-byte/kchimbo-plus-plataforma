@@ -858,7 +858,7 @@ h4 { font-size: 1.1rem; }
   border: 1px solid #E5E7EB;
   box-shadow: 0 2px 4px rgba(0,0,0,0.03);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
-  overflow: hidden;
+  overflow: visible !important;
   cursor: pointer;
   position: relative;
   flex-shrink: 0;
@@ -868,9 +868,14 @@ h4 { font-size: 1.1rem; }
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   border-color: var(--border-strong);
 }
+.padlet-post-card.has-open-menu {
+  z-index: 9999 !important;
+}
 .padlet-post-top {
   height: 5px;
   width: 100%;
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
 }
 .padlet-post-inner {
   padding: 14px 16px;
@@ -953,20 +958,20 @@ h4 { font-size: 1.1rem; }
 /* Padlet Context Dropdown Menu */
 .padlet-options-menu {
   position: absolute;
-  top: 36px;
-  right: 12px;
+  top: 32px;
+  right: 6px;
   background: white;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #E2E8F0;
   border-radius: var(--radius-lg);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.2), 0 2px 6px rgba(0, 0, 0, 0.05);
   width: 220px;
-  z-index: 100;
+  z-index: 99999 !important;
   padding: 6px;
   display: none;
   animation: fadeInFast 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .padlet-options-menu.open {
-  display: block;
+  display: block !important;
 }
 @keyframes fadeInFast {
   from { opacity: 0; transform: translateY(-6px) scale(0.96); }

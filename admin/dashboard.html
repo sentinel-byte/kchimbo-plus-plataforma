@@ -951,10 +951,25 @@
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const id = btn.dataset.id;
+        const card = btn.closest('.padlet-post-card');
         const menu = document.getElementById(`padlet-menu-admin-${id}`);
-        const isCurrentOpen = menu.classList.contains('open');
+        const isCurrentOpen = menu?.classList.contains('open');
+
         document.querySelectorAll('.padlet-options-menu').forEach(m => m.classList.remove('open'));
-        if (!isCurrentOpen) menu.classList.add('open');
+        document.querySelectorAll('.padlet-post-card').forEach(c => c.classList.remove('has-open-menu'));
+
+        if (menu && !isCurrentOpen) {
+          const rect = btn.getBoundingClientRect();
+          if (rect.bottom + 180 > window.innerHeight) {
+            menu.style.top = 'auto';
+            menu.style.bottom = '32px';
+          } else {
+            menu.style.top = '32px';
+            menu.style.bottom = 'auto';
+          }
+          menu.classList.add('open');
+          if (card) card.classList.add('has-open-menu');
+        }
       });
     });
 
@@ -1232,10 +1247,25 @@
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const id = btn.dataset.id;
+        const card = btn.closest('.padlet-post-card');
         const menu = document.getElementById(`padlet-menu-resumen-${id}`);
         const isCurrentOpen = menu?.classList.contains('open');
+
         document.querySelectorAll('.padlet-options-menu').forEach(m => m.classList.remove('open'));
-        if (menu && !isCurrentOpen) menu.classList.add('open');
+        document.querySelectorAll('.padlet-post-card').forEach(c => c.classList.remove('has-open-menu'));
+
+        if (menu && !isCurrentOpen) {
+          const rect = btn.getBoundingClientRect();
+          if (rect.bottom + 180 > window.innerHeight) {
+            menu.style.top = 'auto';
+            menu.style.bottom = '32px';
+          } else {
+            menu.style.top = '32px';
+            menu.style.bottom = 'auto';
+          }
+          menu.classList.add('open');
+          if (card) card.classList.add('has-open-menu');
+        }
       });
     });
 
