@@ -208,8 +208,9 @@
             </div>
             <select class="form-select" style="width:auto;padding:4px 10px;font-size:0.78rem;" id="filterPregAreaPadlet">
               <option value="">Todas las áreas</option>
-              <option value="CIE">Área CIE</option>
-              <option value="LETRAS">Área LETRAS</option>
+              <option value="INGENIERÍAS">INGENIERÍAS</option>
+              <option value="BIOMÉDICAS">BIOMÉDICAS</option>
+              <option value="SOCIALES">SOCIALES</option>
             </select>
           </div>
         </div>
@@ -420,9 +421,9 @@
         </div>
         <div class="form-group"><label class="form-label">Área</label>
           <select class="form-select" id="pForm_area">
-            <option value="CIE">CIE</option>
-            <option value="LETRAS">LETRAS</option>
-            <option value="AMBAS">AMBAS</option>
+            <option value="INGENIERÍAS">INGENIERÍAS</option>
+            <option value="BIOMÉDICAS">BIOMÉDICAS</option>
+            <option value="SOCIALES">SOCIALES</option>
           </select>
         </div>
         <div class="form-group"><label class="form-label">Año</label>
@@ -476,7 +477,9 @@
       <div class="form-inline-row">
         <div class="form-group"><label class="form-label">Área</label>
           <select class="form-select" id="uForm_area">
-            <option value="CIE">CIE</option><option value="LETRAS">LETRAS</option>
+            <option value="INGENIERÍAS">INGENIERÍAS</option>
+            <option value="BIOMÉDICAS">BIOMÉDICAS</option>
+            <option value="SOCIALES">SOCIALES</option>
           </select>
         </div>
         <div class="form-group"><label class="form-label">Inicio membresía</label>
@@ -1260,11 +1263,18 @@
 
   function renderPreguntaDetailHTML(p, idx, total) {
     if (!p) return '<div style="font-size:0.75rem;color:var(--text-muted);">Sin pregunta seleccionada</div>';
+    const areaColors = {
+      'INGENIERÍAS': { bg: 'rgba(41,128,185,0.1)', color: '#2980B9' },
+      'BIOMÉDICAS': { bg: 'rgba(16,185,129,0.1)', color: '#10B981' },
+      'SOCIALES': { bg: 'rgba(142,68,173,0.1)', color: '#8E44AD' }
+    };
+    const aStyle = areaColors[p.area] || { bg: 'rgba(232,82,26,0.1)', color: '#E8521A' };
+
     return `
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:0.68rem;font-weight:800;color:var(--primary);">Pregunta ${idx}/${total}</span>
-          <span class="padlet-post-tag" style="background:${p.area === 'CIE' ? 'rgba(41,128,185,0.1)' : 'rgba(142,68,173,0.1)'};color:${p.area === 'CIE' ? '#2980B9' : '#8E44AD'};padding:1px 5px;font-size:0.65rem;">
+          <span class="padlet-post-tag" style="background:${aStyle.bg};color:${aStyle.color};padding:1px 5px;font-size:0.65rem;">
             ${p.area}
           </span>
           <span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);">${p.año || 2024}</span>
