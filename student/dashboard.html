@@ -114,13 +114,15 @@
       </div>
 
       <!-- User card -->
-      <div class="sidebar-user" style="background:linear-gradient(135deg,rgba(232,82,26,0.06),rgba(192,57,43,0.03));border:1px solid rgba(232,82,26,0.16);border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:12px;margin-top:12px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
-        <div class="sidebar-avatar" style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--primary),#C0392B);color:white;font-weight:900;font-size:1.05rem;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(232,82,26,0.3);flex-shrink:0;" id="sidebarAvatarInitials">?</div>
+      <div class="sidebar-user" style="background:white;border:1px solid #E2E8F0;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px;margin-top:14px;box-shadow:0 2px 6px rgba(0,0,0,0.02);">
+        <div style="position:relative;flex-shrink:0;">
+          <div class="sidebar-avatar" style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#C0392B);color:white;font-weight:800;font-size:0.95rem;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(232,82,26,0.25);" id="sidebarAvatarInitials">?</div>
+          <span style="position:absolute;bottom:-1px;right:-1px;width:9px;height:9px;border-radius:50%;background:#10B981;border:2px solid white;box-shadow:0 0 4px rgba(16,185,129,0.5);" title="Estudiante en Línea"></span>
+        </div>
         <div class="sidebar-user-info" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
-          <div class="sidebar-user-name" style="font-size:0.9rem;font-weight:800;color:var(--text-main);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sidebarUserName">—</div>
-          <div class="sidebar-user-role" style="font-size:0.72rem;font-weight:600;color:var(--primary);display:inline-flex;align-items:center;gap:5px;">
-            <span style="width:7px;height:7px;border-radius:50%;background:#10B981;display:inline-block;box-shadow:0 0 6px rgba(16,185,129,0.5);"></span>
-            Estudiante <span id="sidebarUserArea" style="color:var(--text-muted);font-weight:600;">(—)</span>
+          <div class="sidebar-user-name" style="font-size:0.85rem;font-weight:800;color:var(--text-main);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sidebarUserName">—</div>
+          <div style="display:flex;align-items:center;">
+            <span style="background:rgba(232,82,26,0.08);color:var(--primary);border:1px solid rgba(232,82,26,0.2);padding:2px 8px;border-radius:10px;font-size:0.68rem;font-weight:800;letter-spacing:0.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sidebarUserArea">INGENIERÍAS</span>
           </div>
         </div>
       </div>
@@ -874,8 +876,16 @@
 
   const areaFormateada = (sesion.area === 'CIE' || !sesion.area) ? 'INGENIERÍAS' : (sesion.area === 'LETRAS' ? 'SOCIALES' : sesion.area);
 
-  if (nameEl)  nameEl.textContent  = sesion.nombre;
-  if (areaEl)  areaEl.textContent  = `(${areaFormateada})`;
+  function obtenerNombreCorto(nombreCompleto) {
+    if (!nombreCompleto) return 'Estudiante';
+    const partes = nombreCompleto.trim().split(/\s+/);
+    if (partes.length <= 2) return nombreCompleto;
+    return `${partes[0]} ${partes[1].charAt(0)}. ${partes[2]}`;
+  }
+
+  if (nameEl)  nameEl.textContent  = obtenerNombreCorto(sesion.nombre);
+  if (nameEl)  nameEl.title        = sesion.nombre;
+  if (areaEl)  areaEl.textContent  = areaFormateada;
   if (badgeEl) badgeEl.textContent = areaFormateada;
   if (avEl)    avEl.textContent    = sesion.nombre.charAt(0).toUpperCase();
   if (exLabel) exLabel.textContent = areaFormateada;
