@@ -246,112 +246,97 @@
       <div class="section-view" id="section-simulacro">
         <!-- Setup (visible antes de iniciar) -->
         <div id="examSetup">
-          <div style="background:linear-gradient(135deg,#0F172A 0%,#1E1B4B 50%,#31103F 100%);border-radius:24px;padding:36px 32px;color:white;box-shadow:0 20px 40px rgba(15,23,42,0.3);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.1);max-width:900px;margin:0 auto;">
-            
-            <!-- Background Orbs -->
-            <div style="position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(232,82,26,0.18);filter:blur(50px);pointer-events:none;"></div>
-            <div style="position:absolute;bottom:-60px;left:-60px;width:240px;height:240px;border-radius:50%;background:rgba(99,102,241,0.18);filter:blur(50px);pointer-events:none;"></div>
-
-            <!-- Top Header Badge & Title -->
-            <div style="text-align:center;position:relative;z-index:2;margin-bottom:32px;">
-              <span style="background:rgba(232,82,26,0.18);color:#FF8C61;border:1px solid rgba(232,82,26,0.4);padding:5px 14px;border-radius:20px;font-size:0.75rem;font-weight:800;letter-spacing:0.5px;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;box-shadow:0 0 12px rgba(232,82,26,0.2);">
-                <span style="width:6px;height:6px;border-radius:50%;background:#FF8C61;box-shadow:0 0 8px #FF8C61;"></span>
-                EXAMEN DE ADMISIÓN OFICIAL UNA PUNO
-              </span>
-              <h2 style="font-size:1.8rem;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px;color:white;">
-                Simulacro Tipo Admisión Real
+          <div class="board-header" style="margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+            <div class="board-header-info">
+              <h2>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Examen Simulacro de Admisión
               </h2>
-              <p style="font-size:0.9rem;color:rgba(255,255,255,0.7);max-width:600px;margin:0 auto;line-height:1.5;">
-                Mídete en tiempo real con <strong>60 preguntas seleccionadas</strong> bajo la matriz oficial de admisión UNA PUNO. Evaluación con cronómetro y puntaje ponderado.
-              </p>
+              <p>Simulación oficial del examen de la <strong>UNA PUNO</strong> con 60 preguntas por área y cronómetro de 3 horas</p>
             </div>
+            <div style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:6px 16px;border-radius:20px;font-size:0.82rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 6px rgba(232,82,26,0.5);"></span>
+              Área: <span id="examAreaLabel">CIE</span>
+            </div>
+          </div>
 
-            <!-- 3 Specs Cards Grid -->
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:28px;position:relative;z-index:2;">
-              <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px;transition:transform 0.2s ease;">
-                <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#F97316,#EA580C);display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 4px 12px rgba(249,115,22,0.3);flex-shrink:0;">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                </div>
-                <div>
-                  <div style="font-size:1.25rem;font-weight:800;color:white;line-height:1.1;">60 Preguntas</div>
-                  <div style="font-size:0.75rem;color:rgba(255,255,255,0.6);margin-top:2px;">Matriz por Área</div>
-                </div>
+          <!-- 3 Specs Cards Grid (Nativamente integrados en la página) -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px;">
+            <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+              <div style="width:48px;height:48px;border-radius:14px;background:rgba(232,82,26,0.1);color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
               </div>
-
-              <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px;transition:transform 0.2s ease;">
-                <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#3B82F6,#2563EB);display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 4px 12px rgba(59,130,246,0.3);flex-shrink:0;">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                </div>
-                <div>
-                  <div style="font-size:1.25rem;font-weight:800;color:white;line-height:1.1;">180 Minutos</div>
-                  <div style="font-size:0.75rem;color:rgba(255,255,255,0.6);margin-top:2px;">3 Horas de examen</div>
-                </div>
-              </div>
-
-              <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px;transition:transform 0.2s ease;">
-                <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#10B981,#059669);display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 4px 12px rgba(16,185,129,0.3);flex-shrink:0;">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
-                </div>
-                <div>
-                  <div style="font-size:1.25rem;font-weight:800;color:white;line-height:1.1;">Escala 0 - 20</div>
-                  <div style="font-size:0.75rem;color:rgba(255,255,255,0.6);margin-top:2px;">Calificación Oficial</div>
-                </div>
+              <div>
+                <div style="font-size:1.35rem;font-weight:800;color:var(--text-main);line-height:1.1;">60 Preguntas</div>
+                <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">Matriz Oficial por Área</div>
               </div>
             </div>
 
-            <!-- Details 2 Columns Layout -->
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:28px;position:relative;z-index:2;">
-              <!-- Left Detail Box: Puntaje -->
-              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;text-align:left;">
-                <div style="font-size:0.72rem;font-weight:800;color:#FF8C61;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                  Regla de Puntuación
-                </div>
-                <div style="display:flex;flex-direction:column;gap:8px;font-size:0.84rem;color:rgba(255,255,255,0.9);">
-                  <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span>🟢 Respuesta Correcta:</span>
-                    <strong style="color:#34D399;">+1.00 pto</strong>
-                  </div>
-                  <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span>🔴 Respuesta Incorrecta:</span>
-                    <strong style="color:#F87171;">-0.25 ptos</strong>
-                  </div>
-                  <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span>⚪ Sin Marcar:</span>
-                    <strong style="color:rgba(255,255,255,0.6);">0.00 ptos</strong>
-                  </div>
-                </div>
+            <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+              <div style="width:48px;height:48px;border-radius:14px;background:rgba(59,130,246,0.1);color:#3B82F6;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               </div>
+              <div>
+                <div style="font-size:1.35rem;font-weight:800;color:var(--text-main);line-height:1.1;">180 Minutos</div>
+                <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">3 Horas continuas</div>
+              </div>
+            </div>
 
-              <!-- Right Detail Box: Área del Estudiante -->
-              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;text-align:left;display:flex;flex-direction:column;justify-content:center;">
-                <div style="font-size:0.72rem;font-weight:800;color:#60A5FA;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">
-                  Área de Admisión Registrada
+            <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+              <div style="width:48px;height:48px;border-radius:14px;background:rgba(16,185,129,0.1);color:#10B981;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+              </div>
+              <div>
+                <div style="font-size:1.35rem;font-weight:800;color:var(--text-main);line-height:1.1;">Escala 0 - 20</div>
+                <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">Calificación Oficial</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2 Details Cards (Nativamente integrados) -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:28px;">
+            <!-- Left Detail Box: Puntaje -->
+            <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+              <div style="font-size:0.75rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Criterio Oficial de Calificación
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px;font-size:0.86rem;color:var(--text-main);">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:6px;border-bottom:1px solid #F1F5F9;">
+                  <span>🟢 Respuesta Correcta:</span>
+                  <strong style="color:#10B981;font-size:0.92rem;">+1.00 pto</strong>
                 </div>
-                <div style="display:flex;align-items:center;justify-content:space-between;">
-                  <div style="font-size:1.4rem;font-weight:900;color:white;" id="examAreaLabel">CIE</div>
-                  <span style="background:rgba(59,130,246,0.2);color:#93C5FD;border:1px solid rgba(59,130,246,0.3);padding:4px 10px;border-radius:20px;font-size:0.72rem;font-weight:800;">
-                    Asignación Oficial
-                  </span>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:6px;border-bottom:1px solid #F1F5F9;">
+                  <span>🔴 Respuesta Incorrecta:</span>
+                  <strong style="color:#EF4444;font-size:0.92rem;">-0.25 ptos</strong>
                 </div>
-                <div style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:6px;">
-                  Preguntas asignadas según la distribución de tu carrera.
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span>⚪ Sin Marcar:</span>
+                  <strong style="color:var(--text-muted);font-size:0.92rem;">0.00 ptos</strong>
                 </div>
               </div>
             </div>
 
-            <!-- Launch Action Button -->
-            <div style="position:relative;z-index:2;text-align:center;">
-              <button class="btn btn-primary btn-lg btn-full" id="btnIniciarExamen" style="background:linear-gradient(135deg,#E8521A,#C0392B);border:none;box-shadow:0 8px 30px rgba(232,82,26,0.5);font-size:1.05rem;font-weight:800;padding:16px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;gap:10px;transition:all 0.3s ease;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                COMENZAR SIMULACRO OFICIAL AHORA
-              </button>
-              <div style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px;">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                El cronómetro de 3 horas se iniciará al presionar el botón
+            <!-- Right Detail Box: Instrucciones -->
+            <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.02);display:flex;flex-direction:column;justify-content:center;">
+              <div style="font-size:0.75rem;font-weight:800;color:#3B82F6;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Indicaciones Importantes
               </div>
+              <ul style="font-size:0.84rem;color:var(--text-secondary);line-height:1.5;display:flex;flex-direction:column;gap:6px;">
+                <li>• El examen cuenta con navegación libre entre preguntas.</li>
+                <li>• Al presionar "Iniciar", comenzará la cuenta regresiva de 3 horas.</li>
+                <li>• Tu resultado final se registrará automáticamente en tu reporte de avance.</li>
+              </ul>
             </div>
+          </div>
 
+          <!-- Launch Button Centrado Nativamente -->
+          <div style="text-align:center;padding-top:8px;padding-bottom:16px;">
+            <button class="btn btn-primary btn-lg" id="btnIniciarExamen" style="padding:14px 36px;font-size:1rem;font-weight:800;border-radius:14px;box-shadow:0 8px 25px rgba(232,82,26,0.35);display:inline-flex;align-items:center;gap:10px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Iniciar Examen Simulacro
+            </button>
           </div>
         </div>
 
