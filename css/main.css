@@ -889,14 +889,7 @@ h4 { font-size: 1.1rem; }
   border: 1px dashed #D1D5DB;
 }
 .padlet-post-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 10px;
-  border-top: 1px solid var(--border);
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  font-weight: 600;
+  display: none !important;
 }
 /* Padlet Column Add Button (+) */
 .padlet-column-add-btn {
@@ -1000,23 +993,7 @@ h4 { font-size: 1.1rem; }
 
 /* Padlet Floating Action Button (+ Publicar) */
 .padlet-fab-publish {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: #F59E0B;
-  color: #111827;
-  font-weight: 800;
-  font-size: 0.95rem;
-  padding: 12px 24px;
-  border-radius: var(--radius-full);
-  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4), 0 2px 6px rgba(0,0,0,0.1);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  z-index: 999;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  border: none;
+  display: none !important;
 }
 .padlet-fab-publish:hover {
   transform: translateY(-4px) scale(1.04);

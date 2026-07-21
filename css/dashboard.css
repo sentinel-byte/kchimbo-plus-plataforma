@@ -1034,10 +1034,7 @@ html, body {
     scroll-snap-align: center;
   }
   .padlet-fab-publish {
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 18px;
-    font-size: 0.85rem;
+    display: none !important;
   }
 }
 
