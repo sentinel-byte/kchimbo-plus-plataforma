@@ -224,26 +224,25 @@
         </div>
       </div>
 
-      <!-- ════ SECCIÓN: RESÚMENES ════ -->
+      <!-- ════ SECCIÓN: RESÚMENES (PADLET BOARD ESTUDIANTE) ════ -->
       <div class="section-view" id="section-resumenes">
         <div class="board-header">
           <div class="board-header-info">
             <h2>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-              Resúmenes Teóricos por Tema
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Resúmenes Teóricos
             </h2>
-            <p>Repasa los conceptos clave y resúmenes estructurados en formato PDF</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <div class="board-header-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              PDF Teórico
+            </div>
           </div>
         </div>
 
-        <div class="filter-row">
-          <select id="filtroResumenCurso">
-            <option value="">— Todos los cursos —</option>
-          </select>
-        </div>
-
-        <div class="resumen-grid" id="resumenGrid">
-          <!-- Generado por JS -->
+        <div id="studentResumenesBoard">
+          <!-- Generado como columnas de Padlet por JS -->
         </div>
       </div>
 
@@ -1074,43 +1073,82 @@
   // SECCIÓN: RESÚMENES
   // ─────────────────────────────────────────────────────────
   function renderResumenes() {
-    // Populate filter
-    const cursosFilter = document.getElementById('filtroResumenCurso');
-    const cursos = [...new Set(resumenes.map(r => r.curso))];
-    cursosFilter.innerHTML = `<option value="">— Todos los cursos —</option>` +
-      cursos.map(c => `<option value="${c}">${c}</option>`).join('');
+    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA.CIE;
+    const container = document.getElementById('studentResumenesBoard');
+    if (!container) return;
 
-    cursosFilter.onchange = () => renderResumenGrid(cursosFilter.value);
-    renderResumenGrid('');
-  }
+    const courseColors = {
+      'ÁLGEBRA': '#F97316',
+      'ARITMÉTICA': '#10B981',
+      'GEOMETRÍA': '#3B82F6',
+      'TRIGONOMETRÍA': '#8B5CF6',
+      'FÍSICA': '#6366F1',
+      'QUÍMICA': '#14B8A6',
+      'BIOLOGÍA': '#F43F5E',
+      'LENGUAJE': '#D97706',
+      'LITERATURA': '#06B6D4',
+      'HISTORIA': '#E11D48',
+      'GEOGRAFÍA': '#475569',
+      'FILOSOFÍA': '#7C3AED',
+      'PSICOLOGÍA': '#EC4899',
+      'ECONOMÍA': '#059669'
+    };
 
-  function renderResumenGrid(curso) {
-    const grid = document.getElementById('resumenGrid');
-    let filtered = curso ? resumenes.filter(r => r.curso === curso) : resumenes;
+    let boardHTML = `<div class="padlet-board-container">`;
 
-    if (filtered.length === 0) {
-      grid.innerHTML = `<div class="empty-state"><span class="empty-icon">📭</span><p>No hay resúmenes disponibles.</p></div>`;
-      return;
-    }
+    cursosArea.forEach(curso => {
+      const matCurso = resumenes.filter(r => r.curso === curso);
+      const colorTheme = courseColors[curso] || '#E8521A';
 
-    grid.innerHTML = filtered.map(r => `
-      <div class="resumen-card" data-url="${r.url}" data-titulo="${r.titulo}">
-        <div class="resumen-icon">📄</div>
-        <div class="resumen-info">
-          <div class="resumen-curso">${r.curso} — ${r.tema}</div>
-          <div class="resumen-titulo">${r.titulo}</div>
-          <div class="resumen-pages">${r.paginas} páginas</div>
+      boardHTML += `
+        <div class="padlet-column">
+          <div class="padlet-column-header">
+            <div class="padlet-column-title">
+              <span style="width:10px;height:10px;border-radius:50%;background:${colorTheme};display:inline-block;"></span>
+              ${curso}
+            </div>
+            <span class="padlet-column-count">${matCurso.length} resúmenes</span>
+          </div>
+          <div class="padlet-column-body">
+            ${matCurso.length === 0 ? `
+              <div style="text-align:center;padding:24px 10px;color:var(--text-muted);font-size:0.82rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:8px;opacity:0.5;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <div>Sin resúmenes teóricos</div>
+              </div>
+            ` : matCurso.map(r => `
+              <div class="padlet-post-card" data-id="${r.id}" data-url="${r.url}" data-titulo="${r.titulo}">
+                <div class="padlet-post-top" style="background:${colorTheme};"></div>
+                <div class="padlet-post-inner">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                    <span class="padlet-post-tag" style="background:rgba(232,82,26,0.1);color:var(--primary);">
+                      📄 ${r.paginas || 1} PÁG.
+                    </span>
+                  </div>
+                  <div class="padlet-post-title" style="margin:4px 0 6px 0;">${r.titulo}</div>
+                  <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">📌 Tema: <strong>${r.tema}</strong></div>
+                  <div class="padlet-post-preview" style="margin-bottom:0;">
+                    <div style="display:flex;align-items:center;gap:8px;color:#C0392B;">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                      <span style="font-size:0.78rem;font-weight:600;">Ver PDF Teórico</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
         </div>
-        <button class="btn btn-primary btn-sm">Ver PDF</button>
-      </div>
-    `).join('');
+      `;
+    });
 
-    grid.querySelectorAll('.resumen-card').forEach(card => {
+    boardHTML += `</div>`;
+    container.innerHTML = boardHTML;
+
+    container.querySelectorAll('.padlet-post-card').forEach(card => {
       card.addEventListener('click', () => {
         const url = card.dataset.url;
         const tit = card.dataset.titulo;
         if (url === '#') {
-          showToast('PDF no disponible en modo demo. Conéctate a Google Sheets.', 'warning');
+          showToast('PDF no disponible en modo demo.', 'warning');
         } else {
           openMedia(tit, url, 'PDF');
         }

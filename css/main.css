@@ -747,7 +747,9 @@ h4 { font-size: 1.1rem; }
 
 /* ── Padlet Board Layout System (Independent Column Scroll) ── */
 #adminClasesBoard,
-#clasesContent {
+#clasesContent,
+#adminResumenesBoard,
+#studentResumenesBoard {
   flex: 1;
   min-height: 0;
   display: flex;
