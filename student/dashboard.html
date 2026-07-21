@@ -1385,9 +1385,36 @@
     localStorage.setItem('kchimbo_horarios', JSON.stringify(data));
   }
 
+  function updateCiclosSelectStudent() {
+    const ciclos = getCiclosData();
+    const select = document.getElementById('horarioCicloSelect');
+    if (select) {
+      const currentVal = select.value;
+      let opts = `<option value="TODOS">Todos los Ciclos</option>`;
+      ciclos.forEach(c => {
+        opts += `<option value="${c}">${c}</option>`;
+      });
+      select.innerHTML = opts;
+      select.value = ciclos.includes(currentVal) ? currentVal : 'TODOS';
+    }
+
+    const selectModal = document.getElementById('horarioCiclo');
+    if (selectModal) {
+      const currentVal = selectModal.value;
+      let opts = `<option value="TODOS LOS CICLOS">Todos los Ciclos</option>`;
+      ciclos.forEach(c => {
+        opts += `<option value="${c}">${c}</option>`;
+      });
+      selectModal.innerHTML = opts;
+      selectModal.value = ciclos.includes(currentVal) ? currentVal : (ciclos[0] || 'TODOS LOS CICLOS');
+    }
+  }
+
   function renderHorario() {
     const container = document.getElementById('horarioListContainer');
     if (!container) return;
+
+    updateCiclosSelectStudent();
 
     // Show Admin Add button if Admin
     const btnNuevo = document.getElementById('btnNuevoHorario');

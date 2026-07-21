@@ -32,8 +32,26 @@ const DEMO_USERS = [
   }
 ];
 
-// ── CICLOS ACADÉMICOS DEMO ─────────────────────────────────
+// ── CICLOS ACADÉMICOS DEMO & DYNAMIC STORAGE ──────────────
 const DEMO_CICLOS = ["Ciclo Matecero", "Ciclo Formativo", "Ciclo Intensivo"];
+
+function getCiclosData() {
+  const raw = localStorage.getItem('kchimbo_ciclos');
+  if (!raw) {
+    localStorage.setItem('kchimbo_ciclos', JSON.stringify(DEMO_CICLOS));
+    return [...DEMO_CICLOS];
+  }
+  try {
+    const list = JSON.parse(raw);
+    return Array.isArray(list) && list.length ? list : [...DEMO_CICLOS];
+  } catch {
+    return [...DEMO_CICLOS];
+  }
+}
+
+function saveCiclosData(data) {
+  localStorage.setItem('kchimbo_ciclos', JSON.stringify(data));
+}
 
 // ── CLASES (PDFs y Videos) ──────────────────────────────────
 const DEMO_CLASES = [

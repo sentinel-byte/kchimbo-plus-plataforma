@@ -181,6 +181,10 @@
             <p style="font-size:0.82rem;color:var(--text-muted);margin-top:2px;">Programa, edita y gestiona las clases en vivo y asesorías por áreas</p>
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-outline" id="btnGestionarCiclos" style="border-radius:12px;font-weight:800;font-size:0.85rem;padding:8px 16px;display:inline-flex;align-items:center;gap:6px;background:white;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg>
+              Gestionar Ciclos
+            </button>
             <button class="btn btn-primary" id="btnNuevoHorario" style="border-radius:12px;font-weight:800;font-size:0.85rem;padding:8px 18px;display:inline-flex;align-items:center;gap:6px;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               + Programar Nueva Clase
@@ -919,6 +923,42 @@
   </div>
 </div>
 
+<!-- Modal Gestionar Ciclos Académicos (Admin) -->
+<div class="modal-overlay" id="ciclosModal">
+  <div class="modal-box" style="max-width:550px;">
+    <div class="modal-header">
+      <div class="modal-title" style="display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg>
+        Gestionar Ciclos Académicos
+      </div>
+      <button class="modal-close" onclick="closeModal('ciclosModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Form Crear Nuevo Ciclo -->
+      <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;padding:14px;margin-bottom:18px;">
+        <label class="form-label" style="font-weight:800;color:var(--text-main);margin-bottom:6px;display:block;">+ Crear Nuevo Ciclo Académico</label>
+        <div style="display:flex;gap:10px;">
+          <input type="text" class="form-input" id="nuevoCicloNombre" placeholder="Ej: Ciclo Matecero 2026, Ciclo Verano..." style="flex:1;">
+          <button class="btn btn-primary btn-sm" id="btnCrearCicloSubmit" style="font-weight:800;white-space:nowrap;padding:0 16px;">
+            + Crear Ciclo
+          </button>
+        </div>
+      </div>
+
+      <!-- Lista de Ciclos Existentes -->
+      <div>
+        <label class="form-label" style="font-weight:800;color:var(--text-main);margin-bottom:8px;display:block;">Ciclos Activos en la Plataforma</label>
+        <div id="listaCiclosAdminContainer" style="display:flex;flex-direction:column;gap:8px;max-height:260px;overflow-y:auto;">
+          <!-- Generado dinámicamente -->
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" onclick="closeModal('ciclosModal')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
 <!-- Modal para ver PDF / Video -->
 <div class="modal-overlay" id="mediaModal">
   <div class="modal-box" style="max-width:850px;">
@@ -1472,9 +1512,92 @@
     });
   }
 
+  // ─────────────────────────────────────────────────────────
+  // GESTIÓN DINÁMICA DE CICLOS ACADÉMICOS (ADMIN)
+  // ─────────────────────────────────────────────────────────
+  function updateAllCiclosUI() {
+    const ciclos = getCiclosData();
+
+    // 1. Update filter dropdown in Schedule
+    const selectFiltro = document.getElementById('horarioCicloSelect');
+    if (selectFiltro) {
+      const currentVal = selectFiltro.value;
+      let opts = `<option value="TODOS">Todos los Ciclos</option>`;
+      ciclos.forEach(c => {
+        opts += `<option value="${c}">${c}</option>`;
+      });
+      selectFiltro.innerHTML = opts;
+      selectFiltro.value = ciclos.includes(currentVal) ? currentVal : 'TODOS';
+    }
+
+    // 2. Update select dropdown in Horario Modal
+    const selectModal = document.getElementById('horarioCiclo');
+    if (selectModal) {
+      const currentVal = selectModal.value;
+      let opts = `<option value="TODOS LOS CICLOS">Todos los Ciclos</option>`;
+      ciclos.forEach(c => {
+        opts += `<option value="${c}">${c}</option>`;
+      });
+      selectModal.innerHTML = opts;
+      selectModal.value = ciclos.includes(currentVal) ? currentVal : (ciclos[0] || 'TODOS LOS CICLOS');
+    }
+
+    // 3. Update list in Ciclos Modal
+    const listContainer = document.getElementById('listaCiclosAdminContainer');
+    if (listContainer) {
+      if (ciclos.length === 0) {
+        listContainer.innerHTML = `<div style="text-align:center;padding:16px;color:var(--text-muted);font-size:0.85rem;">No hay ciclos registrados. ¡Crea el primero arriba!</div>`;
+      } else {
+        listContainer.innerHTML = ciclos.map((c, i) => `
+          <div style="background:white;border:1px solid #E2E8F0;border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+            <div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:0.85rem;color:var(--text-main);">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--primary);"></span>
+              ${c}
+            </div>
+            <button class="btn btn-outline btn-danger btn-sm btn-del-ciclo" data-index="${i}" style="border-radius:8px;padding:4px 10px;font-size:0.75rem;font-weight:700;">
+              Eliminar
+            </button>
+          </div>
+        `).join('');
+
+        listContainer.querySelectorAll('.btn-del-ciclo').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.index);
+            deleteCicloAdmin(idx);
+          });
+        });
+      }
+    }
+  }
+
+  function addCicloAdmin(nombre) {
+    const trimmed = nombre.trim();
+    if (!trimmed) { showToast('Ingresa un nombre para el ciclo', 'warning'); return; }
+    let ciclos = getCiclosData();
+    if (ciclos.includes(trimmed)) { showToast('Ese ciclo ya existe', 'warning'); return; }
+    ciclos.push(trimmed);
+    saveCiclosData(ciclos);
+    updateAllCiclosUI();
+    document.getElementById('nuevoCicloNombre').value = '';
+    showToast(`Ciclo "${trimmed}" creado con éxito`, 'success');
+  }
+
+  function deleteCicloAdmin(index) {
+    let ciclos = getCiclosData();
+    const eliminado = ciclos[index];
+    if (confirm(`¿Estás seguro de eliminar el ciclo "${eliminado}"?`)) {
+      ciclos.splice(index, 1);
+      saveCiclosData(ciclos);
+      updateAllCiclosUI();
+      renderHorarioAdmin();
+      showToast(`Ciclo "${eliminado}" eliminado`, 'warning');
+    }
+  }
+
   // Filter Listeners for Admin
   document.addEventListener('DOMContentLoaded', () => {
     initHorarioAdminEvents();
+    updateAllCiclosUI();
   });
 
   function initHorarioAdminEvents() {
@@ -1502,12 +1625,31 @@
     if (btnNuevoHorario) {
       btnNuevoHorario.addEventListener('click', () => openHorarioAdminModal());
     }
+
+    const btnGestionarCiclos = document.getElementById('btnGestionarCiclos');
+    if (btnGestionarCiclos) {
+      btnGestionarCiclos.addEventListener('click', () => {
+        updateAllCiclosUI();
+        openModal('ciclosModal');
+      });
+    }
+
+    const btnCrearCicloSubmit = document.getElementById('btnCrearCicloSubmit');
+    if (btnCrearCicloSubmit) {
+      btnCrearCicloSubmit.addEventListener('click', (e) => {
+        e.preventDefault();
+        const input = document.getElementById('nuevoCicloNombre');
+        if (input) addCicloAdmin(input.value);
+      });
+    }
   }
 
   function openHorarioAdminModal(id = null) {
     const modal = document.getElementById('horarioModal');
     const form = document.getElementById('horarioForm');
     if (!modal || !form) return;
+
+    updateAllCiclosUI();
 
     if (id) {
       const horarios = getHorariosData();
