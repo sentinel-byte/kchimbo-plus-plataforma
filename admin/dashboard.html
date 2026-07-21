@@ -157,14 +157,11 @@
             </h2>
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <div class="tipo-filter-wrap" style="margin-bottom:0;">
+            <div class="tipo-filter-wrap">
               <button class="tipo-btn active" data-tipo="TODOS">Todos</button>
               <button class="tipo-btn" data-tipo="PDF">PDFs</button>
               <button class="tipo-btn" data-tipo="VIDEO">Videos</button>
             </div>
-            <button class="btn btn-primary btn-sm" id="btnAddClaseHeader" style="padding:6px 14px;font-size:0.8rem;">
-              + Publicar Clase
-            </button>
           </div>
         </div>
 
@@ -878,8 +875,38 @@
       `;
     });
 
+    // Card para añadir un nuevo curso al final del mural Padlet
+    boardHTML += `
+      <div class="padlet-add-course-card" id="btnAddCourseCard" title="Añadir un nuevo curso al mural">
+        <div class="padlet-add-course-inner">
+          <div class="add-course-icon-circle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="add-course-text">Añadir Curso</div>
+        </div>
+      </div>
+    `;
+
     boardHTML += `</div>`;
     container.innerHTML = boardHTML;
+
+    // Handler para añadir nuevo curso
+    const addCourseCard = container.querySelector('#btnAddCourseCard');
+    if (addCourseCard) {
+      addCourseCard.addEventListener('click', () => {
+        const nuevoCurso = prompt('Ingresa el nombre del nuevo curso (ej: ANATOMÍA, FILOSOFÍA, CIVISMO):');
+        if (nuevoCurso && nuevoCurso.trim()) {
+          const nombreClean = nuevoCurso.trim().toUpperCase();
+          if (!CURSOS_POR_AREA.ADMIN.includes(nombreClean)) {
+            CURSOS_POR_AREA.ADMIN.push(nombreClean);
+            showToast(`Curso "${nombreClean}" añadido al mural`, 'success');
+            renderClasesBoard();
+          } else {
+            showToast(`El curso "${nombreClean}" ya existe`, 'warning');
+          }
+        }
+      });
+    }
 
     // Handlers
     container.querySelectorAll('.padlet-column-add-btn').forEach(btn => {
