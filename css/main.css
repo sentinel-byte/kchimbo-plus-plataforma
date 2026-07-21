@@ -426,53 +426,65 @@ h4 { font-size: 1.1rem; }
 .progress-bar-fill.green { background: linear-gradient(90deg, #2ECC71, #27AE60); }
 .progress-bar-fill.yellow { background: linear-gradient(90deg, #F39C12, #E67E22); }
 
-/* ── Stats Card ── */
+/* ── Modern Compact Stats / KPI Cards ── */
+.admin-stats-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
 .stat-card {
+  flex: 1;
+  min-width: 170px;
   background: white;
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 16px;
+  border: 1px solid #E2E8F0;
   display: flex;
   align-items: center;
-  gap: 16px;
-  transition: var(--transition);
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
 }
 .stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 80px; height: 80px;
-  background: linear-gradient(135deg, var(--primary), transparent);
-  opacity: 0.06;
-  border-radius: 0 var(--radius-lg) 0 100%;
+  display: none !important;
 }
-.stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  border-color: #CBD5E1;
+}
 .stat-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
-  color: white;
   flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
-.stat-info { flex: 1; }
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .stat-value {
-  font-size: 1.7rem;
+  font-size: 1.35rem;
   font-weight: 800;
   color: var(--text-primary);
-  line-height: 1;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 .stat-label {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-weight: 500;
-  margin-top: 2px;
+  font-size: 0.68rem;
+  color: #64748B;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 1px;
 }
 
 /* ── Alert / Toast ── */
