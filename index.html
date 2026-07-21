@@ -315,15 +315,19 @@
     }
   });
 
-  // ── Toast ──
-  function showToast(msg, type = 'info') {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.innerHTML = `<span>${type === 'success' ? '✅' : 'ℹ️'}</span><span>${msg}</span>`;
-    container.appendChild(toast);
-    setTimeout(() => toast.remove(), 3200);
-  }
+  // ── Modal helpers ──
+  window.openModal = (id) => {
+    const m = document.getElementById(id);
+    if (m) m.classList.add('open');
+  };
+  window.closeModal = (id) => {
+    const m = document.getElementById(id);
+    if (m) m.classList.remove('open');
+  };
+
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+  });
 })();
 </script>
 </body>

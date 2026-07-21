@@ -254,6 +254,20 @@
       btnText.textContent = 'Acceder al Panel';
     }
   });
+
+  // ── Modal helpers ──
+  window.openModal = (id) => {
+    const m = document.getElementById(id);
+    if (m) m.classList.add('open');
+  };
+  window.closeModal = (id) => {
+    const m = document.getElementById(id);
+    if (m) m.classList.remove('open');
+  };
+
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+  });
 })();
 </script>
 </body>
