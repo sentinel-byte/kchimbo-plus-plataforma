@@ -256,7 +256,7 @@
             </div>
             <div style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:6px 16px;border-radius:20px;font-size:0.82rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
               <span style="width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 6px rgba(232,82,26,0.5);"></span>
-              Área: <span id="examAreaLabel">CIE</span>
+              Área: <span id="examAreaLabel">INGENIERÍAS</span>
             </div>
           </div>
 
@@ -744,11 +744,13 @@
   const avEl    = document.getElementById('sidebarAvatarInitials');
   const exLabel = document.getElementById('examAreaLabel');
 
+  const areaFormateada = (sesion.area === 'CIE' || !sesion.area) ? 'INGENIERÍAS' : (sesion.area === 'LETRAS' ? 'SOCIALES' : sesion.area);
+
   if (nameEl)  nameEl.textContent  = sesion.nombre;
-  if (areaEl)  areaEl.textContent  = `(${sesion.area})`;
-  if (badgeEl) badgeEl.textContent = sesion.area;
+  if (areaEl)  areaEl.textContent  = `(${areaFormateada})`;
+  if (badgeEl) badgeEl.textContent = areaFormateada;
   if (avEl)    avEl.textContent    = sesion.nombre.charAt(0).toUpperCase();
-  if (exLabel) exLabel.textContent = sesion.area;
+  if (exLabel) exLabel.textContent = areaFormateada;
 
   // ── Ocultar loading ──
   setTimeout(() => {

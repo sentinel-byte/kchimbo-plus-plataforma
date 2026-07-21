@@ -138,6 +138,12 @@ const AUTH = {
     return { success: true, sesion };
   },
 
+  normalizeArea(a) {
+    if (!a || a === 'CIE') return 'INGENIERÍAS';
+    if (a === 'LETRAS') return 'SOCIALES';
+    return a;
+  },
+
   // ── Obtener sesión activa ──
   getSesion() {
     const raw = localStorage.getItem(this.KEYS.SESSION);
@@ -149,6 +155,7 @@ const AUTH = {
         this.logout();
         return null;
       }
+      sesion.area = this.normalizeArea(sesion.area);
       return sesion;
     } catch {
       return null;
