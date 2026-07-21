@@ -8,7 +8,7 @@ const DEMO_USERS = [
     usuario: "estudiante01",
     password: "abc12345",
     nombre: "Jose Carlos Llano Vilca",
-    area: "CIE",
+    area: "INGENIERÍAS",
     rol: "estudiante",
     membresia_inicio: "2026-06-01",
     membresia_fin: "2026-08-31",
@@ -340,30 +340,23 @@ const DEMO_PREGUNTAS = [
    a:"Empresas individuales", b:"Comportamiento del consumidor", c:"La economía global y nacional", d:"Precios de productos específicos", e:"Decisiones familiares", respuesta:"C", año:2021},
 ];
 
-// ── DISTRIBUCIÓN EXAMEN UNA PUNO ──────────────────────────
+// ── DISTRIBUCIÓN EXAMEN UNA PUNO (3 ÁREAS OFICIALES) ─────
 const DISTRIBUCION_EXAMEN = {
+  INGENIERÍAS: {
+    "ÁLGEBRA": 8, "ARITMÉTICA": 6, "GEOMETRÍA": 6, "TRIGONOMETRÍA": 5, "FÍSICA": 8, "QUÍMICA": 8, "BIOLOGÍA": 8, "LENGUAJE": 5, "HISTORIA": 3, "GEOGRAFÍA": 3
+  },
+  BIOMÉDICAS: {
+    "BIOLOGÍA": 12, "QUÍMICA": 10, "FÍSICA": 6, "ÁLGEBRA": 6, "ARITMÉTICA": 6, "GEOMETRÍA": 4, "TRIGONOMETRÍA": 4, "LENGUAJE": 5, "HISTORIA": 4, "GEOGRAFÍA": 3
+  },
+  SOCIALES: {
+    "LENGUAJE": 12, "LITERATURA": 8, "HISTORIA": 8, "GEOGRAFÍA": 8, "FILOSOFÍA": 8, "ECONOMÍA": 6, "ÁLGEBRA": 4, "ARITMÉTICA": 3, "GEOMETRÍA": 3
+  },
+  // Aliases para retrocompatibilidad
   CIE: {
-    "ÁLGEBRA": 8,
-    "ARITMÉTICA": 6,
-    "GEOMETRÍA": 6,
-    "TRIGONOMETRÍA": 5,
-    "FÍSICA": 8,
-    "QUÍMICA": 8,
-    "BIOLOGÍA": 8,
-    "LENGUAJE": 5,
-    "HISTORIA": 3,
-    "GEOGRAFÍA": 3
+    "ÁLGEBRA": 8, "ARITMÉTICA": 6, "GEOMETRÍA": 6, "TRIGONOMETRÍA": 5, "FÍSICA": 8, "QUÍMICA": 8, "BIOLOGÍA": 8, "LENGUAJE": 5, "HISTORIA": 3, "GEOGRAFÍA": 3
   },
   LETRAS: {
-    "LENGUAJE": 12,
-    "LITERATURA": 8,
-    "HISTORIA": 8,
-    "GEOGRAFÍA": 8,
-    "FILOSOFÍA": 8,
-    "ECONOMÍA": 6,
-    "ÁLGEBRA": 4,
-    "ARITMÉTICA": 3,
-    "GEOMETRÍA": 3
+    "LENGUAJE": 12, "LITERATURA": 8, "HISTORIA": 8, "GEOGRAFÍA": 8, "FILOSOFÍA": 8, "ECONOMÍA": 6, "ÁLGEBRA": 4, "ARITMÉTICA": 3, "GEOMETRÍA": 3
   }
 };
 
