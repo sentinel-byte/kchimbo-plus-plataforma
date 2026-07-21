@@ -468,7 +468,10 @@
 <div class="modal-overlay" id="claseModal">
   <div class="modal-box">
     <div class="modal-header">
-      <div class="modal-title" id="claseModalTitle">Nueva Clase</div>
+      <div class="modal-title" id="claseModalTitle" style="display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
+        Nueva Clase
+      </div>
       <button class="modal-close" onclick="closeModal('claseModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -480,20 +483,20 @@
           </select>
         </div>
         <div class="form-group"><label class="form-label">Semana</label>
-          <input type="number" class="form-input" id="claseForm_semana" min="1" max="30">
+          <input type="number" class="form-input" id="claseForm_semana" min="1" max="30" placeholder="1">
         </div>
       </div>
-      <div class="form-group"><label class="form-label">Título</label>
+      <div class="form-group"><label class="form-label">Título de la clase</label>
         <input type="text" class="form-input" id="claseForm_titulo" placeholder="Ej: Álgebra - Semana 1">
       </div>
       <div class="form-inline-row">
-        <div class="form-group"><label class="form-label">Tipo</label>
+        <div class="form-group"><label class="form-label">Tipo de recurso</label>
           <select class="form-select" id="claseForm_tipo">
             <option value="PDF">PDF</option><option value="VIDEO">VIDEO</option>
           </select>
         </div>
-        <div class="form-group"><label class="form-label">Thumbnail (emoji)</label>
-          <input type="text" class="form-input" id="claseForm_thumbnail" placeholder="📐" maxlength="4">
+        <div class="form-group"><label class="form-label">Ícono / Código</label>
+          <input type="text" class="form-input" id="claseForm_thumbnail" placeholder="Ej: ALG1" maxlength="6">
         </div>
       </div>
       <div class="form-group"><label class="form-label">URL (Google Drive / YouTube)</label>
@@ -502,7 +505,10 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline btn-sm" onclick="closeModal('claseModal')">Cancelar</button>
-      <button class="btn btn-primary btn-sm" id="btnGuardarClase">💾 Guardar</button>
+      <button class="btn btn-primary btn-sm" id="btnGuardarClase" style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Guardar Clase
+      </button>
     </div>
   </div>
 </div>
@@ -511,7 +517,10 @@
 <div class="modal-overlay" id="resumenModal">
   <div class="modal-box">
     <div class="modal-header">
-      <div class="modal-title" id="resumenModalTitle">Nuevo Resumen</div>
+      <div class="modal-title" id="resumenModalTitle" style="display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Nuevo Resumen
+      </div>
       <button class="modal-close" onclick="closeModal('resumenModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -524,8 +533,8 @@
           <input type="text" class="form-input" id="resForm_tema" placeholder="Ej: Factorización">
         </div>
       </div>
-      <div class="form-group"><label class="form-label">Título</label>
-        <input type="text" class="form-input" id="resForm_titulo" placeholder="Título del resumen">
+      <div class="form-group"><label class="form-label">Título del resumen</label>
+        <input type="text" class="form-input" id="resForm_titulo" placeholder="Ej: Guía de Factorización Práctica">
       </div>
       <div class="form-inline-row">
         <div class="form-group"><label class="form-label">Páginas</label>
@@ -538,7 +547,10 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline btn-sm" onclick="closeModal('resumenModal')">Cancelar</button>
-      <button class="btn btn-primary btn-sm" id="btnGuardarResumen">💾 Guardar</button>
+      <button class="btn btn-primary btn-sm" id="btnGuardarResumen" style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Guardar Resumen
+      </button>
     </div>
   </div>
 </div>
@@ -547,7 +559,10 @@
 <div class="modal-overlay" id="preguntaModal">
   <div class="modal-box" style="max-width:700px;">
     <div class="modal-header">
-      <div class="modal-title" id="preguntaModalTitle">Nueva Pregunta</div>
+      <div class="modal-title" id="preguntaModalTitle" style="display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+        Nueva Pregunta
+      </div>
       <button class="modal-close" onclick="closeModal('preguntaModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -567,10 +582,10 @@
           </select>
         </div>
         <div class="form-group"><label class="form-label">Año</label>
-          <input type="number" class="form-input" id="pForm_año" min="2000" max="2030" value="2024">
+          <input type="number" class="form-input" id="pForm_año" min="2000" max="2030" value="2026">
         </div>
       </div>
-      <div class="form-group"><label class="form-label">Pregunta</label>
+      <div class="form-group"><label class="form-label">Enunciado de la Pregunta</label>
         <textarea class="form-input" id="pForm_pregunta" rows="3" placeholder="Escribe la pregunta aquí..."></textarea>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -589,16 +604,22 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline btn-sm" onclick="closeModal('preguntaModal')">Cancelar</button>
-      <button class="btn btn-primary btn-sm" id="btnGuardarPregunta">💾 Guardar</button>
+      <button class="btn btn-primary btn-sm" id="btnGuardarPregunta" style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Guardar Pregunta
+      </button>
     </div>
   </div>
 </div>
 
-<!-- Modal Usuario -->
+<!-- Modal Usuario / Matrícula -->
 <div class="modal-overlay" id="usuarioModal">
   <div class="modal-box">
     <div class="modal-header">
-      <div class="modal-title" id="usuarioModalTitle">Nueva Matrícula</div>
+      <div class="modal-title" id="usuarioModalTitle" style="display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M9 21v-2a4 4 0 0 1 3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M8 3.13a4 4 0 0 0 0 7.75"/></svg>
+        Nueva Matrícula
+      </div>
       <button class="modal-close" onclick="closeModal('usuarioModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -632,7 +653,66 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline btn-sm" onclick="closeModal('usuarioModal')">Cancelar</button>
-      <button class="btn btn-success btn-sm" id="btnGuardarUsuario">💾 Guardar</button>
+      <button class="btn btn-primary btn-sm" id="btnGuardarUsuario" style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Guardar Matrícula
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Añadir Nuevo Curso -->
+<div class="modal-overlay" id="cursoModal">
+  <div class="modal-box" style="max-width:420px;">
+    <div class="modal-header">
+      <div class="modal-title" style="display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Añadir Nuevo Curso
+      </div>
+      <button class="modal-close" onclick="closeModal('cursoModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Nombre del Curso</label>
+        <input type="text" class="form-input" id="cursoForm_nombre" placeholder="Ej: ANATOMÍA, FILOSOFÍA, CIVISMO..." style="text-transform:uppercase;">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('cursoModal')">Cancelar</button>
+      <button class="btn btn-primary btn-sm" id="btnGuardarNuevoCurso" style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Añadir Curso
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Renovar Membresía -->
+<div class="modal-overlay" id="renovarModal">
+  <div class="modal-box" style="max-width:420px;">
+    <div class="modal-header">
+      <div class="modal-title" style="display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Renovar Membresía
+      </div>
+      <button class="modal-close" onclick="closeModal('renovarModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="renovar_usuario">
+      <div style="font-size:0.85rem;color:var(--text-main);font-weight:700;margin-bottom:12px;" id="renovar_estudiante_nombre">
+        Estudiante: —
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nueva Fecha de Vencimiento</label>
+        <input type="date" class="form-input" id="renovar_fecha">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('renovarModal')">Cancelar</button>
+      <button class="btn btn-primary btn-sm" id="btnGuardarRenovacion" style="display:inline-flex;align-items:center;gap:6px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Guardar Cambio
+      </button>
     </div>
   </div>
 </div>
@@ -641,7 +721,10 @@
 <div class="modal-overlay" id="confirmModal">
   <div class="modal-box" style="max-width:380px;">
     <div class="modal-header">
-      <div class="modal-title">⚠️ Confirmar eliminación</div>
+      <div class="modal-title" style="display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Confirmar eliminación
+      </div>
       <button class="modal-close" onclick="closeModal('confirmModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -658,7 +741,10 @@
 <div class="modal-overlay" id="logoutModal">
   <div class="modal-box" style="max-width:400px;">
     <div class="modal-header">
-      <div class="modal-title">🚪 Cerrar Sesión</div>
+      <div class="modal-title" style="display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Cerrar Sesión
+      </div>
       <button class="modal-close" onclick="closeModal('logoutModal')">✕</button>
     </div>
     <div class="modal-body">
@@ -986,21 +1072,12 @@
     boardHTML += `</div>`;
     container.innerHTML = boardHTML;
 
-    // Handler para añadir nuevo curso
+    // Handler para añadir nuevo curso con modal personalizado
     const addCourseCard = container.querySelector('#btnAddCourseCard');
     if (addCourseCard) {
       addCourseCard.addEventListener('click', () => {
-        const nuevoCurso = prompt('Ingresa el nombre del nuevo curso (ej: ANATOMÍA, FILOSOFÍA, CIVISMO):');
-        if (nuevoCurso && nuevoCurso.trim()) {
-          const nombreClean = nuevoCurso.trim().toUpperCase();
-          if (!CURSOS_POR_AREA.ADMIN.includes(nombreClean)) {
-            CURSOS_POR_AREA.ADMIN.push(nombreClean);
-            showToast(`Curso "${nombreClean}" añadido al mural`, 'success');
-            renderClasesBoard();
-          } else {
-            showToast(`El curso "${nombreClean}" ya existe`, 'warning');
-          }
-        }
+        document.getElementById('cursoForm_nombre').value = '';
+        openModal('cursoModal');
       });
     }
 
@@ -1989,16 +2066,47 @@
   document.getElementById('filterPagoEstado')?.addEventListener('change', renderPagosTable);
   document.getElementById('filterPagoArea')?.addEventListener('change', renderPagosTable);
 
+  // ── Guardar Nuevo Curso ──
+  document.getElementById('btnGuardarNuevoCurso')?.addEventListener('click', () => {
+    const input = document.getElementById('cursoForm_nombre');
+    const val = (input?.value || '').trim().toUpperCase();
+    if (!val) {
+      showToast('Ingresa un nombre de curso válido', 'warning');
+      return;
+    }
+    if (!CURSOS_POR_AREA.ADMIN.includes(val)) {
+      CURSOS_POR_AREA.ADMIN.push(val);
+      closeModal('cursoModal');
+      showToast(`Curso "${val}" añadido con éxito`, 'success');
+      renderClasesBoard();
+      if (typeof renderResumenesBoard === 'function') renderResumenesBoard();
+      if (typeof renderPreguntasBoard === 'function') renderPreguntasBoard();
+    } else {
+      showToast(`El curso "${val}" ya existe`, 'warning');
+    }
+  });
+
+  // ── Renovar Membresía ──
   window.renovarMembresia = (user) => {
     const u = usuarios.find(x => x.usuario === user);
     if (!u) return;
-    const nuevaFin = prompt(`Ingresa la nueva fecha de vencimiento para ${u.nombre} (YYYY-MM-DD):`, u.membresia_fin);
-    if (nuevaFin) {
-      u.membresia_fin = nuevaFin;
-      renderPagosTable();
-      showToast(`Membresía de ${u.nombre} renovada hasta ${nuevaFin}`);
-    }
+    document.getElementById('renovar_usuario').value = user;
+    document.getElementById('renovar_estudiante_nombre').textContent = `Estudiante: ${u.nombre} (${u.usuario})`;
+    document.getElementById('renovar_fecha').value = u.membresia_fin || new Date().toISOString().split('T')[0];
+    openModal('renovarModal');
   };
+
+  document.getElementById('btnGuardarRenovacion')?.addEventListener('click', () => {
+    const user = document.getElementById('renovar_usuario').value;
+    const nuevaFin = document.getElementById('renovar_fecha').value;
+    const u = usuarios.find(x => x.usuario === user);
+    if (u && nuevaFin) {
+      u.membresia_fin = nuevaFin;
+      closeModal('renovarModal');
+      renderPagosTable();
+      showToast(`Membresía de ${u.nombre} renovada hasta ${nuevaFin}`, 'success');
+    }
+  });
 
   // ── Logout ──
   document.getElementById('btnLogout').addEventListener('click', () => { openModal('logoutModal'); });
