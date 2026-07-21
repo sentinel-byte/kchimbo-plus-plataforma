@@ -1006,9 +1006,10 @@ h4 { font-size: 1.1rem; }
 
 /* Padlet Add Course Minimal Dashed Card */
 .padlet-add-column-card {
-  flex: 0 0 320px !important;
-  min-width: 300px !important;
-  max-width: 340px !important;
+  flex: 0 0 280px !important;
+  min-width: 260px !important;
+  max-width: 320px !important;
+  flex-shrink: 0 !important;
   height: 100%;
   border: 2px dashed #CBD5E1 !important;
   border-radius: var(--radius-lg);
@@ -1030,11 +1031,14 @@ h4 { font-size: 1.1rem; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 8px;
   color: #64748B;
   font-weight: 800;
   font-size: 0.9rem;
+  white-space: nowrap;
   transition: color 0.2s ease;
+  padding: 20px;
 }
 .padlet-add-column-card:hover .padlet-add-course-inner {
   color: var(--primary);
