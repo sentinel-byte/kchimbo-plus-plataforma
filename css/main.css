@@ -1004,51 +1004,57 @@ h4 { font-size: 1.1rem; }
   transform: translateY(0) scale(1);
 }
 
-/* Padlet Add Course Column Card */
+/* Padlet Add Course Minimal Dashed Card */
 .padlet-add-column-card {
   flex: 0 0 320px !important;
   min-width: 300px !important;
   max-width: 340px !important;
-  background: white !important;
-  border: 2px dashed rgba(232, 82, 26, 0.4) !important;
+  height: 100%;
+  border: 2px dashed #CBD5E1 !important;
   border-radius: var(--radius-lg);
+  background: rgba(248, 250, 252, 0.7) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
 }
 .padlet-add-column-card:hover {
   background: white !important;
   border-color: var(--primary) !important;
-  box-shadow: 0 10px 28px rgba(232, 82, 26, 0.16);
-  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(232, 82, 26, 0.12);
+  transform: translateY(-2px);
 }
-.padlet-add-course-btn-inner {
+.padlet-add-course-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  color: var(--text-secondary);
-  text-align: center;
+  gap: 10px;
+  color: #64748B;
+  font-weight: 800;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+.padlet-add-column-card:hover .padlet-add-course-inner {
+  color: var(--primary);
 }
 .add-course-plus-icon {
-  width: 52px;
-  height: 52px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  background: rgba(232, 82, 26, 0.08);
-  color: var(--primary);
-  border: 2px solid rgba(232, 82, 26, 0.2);
+  background: white;
+  border: 1.5px dashed #94A3B8;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.25s ease;
-  margin-bottom: 4px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 .padlet-add-column-card:hover .add-course-plus-icon {
-  background: var(--primary);
-  color: white;
   border-color: var(--primary);
-  transform: scale(1.1) rotate(90deg);
-  box-shadow: 0 4px 14px rgba(232, 82, 26, 0.35);
+  background: rgba(232, 82, 26, 0.08);
+  color: var(--primary);
 }
 
 /* ── Dev Info Box ── */
