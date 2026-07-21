@@ -1411,6 +1411,15 @@
     const estadoColor = scoreVal >= 14 ? '#10B981' : (scoreVal >= 10 ? '#F59E0B' : '#EF4444');
     const estadoTexto = scoreVal >= 14 ? '🏆 ¡Excelente! Vacante Estimada' : (scoreVal >= 10 ? '📈 Buen Intento - En Margen' : '📚 Requiere Reforzamiento');
 
+    const analisis = (examenObj && typeof examenObj.analisisPorCurso === 'function') ? examenObj.analisisPorCurso() : {};
+    const analisisHTML = Object.entries(analisis).map(([curso, data]) => `
+      <div class="mini-bar-row">
+        <div class="mini-bar-label">${curso}</div>
+        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${data.total ? Math.round((data.correctas/data.total)*100) : 0}%"></div></div>
+        <div class="mini-bar-val">${data.correctas}/${data.total}</div>
+      </div>
+    `).join('');
+
     resultsDiv.innerHTML = `
       <div style="max-width:850px;margin:0 auto;padding-bottom:30px;">
         <!-- Header -->
