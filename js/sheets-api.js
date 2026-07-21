@@ -48,9 +48,9 @@ const SheetsAPI = {
     return await response.json();
   },
 
-  // ── USUARIOS ──
+  // SEGURIDAD FIX: login siempre por POST (nunca exponer password en GET params/URL/logs)
   async verificarLogin(usuario, password) {
-    const data = await this.request('verificarLogin', { usuario, password });
+    const data = await this.post('verificarLogin', { usuario, password });
     if (data && data.success) return data.usuario;
     return null;
   },

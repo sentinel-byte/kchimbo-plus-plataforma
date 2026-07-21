@@ -22,7 +22,8 @@ class ExamenSimulacro {
 
   // ── Seleccionar 60 preguntas según distribución ──
   seleccionarPreguntas() {
-    const distribucion = DISTRIBUCION_EXAMEN[this.area] || DISTRIBUCION_EXAMEN.CIE;
+    // BUG FIX: DISTRIBUCION_EXAMEN no tiene clave 'CIE' — usar 'INGENIERÍAS' como fallback
+    const distribucion = DISTRIBUCION_EXAMEN[this.area] || DISTRIBUCION_EXAMEN['INGENIERÍAS'];
     let seleccionadas = [];
 
     for (const [curso, cantidad] of Object.entries(distribucion)) {
@@ -96,9 +97,10 @@ class ExamenSimulacro {
     let puntajePonderadoTotal = 0;
     const detalle = [];
 
-    const areaPonderaciones = (typeof PONDERACIONES_UNA_PUNO !== 'undefined' && PONDERACIONES_UNA_PUNO[this.area])
-      ? PONDERACIONES_UNA_PUNO[this.area]
-      : (PONDERACIONES_UNA_PUNO ? PONDERACIONES_UNA_PUNO.INGENIERÍAS : {});
+    // BUG FIX: fallback seguro con operador de encadenamiento opcional
+    const areaPonderaciones = (typeof PONDERACIONES_UNA_PUNO !== 'undefined')
+      ? (PONDERACIONES_UNA_PUNO[this.area] || PONDERACIONES_UNA_PUNO['INGENIERÍAS'] || {})
+      : {};
 
     this.preguntasExamen.forEach((pregunta, idx) => {
       const respuesta = this.respuestasUsuario[idx];

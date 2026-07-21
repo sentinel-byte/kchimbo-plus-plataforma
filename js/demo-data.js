@@ -437,9 +437,9 @@ const DISTRIBUCION_EXAMEN = {
 
 // ── HISTORIAL SIMULACROS (demo) ───────────────────────────
 const DEMO_HISTORIAL = [
-  { fecha:"2026-07-10", correctas:38, incorrectas:15, blanco:7, puntaje:34.25, area:"CIE" },
-  { fecha:"2026-07-05", correctas:32, incorrectas:20, blanco:8, puntaje:27.0, area:"CIE" },
-  { fecha:"2026-06-28", correctas:42, incorrectas:12, blanco:6, puntaje:39.0, area:"CIE" },
+  { fecha:"2026-07-10", correctas:38, incorrectas:15, blanco:7, puntaje:34.25, area:"INGENIERÍAS" },
+  { fecha:"2026-07-05", correctas:32, incorrectas:20, blanco:8, puntaje:27.0,  area:"INGENIERÍAS" },
+  { fecha:"2026-06-28", correctas:42, incorrectas:12, blanco:6, puntaje:39.0,  area:"INGENIERÍAS" },
 ];
 
 // Cursos disponibles por área (UNA PUNO)

@@ -879,7 +879,8 @@
   // SECCIÓN: CLASES EN LÍNEA (MURAL PADLET INTERACTIVO)
   // ─────────────────────────────────────────────────────────
   function renderClases() {
-    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA.CIE;
+    // BUG FIX: el área ya está normalizada, usar INGENIERÍAS como fallback
+    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA['INGENIERÍAS'] || CURSOS_POR_AREA.CIE;
     const content = document.getElementById('clasesContent');
 
     const courseColors = {
@@ -1085,7 +1086,7 @@
     const modal = document.getElementById('padletPostModal');
     const form = document.getElementById('padletPostForm');
     const cursoSelect = document.getElementById('postCurso');
-    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA.CIE;
+    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA['INGENIERÍAS'] || CURSOS_POR_AREA.CIE;
 
     cursoSelect.innerHTML = cursosArea.map(c => `<option value="${c}">${c}</option>`).join('');
 
@@ -1213,7 +1214,7 @@
   // SECCIÓN: RESÚMENES
   // ─────────────────────────────────────────────────────────
   function renderResumenes() {
-    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA.CIE;
+    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA['INGENIERÍAS'] || CURSOS_POR_AREA.CIE;
     const container = document.getElementById('studentResumenesBoard');
     if (!container) return;
 
@@ -1573,7 +1574,8 @@
 
     document.getElementById('btnVerAvanceLink')?.addEventListener('click', () => {
       showSection('avance');
-      document.querySelectorAll('.sidebar-nav-item').forEach(i => {
+      // BUG FIX: la clase correcta es 'nav-item', no 'sidebar-nav-item'
+      document.querySelectorAll('.nav-item').forEach(i => {
         i.classList.toggle('active', i.dataset.section === 'avance');
       });
     });
@@ -1670,6 +1672,9 @@
 
     const feedback = document.getElementById('quizFeedback');
     feedback.classList.remove('show','correct','incorrect');
+    feedback.style.display = 'none';  // BUG FIX: ocultar feedback entre preguntas
+    document.getElementById('quizFeedbackIcon').innerHTML = '';
+    document.getElementById('quizFeedbackText').textContent = '';
     document.getElementById('btnQuizNext').disabled = true;
 
     document.getElementById('quizQuestionCard').innerHTML = `
@@ -1781,7 +1786,8 @@
 
     // Rendimiento por curso (demo)
     const cursoStats = document.getElementById('rendimientoCursos');
-    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA.CIE;
+    // BUG FIX: usar INGENIERÍAS como clave (el área ya está normalizada por AUTH.getSesion())
+    const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA['INGENIERÍAS'] || CURSOS_POR_AREA.CIE;
     const demoStats = cursosArea.slice(0,6).map((c,i) => {
       const pct = Math.max(40, Math.min(95, 55 + (i*7) + Math.floor(Math.random()*15)));
       return { curso: c.substring(0,8), pct };
