@@ -687,16 +687,23 @@
   let preguntas = [...DEMO_PREGUNTAS];
 
   // ── Inicializar UI con datos de sesión ──
-  document.getElementById('sidebarUserName').textContent = sesion.nombre;
-  document.getElementById('sidebarUserArea').textContent = `Área ${sesion.area}`;
-  document.getElementById('sidebarUserBadge').textContent = sesion.area;
-  document.getElementById('sidebarAvatarInitials').textContent = sesion.nombre.charAt(0).toUpperCase();
-  document.getElementById('examAreaLabel').textContent = sesion.area;
+  const nameEl  = document.getElementById('sidebarUserName');
+  const areaEl  = document.getElementById('sidebarUserArea');
+  const badgeEl = document.getElementById('sidebarUserBadge');
+  const avEl    = document.getElementById('sidebarAvatarInitials');
+  const exLabel = document.getElementById('examAreaLabel');
+
+  if (nameEl)  nameEl.textContent  = sesion.nombre;
+  if (areaEl)  areaEl.textContent  = `(${sesion.area})`;
+  if (badgeEl) badgeEl.textContent = sesion.area;
+  if (avEl)    avEl.textContent    = sesion.nombre.charAt(0).toUpperCase();
+  if (exLabel) exLabel.textContent = sesion.area;
 
   // ── Ocultar loading ──
   setTimeout(() => {
-    document.getElementById('loadingOverlay').style.display = 'none';
-  }, 600);
+    const loader = document.getElementById('loadingOverlay');
+    if (loader) loader.style.display = 'none';
+  }, 400);
 
   // ─────────────────────────────────────────────────────────
   // NAVEGACIÓN Y RUTAS (Hash Routing)

@@ -788,9 +788,13 @@
   if (!sesion) return;
 
   // Init UI
-  document.getElementById('adminName').textContent = sesion.nombre;
-  document.getElementById('adminAvatar').textContent = sesion.nombre.charAt(0).toUpperCase();
-  setTimeout(() => { document.getElementById('loadingOverlay').style.display = 'none'; }, 500);
+  const aName   = document.getElementById('adminName');
+  const aAvatar = document.getElementById('adminAvatar');
+  const aLoader = document.getElementById('loadingOverlay');
+
+  if (aName)   aName.textContent   = sesion.nombre;
+  if (aAvatar) aAvatar.textContent = sesion.nombre.charAt(0).toUpperCase();
+  setTimeout(() => { if (aLoader) aLoader.style.display = 'none'; }, 400);
 
   // Estado local (mutable)
   let clases    = [...DEMO_CLASES];
