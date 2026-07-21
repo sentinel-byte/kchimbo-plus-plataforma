@@ -195,10 +195,14 @@ class ExamenSimulacro {
   analisisPorCurso() {
     if (!this.resultado) return {};
     const cursos = {};
-    this.resultado.detalle.forEach(({ pregunta, estado }) => {
+    this.resultado.detalle.forEach(({ pregunta, estado, ponderacion, ptsPregunta }) => {
       const c = pregunta.curso;
-      if (!cursos[c]) cursos[c] = { total: 0, correctas: 0, incorrectas: 0, blancos: 0 };
+      if (!cursos[c]) cursos[c] = { total: 0, correctas: 0, incorrectas: 0, blancos: 0, puntajeObtenido: 0, puntajeMaximo: 0 };
+      const pond = ponderacion || 3.33;
+      const valCorrecta = 10.0 * pond;
       cursos[c].total++;
+      cursos[c].puntajeMaximo += valCorrecta;
+      cursos[c].puntajeObtenido += (ptsPregunta || 0);
       cursos[c][estado === 'correcta' ? 'correctas' : estado === 'incorrecta' ? 'incorrectas' : 'blancos']++;
     });
     return cursos;
