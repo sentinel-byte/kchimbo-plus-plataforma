@@ -1443,9 +1443,16 @@
       const availablePregs = preguntas.filter(p => selectedPregCursoTab === 'TODOS' || p.curso === selectedPregCursoTab);
       const temasUnicos = [...new Set(availablePregs.map(p => p.tema).filter(Boolean))].sort();
 
+      const isValidTopic = temasUnicos.includes(currentTemaVal);
+      const selectedVal = isValidTopic ? currentTemaVal : '';
+
       temaSelect.innerHTML = `<option value="">Todos los temas (${temasUnicos.length})</option>` +
-        temasUnicos.map(t => `<option value="${t}" ${currentTemaVal === t ? 'selected' : ''}>📌 ${t}</option>`).join('');
+        temasUnicos.map(t => `<option value="${t}" ${selectedVal === t ? 'selected' : ''}>📌 ${t}</option>`).join('');
+
+      temaSelect.value = selectedVal;
     }
+
+    const temaFilter = (temaSelect ? temaSelect.value : '').trim();
 
     // Filter questions
     let filtered = preguntas.filter(p => {
