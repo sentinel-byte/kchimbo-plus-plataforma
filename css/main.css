@@ -672,6 +672,7 @@ h4 { font-size: 1.1rem; }
 
 /* ── Human-Crafted Board Header (Replaces AI Gradient Banners) ── */
 .board-header {
+  flex-shrink: 0;
   background: white;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -713,6 +714,8 @@ h4 { font-size: 1.1rem; }
 
 /* ── Padlet Board Layout System (Independent Column Scroll) ── */
 .padlet-board-container {
+  flex: 1;
+  min-height: 0;
   display: flex;
   gap: 20px;
   overflow-x: auto !important;
