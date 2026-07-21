@@ -246,45 +246,65 @@
       <div class="section-view" id="section-simulacro">
         <!-- Setup (visible antes de iniciar) -->
         <div id="examSetup">
-          <div class="exam-setup-card">
-            <span class="exam-setup-icon">📝</span>
-            <h2 class="exam-setup-title">Examen Simulacro</h2>
-            <p class="exam-setup-desc">
-              Simula el examen real de admisión de la <strong>UNA PUNO</strong>.<br>
-              El sistema seleccionará <strong>60 preguntas</strong> distribuidas según tu área,
-              con el puntaje oficial del examen real.
+          <div class="exam-setup-card" style="max-width:680px;margin:0 auto;text-align:center;padding:32px 28px;">
+            <div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,var(--primary),#C0392B);display:inline-flex;align-items:center;justify-content:center;color:white;box-shadow:0 8px 25px rgba(232,82,26,0.35);margin-bottom:16px;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h2 class="exam-setup-title" style="font-size:1.5rem;font-weight:800;color:var(--text-main);margin-bottom:6px;">Examen Simulacro</h2>
+            <p class="exam-setup-desc" style="font-size:0.88rem;color:var(--text-muted);max-width:500px;margin:0 auto 20px auto;line-height:1.5;">
+              Simula el examen real de admisión de la <strong>UNA PUNO</strong>. El sistema seleccionará <strong>60 preguntas</strong> distribuidas según tu área, con el puntaje oficial del examen real.
             </p>
 
-            <div class="exam-info-grid">
-              <div class="exam-info-item">
-                <div class="exam-info-value">60</div>
-                <div class="exam-info-label">Preguntas</div>
+            <!-- Single KPI Ribbon -->
+            <div class="kpi-ribbon" style="max-width:540px;margin:0 auto 24px auto;">
+              <div class="kpi-pill">
+                <span class="kpi-dot" style="background:#E8521A;box-shadow:0 0 8px rgba(232,82,26,0.5);"></span>
+                <div class="kpi-content">
+                  <span class="kpi-val" style="color:#E8521A;">60</span>
+                  <span class="kpi-lbl">Preguntas</span>
+                </div>
               </div>
-              <div class="exam-info-item">
-                <div class="exam-info-value">3h</div>
-                <div class="exam-info-label">Tiempo</div>
+              <div class="kpi-sep"></div>
+              <div class="kpi-pill">
+                <span class="kpi-dot" style="background:#3B82F6;box-shadow:0 0 8px rgba(59,130,246,0.5);"></span>
+                <div class="kpi-content">
+                  <span class="kpi-val" style="color:#3B82F6;">3h 00m</span>
+                  <span class="kpi-lbl">Tiempo límite</span>
+                </div>
               </div>
-              <div class="exam-info-item">
-                <div class="exam-info-value">20</div>
-                <div class="exam-info-label">Escala</div>
+              <div class="kpi-sep"></div>
+              <div class="kpi-pill">
+                <span class="kpi-dot" style="background:#10B981;box-shadow:0 0 8px rgba(16,185,129,0.5);"></span>
+                <div class="kpi-content">
+                  <span class="kpi-val" style="color:#10B981;">0 - 20</span>
+                  <span class="kpi-lbl">Escala oficial</span>
+                </div>
               </div>
             </div>
 
-            <div class="alert alert-info mb-24" style="text-align:left;">
-              <span>ℹ️</span>
-              <span><strong>Puntaje:</strong> Correcta = +1 pto | Incorrecta = -0.25 | Sin marcar = 0. Se convierte a escala de 20.</span>
-            </div>
-
-            <div style="background:var(--bg-warm);border-radius:var(--radius-md);padding:14px 18px;margin-bottom:24px;text-align:left;border:1px solid var(--border);">
-              <strong style="font-size:0.85rem;">Área detectada:</strong>
-              <span id="examAreaLabel" style="font-size:0.85rem;color:var(--primary);font-weight:700;"> —</span>
-              <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">
-                La distribución de preguntas corresponde a tu área de postulación.
+            <!-- Puntaje Info Card -->
+            <div style="background:rgba(41,128,185,0.06);border:1px solid rgba(41,128,185,0.2);border-radius:12px;padding:14px 18px;margin-bottom:16px;text-align:left;display:flex;align-items:center;gap:12px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2980B9" stroke-width="2.2" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <div style="font-size:0.84rem;color:var(--text-main);line-height:1.45;">
+                <strong>Criterio de Puntaje:</strong> Correcta = <span style="color:#10B981;font-weight:700;">+1 pto</span> &nbsp;|&nbsp; Incorrecta = <span style="color:#EF4444;font-weight:700;">-0.25 ptos</span> &nbsp;|&nbsp; Sin marcar = <span>0 ptos</span> (escala de 20).
               </div>
             </div>
 
-            <button class="btn btn-primary btn-lg btn-full" id="btnIniciarExamen">
-              🚀 Iniciar Examen Simulacro
+            <!-- Área detectada Tag -->
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:14px 18px;margin-bottom:24px;text-align:left;display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-size:0.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Área de Admisión Registrada</div>
+                <div style="font-size:0.95rem;font-weight:800;color:var(--text-main);margin-top:2px;" id="examAreaLabel">CIE</div>
+              </div>
+              <span style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:800;display:inline-flex;align-items:center;gap:5px;">
+                <span style="width:7px;height:7px;border-radius:50%;background:var(--primary);display:inline-block;box-shadow:0 0 6px rgba(232,82,26,0.5);"></span>
+                Detectada
+              </span>
+            </div>
+
+            <button class="btn btn-primary btn-lg btn-full" id="btnIniciarExamen" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:1rem;font-weight:800;padding:14px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Iniciar Examen Simulacro
             </button>
           </div>
         </div>
