@@ -126,6 +126,22 @@ const DEMO_RESUMENES = [
   { id:12, curso:"GEOGRAFÍA", tema:"Relieve", titulo:"Resumen: Regiones Naturales del Perú", url:"#", paginas:5 },
 ];
 
+// ── HORARIO DE CLASES DEMO ─────────────────────────────────
+const DEMO_HORARIO = [
+  { id: 1, dia: "LUNES", horaInicio: "07:00", horaFin: "08:30", curso: "ÁLGEBRA", docente: "Prof. Carlos Llano", aula: "Aula Virtual 1 (Zoom)", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 2, dia: "LUNES", horaInicio: "08:30", horaFin: "10:00", curso: "ARITMÉTICA", docente: "Mg. Juan Mamani", aula: "Aula Virtual 1 (Meet)", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://meet.google.com" },
+  { id: 3, dia: "LUNES", horaInicio: "10:15", horaFin: "11:45", curso: "FÍSICA", docente: "Ing. Roberto Quispe", aula: "Laboratorio Virtual", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 4, dia: "MARTES", horaInicio: "07:00", horaFin: "08:30", curso: "GEOMETRÍA", docente: "Prof. Carlos Llano", aula: "Aula Virtual 2", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 5, dia: "MARTES", horaInicio: "08:30", horaFin: "10:00", curso: "TRIGONOMETRÍA", docente: "Mg. Sonia Apaza", aula: "Aula Virtual 2", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 6, dia: "MARTES", horaInicio: "10:15", horaFin: "11:45", curso: "QUÍMICA", docente: "Dr. Walter Canaza", aula: "Laboratorio Virtual", area: "INGENIERÍAS", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 7, dia: "MIÉRCOLES", horaInicio: "07:00", horaFin: "08:30", curso: "BIOLOGÍA", docente: "Dra. Elena Vargas", aula: "Aula Virtual Biomédicas", area: "BIOMÉDICAS", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 8, dia: "MIÉRCOLES", horaInicio: "08:30", horaFin: "10:00", curso: "QUÍMICA", docente: "Dr. Walter Canaza", aula: "Aula Virtual Biomédicas", area: "BIOMÉDICAS", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 9, dia: "JUEVES", horaInicio: "07:00", horaFin: "08:30", curso: "LENGUAJE", docente: "Lic. Maria Paredes", aula: "Aula Virtual Sociales", area: "SOCIALES", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 10, dia: "JUEVES", horaInicio: "08:30", horaFin: "10:00", curso: "HISTORIA", docente: "Lic. Jose Pari", aula: "Aula Virtual Sociales", area: "SOCIALES", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 11, dia: "VIERNES", horaInicio: "07:00", horaFin: "08:30", curso: "GEOGRAFÍA", docente: "Lic. Jose Pari", aula: "Aula Virtual Sociales", area: "SOCIALES", tipo: "EN VIVO", url: "https://zoom.us" },
+  { id: 12, dia: "SÁBADO", horaInicio: "08:00", horaFin: "12:00", curso: "SIMULACRO GENERAL", docente: "Equipo Académico UNA", aula: "Plataforma KCHIMBO+", area: "TODAS", tipo: "EVALUACIÓN", url: "#" }
+];
+
 // ── BANCO DE PREGUNTAS DEMO ────────────────────────────────
 // Distribución examen UNA PUNO (área CIE): 60 preguntas
 // Álgebra:8, Aritmética:6, Geometría:6, Trigonometría:5,

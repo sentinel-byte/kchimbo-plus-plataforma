@@ -139,6 +139,13 @@
         <span class="nav-item-text">Clases en Línea</span>
       </div>
 
+      <div class="nav-item" data-section="horario" id="nav-horario">
+        <span class="nav-item-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </span>
+        <span class="nav-item-text">Horario de Clases</span>
+      </div>
+
       <div class="nav-item" data-section="resumenes" id="nav-resumenes">
         <span class="nav-item-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
@@ -219,6 +226,59 @@
 
         <div id="clasesContent">
           <!-- Generado como columnas de Padlet por JS -->
+        </div>
+      </div>
+
+      <!-- ════ SECCIÓN: HORARIO DE CLASES ════ -->
+      <div class="section-view" id="section-horario">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+          <div>
+            <h2 style="font-size:1.4rem;font-weight:800;color:var(--text-main);display:flex;align-items:center;gap:8px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Horario Semanal de Clases y Asesorías
+            </h2>
+            <p style="font-size:0.82rem;color:var(--text-muted);margin-top:2px;">Consulta la programación de transmisiones en vivo y actividades académicas</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-primary" id="btnNuevoHorario" style="display:none;border-radius:12px;font-weight:800;font-size:0.85rem;padding:8px 18px;align-items:center;gap:6px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Agregar Horario
+            </button>
+            <span style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Ciclo 2026
+            </span>
+          </div>
+        </div>
+
+        <!-- Filter Row: Days of Week + Area Filter -->
+        <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:14px;margin-bottom:20px;box-shadow:0 2px 6px rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <!-- Day Filter Buttons -->
+          <div style="display:flex;gap:6px;flex-wrap:wrap;" id="horarioDaysFilter">
+            <button class="tipo-btn active" data-dia="TODOS">Toda la Semana</button>
+            <button class="tipo-btn" data-dia="LUNES">Lunes</button>
+            <button class="tipo-btn" data-dia="MARTES">Martes</button>
+            <button class="tipo-btn" data-dia="MIÉRCOLES">Miércoles</button>
+            <button class="tipo-btn" data-dia="JUEVES">Jueves</button>
+            <button class="tipo-btn" data-dia="VIERNES">Viernes</button>
+            <button class="tipo-btn" data-dia="SÁBADO">Sábado</button>
+          </div>
+
+          <!-- Area Selector -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            <label style="font-size:0.75rem;font-weight:800;color:var(--text-muted);letter-spacing:0.5px;">ÁREA:</label>
+            <select class="form-select" id="horarioAreaSelect" style="height:36px;border-radius:10px;font-size:0.8rem;font-weight:700;padding:4px 10px;">
+              <option value="TODAS">Todas las Áreas</option>
+              <option value="INGENIERÍAS">INGENIERÍAS</option>
+              <option value="BIOMÉDICAS">BIOMÉDICAS</option>
+              <option value="SOCIALES">SOCIALES</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Schedule Slots Container -->
+        <div id="horarioListContainer">
+          <!-- Generado por JS -->
         </div>
       </div>
 
@@ -795,6 +855,91 @@
   </div>
 </div>
 
+<!-- Modal Programar/Editar Horario (Admin) -->
+<div class="modal-overlay" id="horarioModal">
+  <div class="modal-box" style="max-width:550px;">
+    <div class="modal-header">
+      <div class="modal-title" id="horarioModalTitle" style="display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Programar Clase / Horario
+      </div>
+      <button class="modal-close" id="horarioModalClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <form id="horarioForm">
+      <input type="hidden" id="horarioEditId" value="">
+      <div class="modal-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Día de la semana</label>
+            <select class="form-select" id="horarioDia" required>
+              <option value="LUNES">Lunes</option>
+              <option value="MARTES">Martes</option>
+              <option value="MIÉRCOLES">Miércoles</option>
+              <option value="JUEVES">Jueves</option>
+              <option value="VIERNES">Viernes</option>
+              <option value="SÁBADO">Sábado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Área Dirigida</label>
+            <select class="form-select" id="horarioArea" required>
+              <option value="TODAS">Todas las áreas</option>
+              <option value="INGENIERÍAS">INGENIERÍAS</option>
+              <option value="BIOMÉDICAS">BIOMÉDICAS</option>
+              <option value="SOCIALES">SOCIALES</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Hora Inicio (ej: 07:00)</label>
+            <input type="text" class="form-input" id="horarioInicio" placeholder="07:00" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hora Fin (ej: 08:30)</label>
+            <input type="text" class="form-input" id="horarioFin" placeholder="08:30" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Asignatura / Curso</label>
+          <input type="text" class="form-input" id="horarioCurso" placeholder="Ej: ÁLGEBRA" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Docente / Profesor</label>
+          <input type="text" class="form-input" id="horarioDocente" placeholder="Ej: Prof. Carlos Llano" required>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Aula / Medio</label>
+            <input type="text" class="form-input" id="horarioAula" placeholder="Ej: Aula Virtual 1 (Zoom)" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tipo de sesión</label>
+            <select class="form-select" id="horarioTipo" required>
+              <option value="EN VIVO">Clase en Vivo</option>
+              <option value="ASESORÍA">Asesoría / Consultas</option>
+              <option value="EVALUACIÓN">Simulacro / Evaluación</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">URL / Enlace de Transmisión (Zoom/Meet/YouTube)</label>
+          <input type="url" class="form-input" id="horarioUrl" placeholder="https://zoom.us/j/..." required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" id="horarioModalCancel">Cancelar</button>
+        <button type="submit" class="btn btn-primary" id="horarioModalSubmit">Guardar Horario</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- Modal Publicar/Editar Publicación en Padlet -->
 <div class="modal-overlay" id="padletPostModal">
   <div class="modal-box" style="max-width:520px;">
@@ -959,6 +1104,7 @@
 
     // Cargar contenido de sección
     if (name === 'clases') renderClases();
+    if (name === 'horario') renderHorario();
     if (name === 'resumenes') renderResumenes();
     if (name === 'avance') renderAvance();
     if (name === 'pagos') renderPagos();
@@ -1222,6 +1368,256 @@
         openMedia(card.dataset.titulo, card.dataset.url, card.dataset.tipo);
       });
     });
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // SECCIÓN: HORARIO DE CLASES Y ASESORÍAS
+  // ─────────────────────────────────────────────────────────
+  let diaHorarioFiltro = 'TODOS';
+  let areaHorarioFiltro = 'TODAS';
+
+  function getHorariosData() {
+    const raw = localStorage.getItem('kchimbo_horarios');
+    if (!raw) {
+      localStorage.setItem('kchimbo_horarios', JSON.stringify(DEMO_HORARIO));
+      return [...DEMO_HORARIO];
+    }
+    try { return JSON.parse(raw); } catch { return [...DEMO_HORARIO]; }
+  }
+
+  function saveHorariosData(data) {
+    localStorage.setItem('kchimbo_horarios', JSON.stringify(data));
+  }
+
+  function renderHorario() {
+    const container = document.getElementById('horarioListContainer');
+    if (!container) return;
+
+    // Show Admin Add button if Admin
+    const btnNuevo = document.getElementById('btnNuevoHorario');
+    if (btnNuevo) btnNuevo.style.display = isAdmin ? 'inline-flex' : 'none';
+
+    let horarios = getHorariosData();
+
+    // Filter by Day
+    if (diaHorarioFiltro !== 'TODOS') {
+      horarios = horarios.filter(h => h.dia === diaHorarioFiltro);
+    }
+    // Filter by Area
+    if (areaHorarioFiltro !== 'TODAS') {
+      horarios = horarios.filter(h => h.area === areaHorarioFiltro || h.area === 'TODAS');
+    }
+
+    if (horarios.length === 0) {
+      container.innerHTML = `
+        <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:40px 20px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+          <div style="width:48px;height:48px;border-radius:14px;background:#F1F5F9;color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 16 14"/></svg>
+          </div>
+          <div style="font-size:0.95rem;font-weight:800;color:var(--text-main);">No hay clases programadas para esta selección</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Intenta seleccionando otro día o área en los filtros superiores.</div>
+        </div>
+      `;
+      return;
+    }
+
+    const courseColors = {
+      'ÁLGEBRA': '#F97316',
+      'ARITMÉTICA': '#10B981',
+      'GEOMETRÍA': '#3B82F6',
+      'TRIGONOMETRÍA': '#8B5CF6',
+      'FÍSICA': '#6366F1',
+      'QUÍMICA': '#14B8A6',
+      'BIOLOGÍA': '#F43F5E',
+      'LENGUAJE': '#D97706',
+      'LITERATURA': '#06B6D4',
+      'HISTORIA': '#E11D48',
+      'GEOGRAFÍA': '#475569',
+      'FILOSOFÍA': '#7C3AED',
+      'PSICOLOGÍA': '#EC4899',
+      'ECONOMÍA': '#059669',
+      'SIMULACRO GENERAL': '#E8521A'
+    };
+
+    const diasOrden = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO'];
+    let html = `<div style="display:flex;flex-direction:column;gap:16px;">`;
+
+    horarios.sort((a, b) => {
+      const idxA = diasOrden.indexOf(a.dia);
+      const idxB = diasOrden.indexOf(b.dia);
+      if (idxA !== idxB) return idxA - idxB;
+      return a.horaInicio.localeCompare(b.horaInicio);
+    });
+
+    horarios.forEach(h => {
+      const colorTheme = courseColors[h.curso] || '#E8521A';
+      const esVivo = h.tipo === 'EN VIVO';
+
+      html += `
+        <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:18px 20px;box-shadow:0 2px 6px rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-left:5px solid ${colorTheme};">
+          <div style="display:flex;align-items:center;gap:16px;flex:1;min-width:280px;">
+            <!-- Time Chip -->
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:10px 14px;text-align:center;flex-shrink:0;min-width:110px;">
+              <div style="font-size:0.68rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;">${h.dia}</div>
+              <div style="font-size:0.92rem;font-weight:900;color:var(--text-main);margin-top:2px;display:flex;align-items:center;justify-content:center;gap:4px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                ${h.horaInicio} - ${h.horaFin}
+              </div>
+            </div>
+
+            <!-- Class & Teacher Details -->
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
+                <span style="background:${colorTheme}15;color:${colorTheme};border:1px solid ${colorTheme}30;padding:2px 8px;border-radius:8px;font-size:0.7rem;font-weight:800;">${h.curso}</span>
+                <span style="background:rgba(0,0,0,0.05);color:var(--text-secondary);padding:2px 8px;border-radius:8px;font-size:0.7rem;font-weight:700;">${h.area}</span>
+                ${esVivo ? `<span style="background:rgba(239,68,68,0.1);color:#EF4444;border:1px solid rgba(239,68,68,0.25);padding:2px 8px;border-radius:8px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#EF4444;"></span>EN VIVO</span>` : ''}
+              </div>
+              <h3 style="font-size:1.05rem;font-weight:900;color:var(--text-main);margin:0 0 4px 0;">${h.curso}</h3>
+              <div style="font-size:0.8rem;color:var(--text-secondary);display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${h.docente}</span>
+                <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ${h.aula}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            ${h.url && h.url !== '#' ? `
+              <a href="${h.url}" target="_blank" class="btn btn-primary btn-sm" style="border-radius:10px;font-weight:800;font-size:0.78rem;padding:7px 16px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                Ingresar a Clase
+              </a>
+            ` : ''}
+
+            ${isAdmin ? `
+              <button class="btn btn-outline btn-sm btn-edit-horario" data-id="${h.id}" style="border-radius:10px;padding:6px 10px;" title="Editar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="btn btn-outline btn-danger btn-sm btn-del-horario" data-id="${h.id}" style="border-radius:10px;padding:6px 10px;" title="Eliminar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+    container.innerHTML = html;
+
+    // Attach Event Listeners
+    if (isAdmin) {
+      container.querySelectorAll('.btn-edit-horario').forEach(btn => {
+        btn.addEventListener('click', () => openHorarioModal(parseInt(btn.dataset.id)));
+      });
+      container.querySelectorAll('.btn-del-horario').forEach(btn => {
+        btn.addEventListener('click', () => deleteHorario(parseInt(btn.dataset.id)));
+      });
+    }
+  }
+
+  // Filter Listeners
+  const daysFilter = document.getElementById('horarioDaysFilter');
+  if (daysFilter) {
+    daysFilter.querySelectorAll('.tipo-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        daysFilter.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        diaHorarioFiltro = btn.dataset.dia;
+        renderHorario();
+      });
+    });
+  }
+
+  const areaSelect = document.getElementById('horarioAreaSelect');
+  if (areaSelect) {
+    areaSelect.addEventListener('change', () => {
+      areaHorarioFiltro = areaSelect.value;
+      renderHorario();
+    });
+  }
+
+  // Admin Horario Management Modal logic
+  const btnNuevoHorario = document.getElementById('btnNuevoHorario');
+  if (btnNuevoHorario) {
+    btnNuevoHorario.addEventListener('click', () => openHorarioModal());
+  }
+
+  function openHorarioModal(id = null) {
+    const modal = document.getElementById('horarioModal');
+    const form = document.getElementById('horarioForm');
+    if (!modal || !form) return;
+
+    if (id) {
+      const horarios = getHorariosData();
+      const item = horarios.find(h => h.id === id);
+      if (item) {
+        document.getElementById('horarioModalTitle').textContent = 'Editar Programación de Clase';
+        document.getElementById('horarioEditId').value = item.id;
+        document.getElementById('horarioDia').value = item.dia;
+        document.getElementById('horarioArea').value = item.area;
+        document.getElementById('horarioInicio').value = item.horaInicio;
+        document.getElementById('horarioFin').value = item.horaFin;
+        document.getElementById('horarioCurso').value = item.curso;
+        document.getElementById('horarioDocente').value = item.docente;
+        document.getElementById('horarioAula').value = item.aula;
+        document.getElementById('horarioTipo').value = item.tipo;
+        document.getElementById('horarioUrl').value = item.url;
+      }
+    } else {
+      document.getElementById('horarioModalTitle').textContent = 'Programar Nueva Clase';
+      document.getElementById('horarioEditId').value = '';
+      form.reset();
+    }
+    modal.classList.add('open');
+  }
+
+  const horarioCloseBtn = document.getElementById('horarioModalClose');
+  const horarioCancelBtn = document.getElementById('horarioModalCancel');
+  if (horarioCloseBtn) horarioCloseBtn.addEventListener('click', () => closeModal('horarioModal'));
+  if (horarioCancelBtn) horarioCancelBtn.addEventListener('click', () => closeModal('horarioModal'));
+
+  const horarioForm = document.getElementById('horarioForm');
+  if (horarioForm) {
+    horarioForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const editId = document.getElementById('horarioEditId').value;
+      let horarios = getHorariosData();
+
+      const newItem = {
+        id: editId ? parseInt(editId) : Date.now(),
+        dia: document.getElementById('horarioDia').value,
+        area: document.getElementById('horarioArea').value,
+        horaInicio: document.getElementById('horarioInicio').value.trim(),
+        horaFin: document.getElementById('horarioFin').value.trim(),
+        curso: document.getElementById('horarioCurso').value.trim().toUpperCase(),
+        docente: document.getElementById('horarioDocente').value.trim(),
+        aula: document.getElementById('horarioAula').value.trim(),
+        tipo: document.getElementById('horarioTipo').value,
+        url: document.getElementById('horarioUrl').value.trim()
+      };
+
+      if (editId) {
+        const idx = horarios.findIndex(h => h.id === parseInt(editId));
+        if (idx !== -1) horarios[idx] = newItem;
+      } else {
+        horarios.push(newItem);
+      }
+
+      saveHorariosData(horarios);
+      closeModal('horarioModal');
+      showToast(editId ? 'Horario actualizado con éxito' : 'Nueva clase programada con éxito', 'success');
+      renderHorario();
+    });
+  }
+
+  function deleteHorario(id) {
+    if (confirm('¿Eliminar esta programación del horario?')) {
+      let horarios = getHorariosData().filter(h => h.id !== id);
+      saveHorariosData(horarios);
+      showToast('Programación eliminada', 'warning');
+      renderHorario();
+    }
   }
 
   // ── Padlet Post Modal Functions ──
