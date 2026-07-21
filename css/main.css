@@ -715,11 +715,14 @@ h4 { font-size: 1.1rem; }
 .padlet-board-container {
   display: flex;
   gap: 20px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  height: calc(100vh - 175px);
-  padding-bottom: 12px;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  height: calc(100vh - 185px);
+  padding-bottom: 16px;
   align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .padlet-column {
   flex: 0 0 320px;
