@@ -48,10 +48,14 @@
   <div class="loading-text">Cargando Panel Admin...</div>
 </div>
 
-<!-- Mobile Topbar -->
+<!-- Universal Topbar -->
 <div class="topbar" id="topbar">
-  <div class="topbar-logo">KCHIMBO<span>+</span> <span style="font-size:0.65rem;color:var(--text-muted);font-weight:500;">Admin</span></div>
-  <button class="topbar-menu-btn" id="menuToggle">☰</button>
+  <button class="topbar-menu-btn" id="menuToggle" title="Ocultar / Mostrar menú de navegación">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="topbar-brand-title">
+    <span style="color:#C0392B;">KCHIMBO+</span> — Panel Administrador
+  </div>
 </div>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -68,9 +72,6 @@
           <div class="sidebar-logo-name">KCHIMBO<span>+</span></div>
           <div class="sidebar-logo-sub">Panel Admin</div>
         </div>
-        <button class="sidebar-toggle-btn" id="sidebarCollapseBtn" title="Contraer / Expandir menú">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
       </div>
       <div class="sidebar-user">
         <div class="sidebar-avatar" style="background:linear-gradient(135deg,#A04000,#C0392B);" id="adminAvatar">A</div>
@@ -661,25 +662,34 @@
     item.addEventListener('click', () => showSection(item.dataset.section));
   });
 
+  // ── Universal Sidebar toggle (PC & Mobile) ──
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebarOverlay');
-  const collapseBtn = document.getElementById('sidebarCollapseBtn');
+  const menuToggle = document.getElementById('menuToggle');
 
-  if (collapseBtn) {
-    collapseBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-      const isCollapsed = sidebar.classList.contains('collapsed');
-      localStorage.setItem('kchimbo_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+  if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        // Mobile drawer
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('visible');
+      } else {
+        // PC toggle
+        sidebar.classList.toggle('hidden-pc');
+        const isHidden = sidebar.classList.contains('hidden-pc');
+        localStorage.setItem('kchimbo_sidebar_hidden_pc', isHidden ? 'true' : 'false');
+      }
     });
-    if (localStorage.getItem('kchimbo_sidebar_collapsed') === 'true') {
-      sidebar.classList.add('collapsed');
-    }
   }
 
-  document.getElementById('menuToggle')?.addEventListener('click', () => {
-    sidebar.classList.add('open'); overlay.classList.add('visible');
+  if (window.innerWidth > 768 && localStorage.getItem('kchimbo_sidebar_hidden_pc') === 'true') {
+    sidebar.classList.add('hidden-pc');
+  }
+
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
   });
-  overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('visible'); });
 
   // ── Toast ──
   function showToast(msg, type = 'success') {

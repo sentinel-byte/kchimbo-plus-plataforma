@@ -84,10 +84,14 @@
   <div class="loading-text">Cargando KCHIMBO+...</div>
 </div>
 
-<!-- Mobile Topbar -->
+<!-- Universal Topbar -->
 <div class="topbar" id="topbar">
-  <div class="topbar-logo">KCHIMBO<span>+</span></div>
-  <button class="topbar-menu-btn" id="menuToggle">☰</button>
+  <button class="topbar-menu-btn" id="menuToggle" title="Ocultar / Mostrar menú de navegación">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="topbar-brand-title">
+    <span>KCHIMBO+</span> — Plataforma Virtual
+  </div>
 </div>
 
 <!-- Sidebar overlay (mobile) -->
@@ -107,9 +111,6 @@
           <div class="sidebar-logo-name">KCHIMBO<span>+</span></div>
           <div class="sidebar-logo-sub">Plataforma Virtual</div>
         </div>
-        <button class="sidebar-toggle-btn" id="sidebarCollapseBtn" title="Contraer / Expandir menú">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
       </div>
 
       <!-- User card -->
@@ -717,26 +718,28 @@
     item.addEventListener('click', () => showSection(item.dataset.section));
   });
 
-  // ── Sidebar collapse y mobile handlers ──
+  // ── Universal Sidebar toggle (PC & Mobile) ──
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebarOverlay');
-  const collapseBtn = document.getElementById('sidebarCollapseBtn');
+  const menuToggle = document.getElementById('menuToggle');
 
-  if (collapseBtn) {
-    collapseBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-      const isCollapsed = sidebar.classList.contains('collapsed');
-      localStorage.setItem('kchimbo_sidebar_collapsed', isCollapsed ? 'true' : 'false');
-    });
-    if (localStorage.getItem('kchimbo_sidebar_collapsed') === 'true') {
-      sidebar.classList.add('collapsed');
+  menuToggle.addEventListener('click', () => {
+    if (window.innerWidth <= 768) {
+      // Mobile drawer
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('visible');
+    } else {
+      // PC toggle
+      sidebar.classList.toggle('hidden-pc');
+      const isHidden = sidebar.classList.contains('hidden-pc');
+      localStorage.setItem('kchimbo_sidebar_hidden_pc', isHidden ? 'true' : 'false');
     }
+  });
+
+  if (window.innerWidth > 768 && localStorage.getItem('kchimbo_sidebar_hidden_pc') === 'true') {
+    sidebar.classList.add('hidden-pc');
   }
 
-  document.getElementById('menuToggle').addEventListener('click', () => {
-    sidebar.classList.add('open');
-    overlay.classList.add('visible');
-  });
   function closeSidebar() {
     sidebar.classList.remove('open');
     overlay.classList.remove('visible');
