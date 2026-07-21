@@ -181,7 +181,7 @@
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <div class="search-input-wrap" style="width:220px;margin-bottom:0;">
-              <span class="search-icon">🔍</span>
+              <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
               <input type="text" class="search-input" id="searchResumenesPadlet" placeholder="Buscar resumen..." style="padding:5px 10px 5px 30px;font-size:0.8rem;">
             </div>
           </div>
@@ -203,7 +203,7 @@
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <div class="search-input-wrap" style="width:200px;margin-bottom:0;">
-              <span class="search-icon">🔍</span>
+              <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
               <input type="text" class="search-input" id="searchPreguntasPadlet" placeholder="Buscar pregunta..." style="padding:5px 10px 5px 30px;font-size:0.8rem;">
             </div>
             <select class="form-select" style="width:auto;padding:4px 10px;font-size:0.78rem;" id="filterPregAreaPadlet">
@@ -244,7 +244,7 @@
 
         <div class="admin-actions-bar">
           <div class="search-input-wrap">
-            <span class="search-icon">🔍</span>
+            <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
             <input type="text" class="search-input" id="searchUsuarios" placeholder="Buscar estudiante...">
           </div>
           <select class="form-select" style="width:auto;" id="filterArea">
@@ -292,7 +292,7 @@
 
         <div class="admin-actions-bar">
           <div class="search-input-wrap">
-            <span class="search-icon">🔍</span>
+            <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
             <input type="text" class="search-input" id="searchPagos" placeholder="Buscar estudiante...">
           </div>
           <select class="form-select" style="width:auto;" id="filterPagoEstado">
@@ -1280,8 +1280,12 @@
           <span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);">${p.año || 2024}</span>
         </div>
         <div style="display:flex;align-items:center;gap:4px;">
-          <button class="action-icon-btn action-edit opt-preg-edit" data-id="${p.id}" title="Editar" style="padding:2px 4px;font-size:0.75rem;">✏️</button>
-          <button class="action-icon-btn action-delete opt-preg-delete" data-id="${p.id}" title="Eliminar" style="padding:2px 4px;font-size:0.75rem;">🗑️</button>
+          <button class="action-icon-btn action-edit opt-preg-edit" data-id="${p.id}" title="Editar" style="padding:3px 6px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="action-icon-btn action-delete opt-preg-delete" data-id="${p.id}" title="Eliminar" style="padding:3px 6px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
         </div>
       </div>
       <div style="font-size:0.8rem;color:var(--text-main);line-height:1.35;margin-bottom:6px;font-weight:500;">
@@ -1575,8 +1579,12 @@
               <td style="font-size:0.78rem;">${u.membresia_inicio || '—'} → ${u.membresia_fin || '—'}</td>
               <td><span class="${activo ? 'users-status-active' : 'users-status-expired'}">${activo ? '✅ Activa' : '⛔ Vencida'}</span></td>
               <td class="td-actions">
-                <button class="action-icon-btn action-edit" onclick="editUsuario('${u.usuario}')">✏️</button>
-                <button class="action-icon-btn action-delete" onclick="deleteUsuario('${u.usuario}')">🗑️</button>
+                <button class="action-icon-btn action-edit" onclick="editUsuario('${u.usuario}')" title="Editar">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button class="action-icon-btn action-delete" onclick="deleteUsuario('${u.usuario}')" title="Eliminar">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
               </td>
             </tr>`;
         }).join('');
@@ -1696,7 +1704,9 @@
               <td>${u.membresia_fin || '—'}</td>
               <td>${activo ? `<span class="users-status-active">✅ Activa (${diasLeft}d)</span>` : `<span class="users-status-expired">⛔ Vencida</span>`}</td>
               <td class="td-actions">
-                <button class="action-icon-btn action-edit" onclick="renovarMembresia('${u.usuario}')" title="Renovar">🔄</button>
+                <button class="action-icon-btn action-edit" onclick="renovarMembresia('${u.usuario}')" title="Renovar">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                </button>
               </td>
             </tr>`;
         }).join('');
