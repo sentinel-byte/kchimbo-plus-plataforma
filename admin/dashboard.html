@@ -192,66 +192,30 @@
         </div>
       </div>
 
-      <!-- ════ BANCO DE PREGUNTAS ════ -->
+      <!-- ════ BANCO DE PREGUNTAS (PADLET BOARD ADMIN) ════ -->
       <div class="section-view" id="section-preguntas">
-        <div class="section-header">
-          <div class="section-title"><div class="icon-wrap">📝</div> Banco de Preguntas</div>
-          <button class="btn btn-primary" id="btnAddPregunta">+ Nueva Pregunta</button>
-        </div>
-
-        <div class="admin-stats-row">
-          <div class="stat-card">
-            <div class="stat-icon">📊</div>
-            <div class="stat-info">
-              <div class="stat-value" id="totalPreguntas">0</div>
-              <div class="stat-label">Total de preguntas</div>
-            </div>
+        <div class="board-header">
+          <div class="board-header-info">
+            <h2>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              Banco de Preguntas <span style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-left:6px;">(Admin)</span>
+            </h2>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon" style="background:linear-gradient(135deg,#2980B9,#1A5276);">🔬</div>
-            <div class="stat-info">
-              <div class="stat-value" id="pCIE">0</div>
-              <div class="stat-label">Área CIE</div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <div class="search-input-wrap" style="width:200px;margin-bottom:0;">
+              <span class="search-icon">🔍</span>
+              <input type="text" class="search-input" id="searchPreguntasPadlet" placeholder="Buscar pregunta..." style="padding:5px 10px 5px 30px;font-size:0.8rem;">
             </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon" style="background:linear-gradient(135deg,#8E44AD,#6C3483);">📚</div>
-            <div class="stat-info">
-              <div class="stat-value" id="pLETRAS">0</div>
-              <div class="stat-label">Área LETRAS</div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon" style="background:linear-gradient(135deg,#27AE60,#1E8449);">🏫</div>
-            <div class="stat-info">
-              <div class="stat-value" id="pCursos">0</div>
-              <div class="stat-label">Cursos distintos</div>
-            </div>
+            <select class="form-select" style="width:auto;padding:4px 10px;font-size:0.78rem;" id="filterPregAreaPadlet">
+              <option value="">Todas las áreas</option>
+              <option value="CIE">Área CIE</option>
+              <option value="LETRAS">Área LETRAS</option>
+            </select>
           </div>
         </div>
 
-        <div class="admin-actions-bar">
-          <div class="search-input-wrap">
-            <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" id="searchPreguntas" placeholder="Buscar pregunta...">
-          </div>
-          <select class="form-select" style="width:auto;" id="filterPregCurso">
-            <option value="">Todos los cursos</option>
-          </select>
-          <select class="form-select" style="width:auto;" id="filterPregArea">
-            <option value="">Todas las áreas</option>
-            <option value="CIE">CIE</option>
-            <option value="LETRAS">LETRAS</option>
-          </select>
-        </div>
-
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr><th>#</th><th>Curso</th><th>Tema</th><th>Área</th><th>Año</th><th>Pregunta</th><th>Acciones</th></tr>
-            </thead>
-            <tbody id="preguntasTableBody"></tbody>
-          </table>
+        <div id="adminPreguntasBoard">
+          <!-- Generado como columnas de Padlet por JS -->
         </div>
       </div>
 
@@ -628,7 +592,7 @@
     switch(name) {
       case 'clases':    renderClasesTable(); break;
       case 'resumenes': renderResumenesBoard(); break;
-      case 'preguntas': renderPreguntasTable(); break;
+      case 'preguntas': renderPreguntasBoard(); break;
       case 'usuarios':  renderUsuariosTable(); break;
       case 'avance':    renderAvanceAdmin(); break;
       case 'pagos':     renderPagosTable(); break;
@@ -1281,54 +1245,7 @@
   // ─────────────────────────────────────────────────────────
   // PREGUNTAS
   // ─────────────────────────────────────────────────────────
-  function renderPreguntasTable() {
-    const search  = document.getElementById('searchPreguntas').value.toLowerCase();
-    const filterC = document.getElementById('filterPregCurso').value;
-    const filterA = document.getElementById('filterPregArea').value;
-
-    const cursos = [...new Set(preguntas.map(p => p.curso))].sort();
-    const cSel = document.getElementById('filterPregCurso');
-    const prevC = cSel.value;
-    cSel.innerHTML = `<option value="">Todos los cursos</option>` + cursos.map(c=>`<option value="${c}" ${c===prevC?'selected':''}>${c}</option>`).join('');
-
-    let filtered = preguntas.filter(p => {
-      const ms = !search || p.pregunta.toLowerCase().includes(search) || p.curso.toLowerCase().includes(search);
-      const mc = !filterC || p.curso === filterC;
-      const ma = !filterA || p.area === filterA;
-      return ms && mc && ma;
-    });
-
-    // Stats
-    document.getElementById('totalPreguntas').textContent = preguntas.length;
-    document.getElementById('pCIE').textContent = preguntas.filter(p=>p.area==='CIE').length;
-    document.getElementById('pLETRAS').textContent = preguntas.filter(p=>p.area==='LETRAS').length;
-    document.getElementById('pCursos').textContent = [...new Set(preguntas.map(p=>p.curso))].length;
-
-    const tbody = document.getElementById('preguntasTableBody');
-    tbody.innerHTML = filtered.length === 0
-      ? `<tr><td colspan="7" class="empty-table-msg">No se encontraron preguntas.</td></tr>`
-      : filtered.map((p,i) => `
-        <tr>
-          <td>${i+1}</td>
-          <td><span class="badge badge-primary">${p.curso}</span></td>
-          <td><span class="badge badge-info">${p.tema}</span></td>
-          <td><span class="badge ${p.area==='CIE'?'badge-warning':'badge-primary'}">${p.area}</span></td>
-          <td>${p.año || '—'}</td>
-          <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${p.pregunta}">${p.pregunta.substring(0,80)}${p.pregunta.length>80?'...':''}</td>
-          <td class="td-actions">
-            <button class="action-icon-btn action-edit" onclick="editPregunta(${p.id})">✏️</button>
-            <button class="action-icon-btn action-delete" onclick="deletePregunta(${p.id})">🗑️</button>
-          </td>
-        </tr>
-      `).join('');
-  }
-
-  document.getElementById('searchPreguntas').addEventListener('input', renderPreguntasTable);
-  document.getElementById('filterPregCurso').addEventListener('change', renderPreguntasTable);
-  document.getElementById('filterPregArea').addEventListener('change', renderPreguntasTable);
-  renderPreguntasTable();
-
-  document.getElementById('btnAddPregunta').addEventListener('click', () => {
+  function openPreguntaModalForCurso(curso = null) {
     document.getElementById('preguntaModalTitle').textContent = 'Nueva Pregunta';
     document.getElementById('preguntaId').value = '';
     ['curso','tema','area','año','pregunta','a','b','c','d','e','respuesta'].forEach(f => {
@@ -1336,8 +1253,175 @@
       if (el) el.value = f==='año' ? new Date().getFullYear() : f==='area' ? 'CIE' : f==='respuesta' ? 'A' : '';
     });
     populateCursosSelect(document.getElementById('pForm_curso'));
+    if (curso) document.getElementById('pForm_curso').value = curso;
     openModal('preguntaModal');
-  });
+  }
+
+  function renderPreguntasBoard() {
+    const cursosArea = CURSOS_POR_AREA.ADMIN;
+    const container = document.getElementById('adminPreguntasBoard');
+    if (!container) return;
+
+    const searchEl = document.getElementById('searchPreguntasPadlet');
+    const searchTerm = (searchEl ? searchEl.value : '').toLowerCase().trim();
+    const areaFilter = (document.getElementById('filterPregAreaPadlet')?.value || '').trim();
+
+    const courseColors = {
+      'ÁLGEBRA': '#F97316',
+      'ARITMÉTICA': '#10B981',
+      'GEOMETRÍA': '#3B82F6',
+      'TRIGONOMETRÍA': '#8B5CF6',
+      'FÍSICA': '#6366F1',
+      'QUÍMICA': '#14B8A6',
+      'BIOLOGÍA': '#F43F5E',
+      'LENGUAJE': '#D97706',
+      'LITERATURA': '#06B6D4',
+      'HISTORIA': '#E11D48',
+      'GEOGRAFÍA': '#475569',
+      'FILOSOFÍA': '#7C3AED',
+      'PSICOLOGÍA': '#EC4899',
+      'ECONOMÍA': '#059669'
+    };
+
+    let boardHTML = `<div class="padlet-board-container">`;
+
+    cursosArea.forEach(curso => {
+      let matCurso = preguntas.filter(p => p.curso === curso);
+      if (searchTerm) {
+        matCurso = matCurso.filter(p =>
+          p.pregunta.toLowerCase().includes(searchTerm) ||
+          p.tema.toLowerCase().includes(searchTerm)
+        );
+      }
+      if (areaFilter) {
+        matCurso = matCurso.filter(p => p.area === areaFilter);
+      }
+
+      const colorTheme = courseColors[curso] || '#E8521A';
+
+      boardHTML += `
+        <div class="padlet-column">
+          <div class="padlet-column-header">
+            <div class="padlet-column-title">
+              <span style="width:10px;height:10px;border-radius:50%;background:${colorTheme};display:inline-block;"></span>
+              ${curso}
+            </div>
+            <span class="padlet-column-count">${matCurso.length} preguntas</span>
+          </div>
+          <div class="padlet-column-body">
+            <button class="padlet-column-add-btn padlet-preg-add-btn" data-curso="${curso}" title="Añadir pregunta a ${curso}">
+              +
+            </button>
+            ${matCurso.length === 0 ? `
+              <div style="text-align:center;padding:24px 10px;color:var(--text-muted);font-size:0.82rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:8px;opacity:0.5;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <div>Sin preguntas en este curso</div>
+              </div>
+            ` : matCurso.map(p => `
+              <div class="padlet-post-card" data-id="${p.id}" data-curso="${p.curso}">
+                <div class="padlet-post-top" style="background:${colorTheme};"></div>
+                <div class="padlet-post-inner">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;position:relative;">
+                    <div style="display:flex;gap:6px;align-items:center;">
+                      <span class="padlet-post-tag" style="background:${p.area === 'CIE' ? 'rgba(41,128,185,0.1)' : 'rgba(142,68,173,0.1)'};color:${p.area === 'CIE' ? '#2980B9' : '#8E44AD'};">
+                        ${p.area}
+                      </span>
+                      <span style="font-size:0.68rem;font-weight:700;color:var(--text-muted);">AÑO ${p.año || 2024}</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <button class="padlet-post-more-btn" data-id="${p.id}" title="Opciones">⋮</button>
+                      <div class="padlet-options-menu" id="padlet-menu-preg-${p.id}">
+                        <button class="padlet-menu-item opt-preg-edit" data-id="${p.id}">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                          Editar pregunta
+                        </button>
+                        <button class="padlet-menu-item danger opt-preg-delete" data-id="${p.id}">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                          Eliminar pregunta
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:2px;">📌 Tema: <strong>${p.tema}</strong></div>
+                  <div class="padlet-post-title" style="margin:4px 0 8px 0;font-size:0.85rem;line-height:1.4;">${p.pregunta}</div>
+                  <div style="background:#F8FAFC;border-radius:var(--radius-sm);padding:6px 10px;font-size:0.74rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;border:1px solid #E2E8F0;">
+                    <span>Rpta: <strong style="color:var(--primary);">${p.respuesta}) ${p[p.respuesta.toLowerCase()] || ''}</strong></span>
+                    <span style="font-size:0.68rem;color:var(--success);font-weight:700;">✓ Clave</span>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    });
+
+    // Card estilo columna Padlet para añadir un nuevo curso
+    boardHTML += `
+      <div class="padlet-add-column-card" id="btnAddCourseCardPreguntas" title="Añadir un nuevo curso al mural">
+        <div class="padlet-add-course-inner">
+          <div class="add-course-plus-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <span>+ Añadir Curso</span>
+        </div>
+      </div>
+    `;
+
+    boardHTML += `</div>`;
+    container.innerHTML = boardHTML;
+
+    // Handlers
+    const addCourseCard = container.querySelector('#btnAddCourseCardPreguntas');
+    if (addCourseCard) {
+      addCourseCard.addEventListener('click', () => {
+        const nuevoCurso = prompt('Ingresa el nombre del nuevo curso:');
+        if (nuevoCurso && nuevoCurso.trim()) {
+          const nombreClean = nuevoCurso.trim().toUpperCase();
+          if (!CURSOS_POR_AREA.ADMIN.includes(nombreClean)) {
+            CURSOS_POR_AREA.ADMIN.push(nombreClean);
+            showToast(`Curso "${nombreClean}" añadido al mural`, 'success');
+            renderPreguntasBoard();
+          }
+        }
+      });
+    }
+
+    container.querySelectorAll('.padlet-preg-add-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openPreguntaModalForCurso(btn.dataset.curso);
+      });
+    });
+
+    container.querySelectorAll('.padlet-post-more-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        const menu = document.getElementById(`padlet-menu-preg-${id}`);
+        const isCurrentOpen = menu?.classList.contains('open');
+        document.querySelectorAll('.padlet-options-menu').forEach(m => m.classList.remove('open'));
+        if (menu && !isCurrentOpen) menu.classList.add('open');
+      });
+    });
+
+    container.querySelectorAll('.opt-preg-edit').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        editPregunta(parseInt(btn.dataset.id));
+      });
+    });
+
+    container.querySelectorAll('.opt-preg-delete').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        deletePregunta(parseInt(btn.dataset.id));
+      });
+    });
+  }
+
+  document.getElementById('searchPreguntasPadlet')?.addEventListener('input', renderPreguntasBoard);
+  document.getElementById('filterPregAreaPadlet')?.addEventListener('change', renderPreguntasBoard);
 
   window.editPregunta = (id) => {
     const p = preguntas.find(x => x.id === id);
@@ -1380,7 +1464,7 @@
       showToast('Pregunta agregada al banco');
     }
     closeModal('preguntaModal');
-    renderPreguntasTable();
+    renderPreguntasBoard();
   });
 
   window.deletePregunta = (id) => {
@@ -1388,7 +1472,7 @@
     document.getElementById('confirmDeleteBtn').onclick = () => {
       preguntas = preguntas.filter(p => p.id !== id);
       closeModal('confirmModal');
-      renderPreguntasTable();
+      renderPreguntasBoard();
       showToast('Pregunta eliminada', 'info');
     };
     openModal('confirmModal');

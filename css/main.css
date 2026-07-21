@@ -749,7 +749,8 @@ h4 { font-size: 1.1rem; }
 #adminClasesBoard,
 #clasesContent,
 #adminResumenesBoard,
-#studentResumenesBoard {
+#studentResumenesBoard,
+#adminPreguntasBoard {
   flex: 1;
   min-height: 0;
   display: flex;
