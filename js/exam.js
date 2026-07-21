@@ -16,7 +16,7 @@ class ExamenSimulacro {
     this.iniciado = false;
     this.terminado = false;
     this.timerInterval = null;
-    this.tiempoRestanteMs = 180 * 60 * 1000; // 3 horas (UNA PUNO)
+    this.tiempoRestanteMs = 120 * 60 * 1000; // 2 horas (UNA PUNO)
     this.resultado = null;
   }
 
