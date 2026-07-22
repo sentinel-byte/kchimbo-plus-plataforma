@@ -1392,47 +1392,42 @@
       const esVivo = h.tipo === 'EN VIVO';
 
       html += `
-        <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:18px 20px;box-shadow:0 2px 6px rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-left:5px solid ${colorTheme};">
-          <div style="display:flex;align-items:center;gap:16px;flex:1;min-width:280px;">
+        <div style="background:white;border:1px solid #E2E8F0;border-radius:12px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-left:4px solid ${colorTheme};transition:all 0.2s;">
+          <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:240px;">
             <!-- Time Chip -->
-            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:10px 14px;text-align:center;flex-shrink:0;min-width:110px;">
-              <div style="font-size:0.68rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;">${h.dia}</div>
-              <div style="font-size:0.92rem;font-weight:900;color:var(--text-main);margin-top:2px;display:flex;align-items:center;justify-content:center;gap:4px;">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 16 14"/></svg>
-                ${h.horaInicio} - ${h.horaFin}
-              </div>
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:5px 10px;text-align:center;flex-shrink:0;">
+              <div style="font-size:0.65rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;">${h.dia}</div>
+              <div style="font-size:0.82rem;font-weight:900;color:var(--text-main);line-height:1.1;margin-top:1px;">${h.horaInicio} - ${h.horaFin}</div>
             </div>
 
             <!-- Class & Teacher Details -->
             <div style="flex:1;min-width:0;">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
-                <span style="background:${colorTheme}15;color:${colorTheme};border:1px solid ${colorTheme}30;padding:2px 8px;border-radius:8px;font-size:0.7rem;font-weight:800;">${h.curso}</span>
-                <span style="background:rgba(232,82,26,0.08);color:var(--primary);border:1px solid rgba(232,82,26,0.2);padding:2px 8px;border-radius:8px;font-size:0.7rem;font-weight:800;">${h.ciclo || 'TODOS LOS CICLOS'}</span>
-                ${esVivo ? `<span style="background:rgba(239,68,68,0.1);color:#EF4444;border:1px solid rgba(239,68,68,0.25);padding:2px 8px;border-radius:8px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#EF4444;"></span>EN VIVO VIRTUAL</span>` : ''}
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                <span style="font-size:0.95rem;font-weight:900;color:var(--text-main);">${h.curso}</span>
+                <span style="background:rgba(232,82,26,0.08);color:var(--primary);border:1px solid rgba(232,82,26,0.2);padding:1px 7px;border-radius:6px;font-size:0.7rem;font-weight:800;">${h.ciclo || 'TODOS LOS CICLOS'}</span>
+                ${esVivo ? `<span style="background:#FEF2F2;color:#EF4444;border:1px solid #FCA5A5;padding:1px 7px;border-radius:6px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#EF4444;"></span>EN VIVO</span>` : ''}
               </div>
-              <h3 style="font-size:1.05rem;font-weight:900;color:var(--text-main);margin:0 0 4px 0;">${h.curso}</h3>
-              <div style="font-size:0.8rem;color:var(--text-secondary);display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-                <span style="display:inline-flex;align-items:center;gap:4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${h.docente}</span>
+              <div style="font-size:0.76rem;color:var(--text-muted);margin-top:2px;display:flex;align-items:center;gap:4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Prof. ${h.docente}
               </div>
             </div>
           </div>
 
-          <!-- Actions (Edit & Delete for Admin) -->
-          <div style="display:flex;align-items:center;gap:8px;">
+          <!-- Actions (Compact Icon Buttons + Access Link) -->
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
             ${h.url && h.url !== '#' ? `
-              <a href="${h.url}" target="_blank" class="btn btn-primary btn-sm" style="border-radius:10px;font-weight:800;font-size:0.78rem;padding:7px 14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+              <a href="${h.url}" target="_blank" class="btn btn-primary" style="border-radius:8px;font-weight:800;font-size:0.78rem;padding:6px 14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(232,82,26,0.2);">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                Ver Enlace (Zoom/Meet)
+                Ingresar a Clase
               </a>
             ` : ''}
 
-            <button class="btn btn-outline btn-sm btn-edit-horario-admin" data-id="${h.id}" style="border-radius:10px;padding:6px 12px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;gap:4px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              Editar Enlace / Datos
+            <button class="btn-edit-horario-admin" data-id="${h.id}" title="Editar Clase" style="width:32px;height:32px;border-radius:8px;background:#F1F5F9;border:1px solid #E2E8F0;color:var(--text-main);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
-            <button class="btn btn-outline btn-danger btn-sm btn-del-horario-admin" data-id="${h.id}" style="border-radius:10px;padding:6px 12px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;gap:4px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-              Eliminar
+            <button class="btn-del-horario-admin" data-id="${h.id}" title="Eliminar Clase" style="width:32px;height:32px;border-radius:8px;background:#FEF2F2;border:1px solid #FCA5A5;color:#EF4444;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             </button>
           </div>
         </div>
