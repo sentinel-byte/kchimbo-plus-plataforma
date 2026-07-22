@@ -32,11 +32,12 @@
 
     <!-- Brand Side -->
     <div class="login-brand">
-      <div class="login-logo-wrap" id="loginLogoWrap">
-        <!-- Fallback text logo -->
-        <div class="logo-text-fallback">
-          <div class="kchimbo">KCHIMBO<span>+</span></div>
-          <div class="sub">Plataforma Virtual</div>
+      <div class="login-logo-wrap" id="loginLogoWrap" style="background: linear-gradient(135deg, #E8521A 0%, #C0392B 60%, #900C3F 100%); border-radius: 24px; box-shadow: 0 16px 40px rgba(232, 82, 26, 0.35); padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 190px; height: 190px; border: 1px solid rgba(255, 255, 255, 0.2);">
+        <div style="font-size: 2.1rem; font-weight: 900; color: #FFFFFF; letter-spacing: -0.5px; line-height: 1; font-family: system-ui, -apple-system, sans-serif;">
+          KCHIMBO<span style="color: #FFB703; font-weight: 900;">+</span>
+        </div>
+        <div style="font-size: 0.62rem; font-weight: 800; color: rgba(255, 255, 255, 0.9); text-transform: uppercase; letter-spacing: 2.5px; margin-top: 6px;">
+          PLATAFORMA VIRTUAL
         </div>
       </div>
 
@@ -52,10 +53,9 @@
       </div>
     </div>
 
-    <!-- Form Side -->
+    <!-- Form Side (Unificado Estudiante & Admin) -->
     <div class="login-form-panel">
-      <div class="login-form-title">Estudiante</div>
-      <h2 class="login-form-subtitle">Iniciar <span class="highlight">Sesión</span></h2>
+      <h2 class="login-form-subtitle" style="margin-top: 10px;">Iniciar <span class="highlight">Sesión</span></h2>
 
       <!-- Lockout Box -->
       <div class="lockout-box" id="lockoutBox">
@@ -123,16 +123,6 @@
           <span id="btnLoginText">Iniciar Sesión</span>
         </button>
       </form>
-
-      <div class="login-footer" style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-        <button class="footer-about-btn" onclick="openModal('aboutModal')" title="Ver información del desarrollador" style="background:rgba(232,82,26,0.08);color:var(--primary);border:1px solid rgba(232,82,26,0.2);padding:4px 14px;border-radius:20px;font-size:0.75rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s ease;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          Créditos y Desarrollador
-        </button>
-        <p class="dev-text" style="margin-top:2px; font-size:0.72rem;">
-          ¿Eres administrador? <a href="admin/admin-login.html" style="color:var(--primary);font-weight:700;">Acceso admin →</a>
-        </p>
-      </div>
     </div>
 
   </div>
