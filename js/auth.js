@@ -81,17 +81,18 @@ const AUTH = {
       };
     }
 
-    // Buscar usuario (demo local; en producción esto va al Apps Script)
+    // Buscar usuario (demo local / localStorage; en producción esto va al Apps Script)
     let userData = null;
 
-    // Modo DEMO: buscar en DEMO_USERS
-    if (typeof DEMO_USERS !== 'undefined') {
-      userData = DEMO_USERS.find(
-        u2 => u2.usuario.toLowerCase() === u && u2.password === password
-      );
-    }
+    const userList = (typeof getUsuariosData === 'function')
+      ? getUsuariosData()
+      : (typeof DEMO_USERS !== 'undefined' ? DEMO_USERS : []);
 
-    // Modo REAL: buscar en Google Sheets via SheetsAPI
+    userData = userList.find(
+      u2 => u2.usuario.toLowerCase() === u && u2.password === password
+    );
+
+    // Modo REAL: buscar en Google Sheets via SheetsAPI si está activo
     if (!userData && typeof SheetsAPI !== 'undefined' && SheetsAPI.enabled) {
       try {
         userData = await SheetsAPI.verificarLogin(u, password);
@@ -119,7 +120,7 @@ const AUTH = {
         bloqueado: false,
         intentos,
         intentosRestantes: resultado.intentosRestantes,
-        mensaje: `Credenciales incorrectas. Te quedan ${resultado.intentosRestantes} intento(s).`
+        mensaje: `Usuario o contraseña incorrectos. Te quedan ${resultado.intentosRestantes} intento(s).`
       };
     }
 
@@ -129,6 +130,8 @@ const AUTH = {
       usuario: userData.usuario,
       nombre: userData.nombre,
       area: userData.area,
+      ciclos: userData.ciclos || ['Ciclo Matecero', 'Ciclo Formativo'],
+      areas: userData.areas || [userData.area || 'INGENIERÍAS'],
       rol: userData.rol,
       membresia_inicio: userData.membresia_inicio,
       membresia_fin: userData.membresia_fin,

@@ -32,6 +32,25 @@ const DEMO_USERS = [
   }
 ];
 
+// ── USUARIOS DEMO & DYNAMIC STORAGE ───────────────────────
+function getUsuariosData() {
+  const raw = localStorage.getItem('kchimbo_usuarios');
+  if (!raw) {
+    localStorage.setItem('kchimbo_usuarios', JSON.stringify(DEMO_USERS));
+    return JSON.parse(JSON.stringify(DEMO_USERS));
+  }
+  try {
+    const list = JSON.parse(raw);
+    return Array.isArray(list) && list.length ? list : JSON.parse(JSON.stringify(DEMO_USERS));
+  } catch {
+    return JSON.parse(JSON.stringify(DEMO_USERS));
+  }
+}
+
+function saveUsuariosData(data) {
+  localStorage.setItem('kchimbo_usuarios', JSON.stringify(data));
+}
+
 // ── CICLOS ACADÉMICOS DEMO & DYNAMIC STORAGE ──────────────
 const DEMO_CICLOS = ["Ciclo Matecero", "Ciclo Formativo", "Ciclo Intensivo"];
 
