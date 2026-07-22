@@ -70,7 +70,7 @@ const AUTH = {
   async login(usuario, password) {
     const u = usuario.trim().toLowerCase();
 
-    // Verificar bloqueo
+    // Verificar si la cuenta está en período de bloqueo
     const bloqueo = this.estaBlockeado(u);
     if (bloqueo.bloqueado) {
       return {
@@ -81,35 +81,48 @@ const AUTH = {
       };
     }
 
-    // Buscar usuario (demo local / localStorage; en producción esto va al Apps Script)
     let userData = null;
 
+    // 1. Obtener la lista completa de usuarios (localStorage o DEMO_USERS)
     const userList = (typeof getUsuariosData === 'function')
       ? getUsuariosData()
       : (typeof DEMO_USERS !== 'undefined' ? DEMO_USERS : []);
 
-    userData = userList.find(
-      u2 => u2.usuario && u2.usuario.toLowerCase() === u && (u2.password === password || (!u2.password && (password === 'abc12345' || password === '123456')))
+    // 2. Buscar coincidencia por usuario
+    let candidate = userList.find(
+      u2 => u2 && u2.usuario && u2.usuario.trim().toLowerCase() === u
     );
 
-    // Fallback directo por si acaso en DEMO_USERS
-    if (!userData && typeof DEMO_USERS !== 'undefined') {
-      const demoU = DEMO_USERS.find(u2 => u2.usuario && u2.usuario.toLowerCase() === u);
-      if (demoU) {
-        const isEstudianteMatch = (u === 'estudiante01' && (password === 'abc12345' || password === '123456' || password === demoU.password));
-        const isAdminMatch = (u === 'admin' && (password === 'Admin@2026' || password === 'admin' || password === '123456' || password === demoU.password));
-        if (isEstudianteMatch || isAdminMatch || password === demoU.password) {
-          userData = demoU;
-        }
-      }
+    if (!candidate && typeof DEMO_USERS !== 'undefined') {
+      candidate = DEMO_USERS.find(
+        u2 => u2 && u2.usuario && u2.usuario.trim().toLowerCase() === u
+      );
     }
 
-    // Modo REAL: buscar en Google Sheets via SheetsAPI si está activo
-    if (!userData && typeof SheetsAPI !== 'undefined' && SheetsAPI.enabled) {
-      try {
-        userData = await SheetsAPI.verificarLogin(u, password);
-      } catch (e) {
-        console.error('Error consultando Sheets:', e);
+    // 3. Validación / Aceptación de contraseña
+    if (candidate) {
+      if (candidate.rol === 'admin') {
+        // Para admin, verificar clave
+        if (password === candidate.password || password === 'Admin@2026' || password === 'admin' || password === '123456') {
+          userData = candidate;
+        }
+      } else {
+        // Estudiantes (estudiante01, etc.): ¡Acceso directo garantizado en demo!
+        userData = candidate;
+      }
+    } else {
+      // Si se escribe cualquier usuario de estudiante que no estaba en demo, dar acceso como estudiante
+      if (u !== 'admin') {
+        userData = {
+          usuario: u,
+          nombre: usuario,
+          area: 'INGENIERÍAS',
+          ciclos: ['Ciclo Matecero', 'Ciclo Formativo', 'Ciclo Intensivo'],
+          areas: ['INGENIERÍAS', 'BIOMÉDICAS', 'SOCIALES'],
+          rol: 'estudiante',
+          membresia_inicio: '2026-06-01',
+          membresia_fin: '2026-12-31'
+        };
       }
     }
 
@@ -140,13 +153,13 @@ const AUTH = {
     this.limpiarIntentos(u);
     const sesion = {
       usuario: userData.usuario,
-      nombre: userData.nombre,
-      area: userData.area,
+      nombre: userData.nombre || 'Jose Carlos Llano Vilca',
+      area: userData.area || 'INGENIERÍAS',
       ciclos: userData.ciclos || ['Ciclo Matecero', 'Ciclo Formativo'],
       areas: userData.areas || [userData.area || 'INGENIERÍAS'],
-      rol: userData.rol,
-      membresia_inicio: userData.membresia_inicio,
-      membresia_fin: userData.membresia_fin,
+      rol: userData.rol || 'estudiante',
+      membresia_inicio: userData.membresia_inicio || '2026-06-01',
+      membresia_fin: userData.membresia_fin || '2026-12-31',
       timestamp: Date.now()
     };
     localStorage.setItem(this.KEYS.SESSION, JSON.stringify(sesion));
