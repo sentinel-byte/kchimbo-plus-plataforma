@@ -1017,11 +1017,16 @@
 
   // ── Toast ──
   function showToast(msg, type = 'success') {
-    const icons = { success:'✅', error:'❌', warning:'⚠️', info:'ℹ️' };
+    const icons = {
+      success: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`,
+      error: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+      warning: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+      info: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`
+    };
     const container = document.getElementById('toastContainer');
     const t = document.createElement('div');
     t.className = `toast toast-${type}`;
-    t.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+    t.innerHTML = `<span>${icons[type]||''}</span><span>${msg}</span>`;
     container.appendChild(t);
     setTimeout(() => t.remove(), 3200);
   }
@@ -1073,7 +1078,7 @@
   }
 
   function openMediaAdmin(titulo, url, tipo = 'PDF') {
-    document.getElementById('mediaModalTitle').textContent = `${tipo === 'PDF' ? '📄' : '🎬'} ${titulo}`;
+    document.getElementById('mediaModalTitle').textContent = `${titulo}`;
     const iframe = document.getElementById('mediaModalIframe');
     const extBtn = document.getElementById('mediaModalAdminExternalBtn');
 
@@ -1691,7 +1696,7 @@
     const semana= parseInt(document.getElementById('claseForm_semana').value);
     const titulo= document.getElementById('claseForm_titulo').value.trim();
     const tipo  = document.getElementById('claseForm_tipo').value;
-    const thumb = document.getElementById('claseForm_thumbnail').value || '📄';
+    const thumb = document.getElementById('claseForm_thumbnail').value || 'PDF';
     const url   = document.getElementById('claseForm_url').value.trim();
 
     if (!curso || !titulo || !url) { showToast('Completa todos los campos requeridos', 'warning'); return; }
@@ -1795,8 +1800,8 @@
                 <div class="padlet-post-top" style="background:${colorTheme};"></div>
                 <div class="padlet-post-inner">
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;position:relative;">
-                    <span class="padlet-post-tag" style="background:rgba(232,82,26,0.1);color:var(--primary);">
-                      📄 ${r.paginas || 1} PÁG.
+                    <span class="padlet-post-tag" style="background:rgba(232,82,26,0.1);color:var(--primary);display:inline-flex;align-items:center;gap:4px;">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> ${r.paginas || 1} PÁG.
                     </span>
                     <div style="display:flex;align-items:center;gap:6px;">
                       <button class="padlet-post-more-btn" data-id="${r.id}" title="Opciones">⋮</button>
@@ -1822,7 +1827,7 @@
                     </div>
                   </div>
                   <div class="padlet-post-title" style="margin:4px 0 6px 0;">${r.titulo}</div>
-                  <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">📌 Tema: <strong>${r.tema}</strong></div>
+                  <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">Tema: <strong>${r.tema}</strong></div>
                   <div class="padlet-post-preview" style="margin-bottom:0;">
                     <div style="display:flex;align-items:center;gap:8px;color:#C0392B;">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
@@ -2022,7 +2027,7 @@
     if (tabsContainer) {
       tabsContainer.innerHTML = cursosDisponibles.map(c => `
         <button class="tipo-btn ${selectedPregCursoTab === c ? 'active' : ''}" data-curso="${c}" style="font-size:0.78rem;padding:5px 12px;white-space:nowrap;border-radius:20px;">
-          ${c === 'TODOS' ? '🌐 Todos los cursos' : c}
+          ${c === 'TODOS' ? 'Todos los cursos' : c}
         </button>
       `).join('');
 
@@ -2045,7 +2050,7 @@
       const selectedVal = isValidTopic ? currentTemaVal : '';
 
       temaSelect.innerHTML = `<option value="">Todos los temas (${temasUnicos.length})</option>` +
-        temasUnicos.map(t => `<option value="${t}" ${selectedVal === t ? 'selected' : ''}>📌 ${t}</option>`).join('');
+        temasUnicos.map(t => `<option value="${t}" ${selectedVal === t ? 'selected' : ''}>${t}</option>`).join('');
 
       temaSelect.value = selectedVal;
     }
@@ -2082,7 +2087,9 @@
     if (filtered.length === 0) {
       container.innerHTML = `
         <div style="padding: 40px; text-align: center; background: white; border-radius: 12px; border: 1px solid #E2E8F0; color: var(--text-muted);">
-          <div style="font-size: 2rem; margin-bottom: 8px;">🔍</div>
+          <div style="display:flex;justify-content:center;margin-bottom:8px;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.5;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
           <div style="font-weight: 700; font-size: 1rem; color: var(--text-main);">No se encontraron preguntas</div>
           <div style="font-size: 0.8rem; margin-top: 4px;">Prueba ajustando los filtros de curso, tema o área.</div>
         </div>`;
@@ -2101,7 +2108,7 @@
         return `
           <div style="padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; background: ${isCorrect ? 'rgba(16,185,129,0.12)' : '#F8FAFC'}; border: 1px solid ${isCorrect ? '#10B981' : '#E2E8F0'}; color: ${isCorrect ? '#047857' : 'var(--text-main)'}; font-weight: ${isCorrect ? '700' : '400'}; display: flex; align-items: center; justify-content: space-between;">
             <span><strong>${opt})</strong> ${texto}</span>
-            ${isCorrect ? '<span style="color:#10B981;font-weight:800;">✓ Correcta</span>' : ''}
+            ${isCorrect ? '<span style="color:#10B981;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Correcta</span>' : ''}
           </div>`;
       }).join('');
 
@@ -2115,7 +2122,7 @@
                 ${p.curso}
               </span>
               <span style="font-size:0.7rem; font-weight:700; color:#475569; background:#F1F5F9; padding:2px 7px; border-radius:4px;">
-                📌 ${p.tema}
+                ${p.tema}
               </span>
               <span class="padlet-post-tag" style="background:${aStyle.bg}; color:${aStyle.color}; padding:1px 6px; font-size:0.63rem; font-weight:700;">
                 ${p.area}
