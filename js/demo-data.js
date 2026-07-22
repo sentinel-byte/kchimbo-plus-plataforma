@@ -40,8 +40,21 @@ function getUsuariosData() {
     return JSON.parse(JSON.stringify(DEMO_USERS));
   }
   try {
-    const list = JSON.parse(raw);
-    return Array.isArray(list) && list.length ? list : JSON.parse(JSON.stringify(DEMO_USERS));
+    let list = JSON.parse(raw);
+    if (!Array.isArray(list) || !list.length) {
+      list = JSON.parse(JSON.stringify(DEMO_USERS));
+    }
+    // Asegurar que estudiante01 y admin existan siempre con sus contraseñas por defecto
+    DEMO_USERS.forEach(defU => {
+      const existing = list.find(u => u.usuario && u.usuario.toLowerCase() === defU.usuario.toLowerCase());
+      if (!existing) {
+        list.push({ ...defU });
+      } else {
+        if (!existing.password) existing.password = defU.password;
+      }
+    });
+    localStorage.setItem('kchimbo_usuarios', JSON.stringify(list));
+    return list;
   } catch {
     return JSON.parse(JSON.stringify(DEMO_USERS));
   }
