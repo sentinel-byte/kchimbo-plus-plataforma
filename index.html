@@ -214,6 +214,17 @@
     }
   }
 
+  // ── Toast helper ──
+  function showToast(msg, type = 'success') {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    const t = document.createElement('div');
+    t.className = `toast toast-${type}`;
+    t.innerHTML = `<span>${msg}</span>`;
+    container.appendChild(t);
+    setTimeout(() => t.remove(), 2500);
+  }
+
   // ── Mostrar error ──
   function showError(msg) {
     loginErrTx.textContent = msg;
@@ -286,17 +297,15 @@
     try {
       const resultado = await AUTH.login(usuario, password);
 
-      if (resultado.success) {
+      if (resultado && resultado.success) {
         btnText.textContent = 'Accediendo...';
         showToast('¡Bienvenido a KCHIMBO+!', 'success');
-        setTimeout(() => {
-          const { sesion } = resultado;
-          window.location.href = sesion.rol === 'admin'
-            ? 'admin/dashboard.html'
-            : 'student/dashboard.html';
-        }, 800);
-
-      } else if (resultado.bloqueado) {
+        const { sesion } = resultado;
+        window.location.href = (sesion && sesion.rol === 'admin')
+          ? 'admin/dashboard.html'
+          : 'student/dashboard.html';
+        return;
+      } else if (resultado && resultado.bloqueado) {
         iniciarBloqueo(resultado.msRestantes);
         btnText.textContent = 'Bloqueado';
 
