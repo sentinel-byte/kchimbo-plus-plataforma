@@ -1475,7 +1475,12 @@
 
     horarios.forEach(h => {
       const colorTheme = courseColors[h.curso] || '#E8521A';
-      const esVivo = h.tipo === 'EN VIVO';
+      const tipoLabel = h.tipo || 'EN VIVO';
+      const tipoBadge = {
+        'EN VIVO': `<span style="background:#FEF2F2;color:#DC2626;border:1px solid #FCA5A5;padding:1px 7px;border-radius:6px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#EF4444;"></span>EN VIVO</span>`,
+        'ASESORÍA': `<span style="background:#F5F3FF;color:#6D28D9;border:1px solid #DDD6FE;padding:1px 7px;border-radius:6px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#8B5CF6;"></span>ASESORÍA</span>`,
+        'EVALUACIÓN': `<span style="background:#FFFBEB;color:#D97706;border:1px solid #FCD34D;padding:1px 7px;border-radius:6px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#F59E0B;"></span>EVALUACIÓN</span>`
+      }[tipoLabel] || `<span style="background:#FEF2F2;color:#DC2626;border:1px solid #FCA5A5;padding:1px 7px;border-radius:6px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#EF4444;"></span>EN VIVO</span>`;
 
       html += `
         <div style="background:white;border:1px solid #E2E8F0;border-radius:12px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-left:4px solid ${colorTheme};transition:all 0.2s;">
@@ -1491,7 +1496,7 @@
               <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
                 <span style="font-size:0.95rem;font-weight:900;color:var(--text-main);">${h.curso}</span>
                 <span style="background:rgba(232,82,26,0.08);color:var(--primary);border:1px solid rgba(232,82,26,0.2);padding:1px 7px;border-radius:6px;font-size:0.7rem;font-weight:800;">${h.ciclo || 'TODOS LOS CICLOS'}</span>
-                ${esVivo ? `<span style="background:#FEF2F2;color:#EF4444;border:1px solid #FCA5A5;padding:1px 7px;border-radius:6px;font-size:0.68rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#EF4444;"></span>EN VIVO</span>` : ''}
+                ${tipoBadge}
               </div>
               <div style="font-size:0.76rem;color:var(--text-muted);margin-top:2px;display:flex;align-items:center;gap:4px;">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
