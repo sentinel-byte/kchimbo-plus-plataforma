@@ -216,6 +216,9 @@
             </h2>
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <select id="filterCicloClases" class="custom-cycle-select">
+              <option value="TODOS">Todos los ciclos</option>
+            </select>
             <div class="tipo-filter-wrap" style="margin-bottom:0;">
               <button class="tipo-btn active" data-tipo="TODOS">Todos</button>
               <button class="tipo-btn" data-tipo="PDF">PDFs</button>
@@ -295,9 +298,12 @@
             </h2>
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <div class="board-header-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              PDF Teórico
+            <select id="filterCicloResumenes" class="custom-cycle-select">
+              <option value="TODOS">Todos los ciclos</option>
+            </select>
+            <div class="search-input-wrap" style="width:200px;margin-bottom:0;">
+              <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+              <input type="text" class="search-input" id="searchResumenesPadlet" placeholder="Buscar resumen..." style="padding:5px 10px 5px 30px;font-size:0.8rem;">
             </div>
           </div>
         </div>
