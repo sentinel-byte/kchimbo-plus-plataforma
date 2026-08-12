@@ -1124,27 +1124,45 @@ html, body {
 
   /* Padlet Board Horizontal Mobile Scroll & Columns */
   .padlet-board-container {
-    height: calc(100vh - 210px) !important;
-    height: calc(100dvh - 210px) !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+    height: calc(100vh - 190px) !important;
+    height: calc(100dvh - 190px) !important;
     gap: 12px !important;
-    padding-bottom: 12px !important;
+    padding: 2px 2px 14px 2px !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
     overflow-x: auto !important;
+    align-items: stretch !important;
   }
   .padlet-column {
     flex: 0 0 85vw !important;
-    min-width: 270px !important;
-    max-width: 310px !important;
+    min-width: 275px !important;
+    max-width: 320px !important;
     max-height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
     scroll-snap-align: center !important;
+    border-radius: 14px !important;
+  }
+  .padlet-column-header {
+    padding: 10px 12px !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+  .padlet-column-title {
+    font-size: 0.88rem !important;
+  }
+  .padlet-column-count {
+    font-size: 0.68rem !important;
   }
   .padlet-column-body {
     flex: 1 !important;
     overflow-y: auto !important;
-    padding-right: 2px !important;
+    padding: 8px 8px 24px 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
   }
   .padlet-post-inner {
     padding: 10px 12px !important;
@@ -1161,6 +1179,9 @@ html, body {
   }
   .padlet-post-tag {
     font-size: 0.65rem !important;
+  }
+  .padlet-post-card {
+    border-radius: 10px !important;
   }
   .padlet-fab-publish {
     display: none !important;
