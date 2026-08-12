@@ -1248,7 +1248,89 @@ html, body {
     display: none !important;
   }
 
-  /* Banco de Preguntas Mobile Styles */
+/* Banco de Preguntas Base Styles (Desktop & Laptop) */
+#pregCursosTabs {
+  display: flex !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 4px 2px 8px 2px !important;
+  margin-top: 2px !important;
+  margin-bottom: 10px !important;
+  width: 100% !important;
+  min-height: 44px !important;
+  align-items: center !important;
+  scrollbar-width: thin !important;
+}
+#pregCursosTabs::-webkit-scrollbar {
+  height: 4px;
+}
+#pregCursosTabs::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+#pregCursosTabs .tipo-btn {
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+  padding: 6px 14px !important;
+  font-size: 0.8rem !important;
+  font-weight: 800 !important;
+  border-radius: 20px !important;
+  height: 34px !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03) !important;
+}
+
+.admin-actions-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-bottom: 14px !important;
+  flex-wrap: nowrap !important;
+}
+.admin-actions-bar .search-input-wrap {
+  flex: 1 !important;
+  min-width: 180px !important;
+  margin-bottom: 0 !important;
+}
+.admin-actions-bar .search-input {
+  height: 38px !important;
+  border-radius: 10px !important;
+  font-size: 0.82rem !important;
+}
+.admin-actions-bar .custom-cycle-select {
+  flex: 0 0 auto !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  font-size: 0.82rem !important;
+  border-radius: 10px !important;
+}
+#filterPregTema {
+  width: 175px !important;
+}
+#filterPregModalidad {
+  width: 165px !important;
+}
+#filterPregAño {
+  width: 135px !important;
+}
+
+#adminPreguntasBoard {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  padding-bottom: 40px !important;
+}
+
+@media (max-width: 768px) {
+  /* Banco de Preguntas Mobile Overrides */
   #section-preguntas {
     overflow: visible !important;
     max-height: none !important;
@@ -1266,54 +1348,22 @@ html, body {
     font-size: 0.8rem !important;
   }
 
-  #pregCursosTabs {
-    display: flex !important;
-    gap: 8px !important;
-    flex-wrap: nowrap !important;
-    white-space: nowrap !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    padding: 6px 2px 12px 2px !important;
-    margin-top: 4px !important;
-    margin-bottom: 12px !important;
-    width: 100% !important;
-    min-height: 48px !important;
-    align-items: center !important;
-  }
-  #pregCursosTabs .tipo-btn {
-    flex: 0 0 auto !important;
-    flex-shrink: 0 !important;
-    white-space: nowrap !important;
-    padding: 8px 16px !important;
-    font-size: 0.82rem !important;
-    font-weight: 800 !important;
-    border-radius: 20px !important;
-    height: 36px !important;
-    line-height: 1 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important;
-  }
-
   .admin-actions-bar {
     display: flex !important;
     flex-direction: column !important;
     gap: 8px !important;
     margin-bottom: 14px !important;
+    flex-wrap: wrap !important;
   }
   .admin-actions-bar .search-input-wrap,
-  .admin-actions-bar select,
-  .admin-actions-bar .custom-cycle-select {
+  #filterPregTema,
+  #filterPregModalidad,
+  #filterPregAño {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
   }
   #adminPreguntasBoard {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-    padding-bottom: 40px !important;
     overflow: visible !important;
   }
 
