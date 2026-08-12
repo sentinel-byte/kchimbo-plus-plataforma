@@ -984,11 +984,12 @@ html, body {
 #section-resumenes.active {
   display: flex !important;
   flex-direction: column !important;
-  height: calc(100vh - 120px) !important;
-  height: calc(100dvh - 120px) !important;
+  height: calc(100vh - 146px) !important;
+  height: calc(100dvh - 146px) !important;
   overflow: hidden !important;
   flex: 1 !important;
   min-height: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 #adminClasesBoard,
@@ -1014,7 +1015,7 @@ html, body {
   min-height: 0 !important;
   height: 100% !important;
   align-items: stretch !important;
-  padding: 4px 4px 16px 4px !important;
+  padding: 4px 2px 4px 2px !important;
   box-sizing: border-box !important;
 }
 
