@@ -2204,9 +2204,12 @@
         if (!texto) return '';
         const isCorrect = p.respuesta === opt;
         return `
-          <div style="padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; background: ${isCorrect ? 'rgba(16,185,129,0.12)' : '#F8FAFC'}; border: 1px solid ${isCorrect ? '#10B981' : '#E2E8F0'}; color: ${isCorrect ? '#047857' : 'var(--text-main)'}; font-weight: ${isCorrect ? '700' : '400'}; display: flex; align-items: center; justify-content: space-between;">
-            <span><strong>${opt})</strong> ${texto}</span>
-            ${isCorrect ? '<span style="color:#10B981;font-weight:800;display:inline-flex;align-items:center;gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Correcta</span>' : ''}
+          <div style="padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; background: ${isCorrect ? 'rgba(16,185,129,0.10)' : '#F8FAFC'}; border: 1px solid ${isCorrect ? '#10B981' : '#E2E8F0'}; color: ${isCorrect ? '#047857' : 'var(--text-main)'}; font-weight: ${isCorrect ? '700' : '400'}; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+            <div style="flex: 1; min-width: 0; word-break: break-word; overflow-wrap: break-word; line-height: 1.4;">
+              <strong style="color: ${isCorrect ? '#047857' : 'var(--text-main)'}; margin-right: 4px;">${opt})</strong>
+              ${texto}
+            </div>
+            ${isCorrect ? '<span style="color:#047857; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); font-size:0.68rem; font-weight:800; padding:2px 8px; border-radius:6px; flex-shrink:0; display:inline-flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Correcta</span>' : ''}
           </div>`;
       }).join('');
 

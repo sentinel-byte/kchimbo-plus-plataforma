@@ -127,7 +127,14 @@ const DEMO_HORARIO = [
 // Álgebra:8, Aritmética:6, Geometría:6, Trigonometría:5,
 // Física:8, Química:8, Biología:8, Lenguaje:5, Historia:3, Geografía:3
 const DEMO_PREGUNTAS = [
-  // ── ÁLGEBRA (8 preguntas en examen) ──
+  // ── ÁLGEBRA (Ejemplo con tema largo y alternativas multilínea) ──
+  {id:101, curso:"ÁLGEBRA", modalidad:"Ordinario", tema:"Ecuaciones Polinómicas y de Segundo Grado con Coeficientes Reales y Complejos",
+   pregunta:"En la ecuación de segundo grado ax² + bx + c = 0 con a ≠ 0 y discriminante Δ = b² - 4ac, determine cuál de las siguientes afirmaciones sobre la naturaleza de sus raíces es verdadera cuando el discriminante es estrictamente menor que cero (Δ < 0):",
+   a:"Las dos raíces de la ecuación son números reales, distintas y estrictamente positivas, situándose de manera simétrica en el plano cartesiano.",
+   b:"La ecuación posee dos raíces complejas conjugadas distintas de la forma z₁ = α + βi y z₂ = α - βi con β ≠ 0, cuyas partes reales son iguales a -b/(2a).",
+   c:"Existe una única raíz real de multiplicidad dos que resulta de la división exacta entre la suma de los coeficientes principales y el término independiente.",
+   d:"Las raíces se vuelven racionales enteras y la suma de ambas resulta siempre igual al producto exacto de las constantes a y c.",
+   e:"La ecuación no admite ninguna solución posible ni en el campo numérico real ni en el conjunto de los números complejos.", respuesta:"B", año:2026},
   {id:1, curso:"ÁLGEBRA", modalidad:"Ordinario", tema:"Conjuntos",
    pregunta:"Si A = {1, 2, 3, 4, 5} y B = {3, 4, 5, 6, 7}, ¿cuántos elementos tiene A ∪ B?",
    a:"5", b:"7", c:"3", d:"8", e:"6", respuesta:"B", año:2023},
