@@ -984,8 +984,23 @@ html, body {
 #section-resumenes.active {
   display: flex !important;
   flex-direction: column !important;
-  height: calc(100vh - 110px) !important;
-  height: calc(100dvh - 110px) !important;
+  height: calc(100vh - 120px) !important;
+  height: calc(100dvh - 120px) !important;
+  overflow: hidden !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+}
+
+#adminClasesBoard,
+#adminResumenesBoard,
+#studentClasesBoard,
+#studentResumenesBoard {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
   overflow: hidden !important;
 }
 
