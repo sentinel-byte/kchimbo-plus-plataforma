@@ -1521,7 +1521,7 @@
               </div>
               <div style="font-size:0.76rem;color:var(--text-muted);margin-top:2px;display:flex;align-items:center;gap:4px;">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                Prof. ${h.docente}
+                ${h.docente ? (h.docente.match(/^(Prof\.|Mg\.|Dr\.|Dra\.|Ing\.)/i) ? h.docente : 'Prof. ' + h.docente) : 'Plana Docente'}
               </div>
             </div>
           </div>
