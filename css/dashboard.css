@@ -1148,13 +1148,28 @@ html, body {
   width: 135px !important;
 }
 
-#section-preguntas.active {
+#section-preguntas.active,
+#section-usuarios.active,
+#section-avance.active {
   width: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   height: auto !important;
   min-height: min-content !important;
   overflow: visible !important;
+}
+
+.kpi-ribbon {
+  background: white !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  padding: 14px 20px !important;
+  margin-bottom: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
 }
 
 #adminPreguntasBoard {
@@ -1237,6 +1252,38 @@ html, body {
   }
   .section-view {
     overflow-y: visible !important;
+  }
+
+  /* KPI Ribbon Mobile Grid */
+  .kpi-ribbon {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    padding: 10px 8px !important;
+    margin-bottom: 12px !important;
+    border-radius: 12px !important;
+  }
+  .kpi-pill {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 4px !important;
+  }
+  .kpi-content {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 2px !important;
+  }
+  .kpi-val {
+    font-size: 1.05rem !important;
+  }
+  .kpi-lbl {
+    font-size: 0.60rem !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+  .kpi-sep {
+    display: none !important;
   }
 
   /* Horario & Preguntas Cards Container Mobile Scroll */
