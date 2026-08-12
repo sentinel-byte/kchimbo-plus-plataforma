@@ -251,7 +251,7 @@
       </div>
 
       <!-- ════ BANCO DE PREGUNTAS (VISTA SIMPLIFICADA Y FILTRADA) ════ -->
-      <div class="section-view" id="section-preguntas" style="overflow-y:auto;max-height:100%;">
+      <div class="section-view" id="section-preguntas">
         <div class="board-header">
           <div class="board-header-info">
             <h2>
@@ -272,19 +272,19 @@
         </div>
 
         <!-- Barra de cursos (Tabs horizontales) -->
-        <div class="curso-tabs-bar" id="pregCursosTabs" style="display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;">
+        <div class="curso-tabs-bar" id="pregCursosTabs">
           <!-- Generado por JS -->
         </div>
 
-        <div class="admin-actions-bar" style="margin-bottom:16px;display:flex;flex-direction:column;gap:10px;">
-          <div class="search-input-wrap" style="width:100%;">
+        <div class="admin-actions-bar">
+          <div class="search-input-wrap">
             <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-            <input type="text" class="search-input" id="searchPreguntasPadlet" placeholder="Buscar pregunta por texto, tema o palabra clave..." style="height:40px;border-radius:12px;font-size:0.82rem;font-weight:600;padding-left:36px;">
+            <input type="text" class="search-input" id="searchPreguntasPadlet" placeholder="Buscar pregunta por texto, tema o palabra clave...">
           </div>
-          <select class="custom-cycle-select" style="width:100%;" id="filterPregTema">
+          <select class="custom-cycle-select" id="filterPregTema">
             <option value="">Todos los temas</option>
           </select>
-          <select class="custom-cycle-select" style="width:100%;" id="filterPregAreaPadlet">
+          <select class="custom-cycle-select" id="filterPregAreaPadlet">
             <option value="">Todas las áreas</option>
             <option value="INGENIERÍAS">INGENIERÍAS</option>
             <option value="BIOMÉDICAS">BIOMÉDICAS</option>
@@ -292,7 +292,7 @@
           </select>
         </div>
 
-        <div id="adminPreguntasBoard" style="display:flex;flex-direction:column;gap:10px;padding-bottom:40px;">
+        <div id="adminPreguntasBoard">
           <!-- Generado como tarjetas simplificadas colapsables por JS -->
         </div>
       </div>

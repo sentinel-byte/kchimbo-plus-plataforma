@@ -1249,6 +1249,10 @@ html, body {
   }
 
   /* Banco de Preguntas Mobile Styles */
+  #section-preguntas {
+    overflow: visible !important;
+    max-height: none !important;
+  }
   #section-preguntas .board-header > div:last-child {
     width: 100% !important;
     display: flex !important;
@@ -1269,7 +1273,7 @@ html, body {
     white-space: nowrap !important;
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
-    padding: 6px 4px 12px 4px !important;
+    padding: 6px 2px 12px 2px !important;
     margin-top: 4px !important;
     margin-bottom: 12px !important;
     width: 100% !important;
@@ -1296,7 +1300,7 @@ html, body {
     display: flex !important;
     flex-direction: column !important;
     gap: 8px !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 14px !important;
   }
   .admin-actions-bar .search-input-wrap,
   .admin-actions-bar select,
@@ -1304,6 +1308,13 @@ html, body {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
+  }
+  #adminPreguntasBoard {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding-bottom: 40px !important;
+    overflow: visible !important;
   }
 
   /* Footer Mobile Clean Formatting */
