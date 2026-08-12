@@ -474,15 +474,20 @@
     <div class="modal-body">
       <input type="hidden" id="claseId">
       <div class="form-inline-row">
+        <div class="form-group"><label class="form-label">Ciclo Académico</label>
+          <select class="form-select" id="claseForm_ciclo">
+            <option value="">Selecciona ciclo...</option>
+          </select>
+        </div>
         <div class="form-group"><label class="form-label">Curso</label>
           <select class="form-select" id="claseForm_curso">
             <option value="">Selecciona...</option>
           </select>
         </div>
-        <div class="form-group"><label class="form-label">Semana</label>
+      </div>
+      <div class="form-group"><label class="form-label">Semana</label>
           <input type="number" class="form-input" id="claseForm_semana" min="1" max="30" placeholder="1">
         </div>
-      </div>
       <div class="form-group"><label class="form-label">Título de la clase</label>
         <input type="text" class="form-input" id="claseForm_titulo" placeholder="Ej: Álgebra - Semana 1">
       </div>
@@ -522,6 +527,11 @@
     </div>
     <div class="modal-body">
       <input type="hidden" id="resumenId">
+      <div class="form-group"><label class="form-label">Ciclo Académico</label>
+        <select class="form-select" id="resForm_ciclo">
+          <option value="">Selecciona ciclo...</option>
+        </select>
+      </div>
       <div class="form-inline-row">
         <div class="form-group"><label class="form-label">Curso</label>
           <select class="form-select" id="resForm_curso"><option value="">Selecciona...</option></select>
@@ -1052,6 +1062,15 @@
       cursos.map(c => `<option value="${c}">${c}</option>`).join('');
   }
 
+  function populateCiclosSelect(selectEl, selectedVal = '') {
+    const ciclos = getCiclosData();
+    selectEl.innerHTML = `<option value="">Selecciona ciclo...</option>` +
+      ciclos.map(c => `<option value="${c}" ${c === selectedVal ? 'selected' : ''}>${c}</option>`).join('');
+    if (!ciclos.length) {
+      selectEl.innerHTML = `<option value="">Sin ciclos creados aún</option>`;
+    }
+  }
+
   // ─────────────────────────────────────────────────────────
   // CLASES
   // ─────────────────────────────────────────────────────────
@@ -1163,6 +1182,7 @@
                       ${c.tipo}
                     </span>
                     <div style="display:flex;align-items:center;gap:6px;">
+                      ${c.ciclo ? `<span style="font-size:0.65rem;font-weight:700;background:rgba(99,102,241,0.1);color:#6366F1;padding:2px 7px;border-radius:20px;">${c.ciclo}</span>` : ''}
                       <span style="font-size:0.68rem;font-weight:700;color:var(--text-muted);">SEMANA ${c.semana}</span>
                       <button class="padlet-post-more-btn" data-id="${c.id}" title="Opciones de administración">⋮</button>
                       <div class="padlet-options-menu" id="padlet-menu-admin-${c.id}">
@@ -1304,13 +1324,14 @@
     });
   }
 
-  function openClaseModalForCurso(curso = null) {
+  function openClaseModalForCurso(curso = null, ciclo = null) {
     document.getElementById('claseModalTitle').textContent = 'Nueva Clase';
     document.getElementById('claseId').value = '';
     ['curso','semana','titulo','tipo','thumbnail','url'].forEach(f => {
       const el = document.getElementById(`claseForm_${f}`);
       if (el) el.value = f === 'semana' ? '1' : '';
     });
+    populateCiclosSelect(document.getElementById('claseForm_ciclo'), ciclo || '');
     populateCursosSelect(document.getElementById('claseForm_curso'));
     if (curso) document.getElementById('claseForm_curso').value = curso;
     openModal('claseModal');
@@ -1680,6 +1701,7 @@
     if (!c) return;
     document.getElementById('claseModalTitle').textContent = 'Editar Clase';
     document.getElementById('claseId').value = id;
+    populateCiclosSelect(document.getElementById('claseForm_ciclo'), c.ciclo || '');
     populateCursosSelect(document.getElementById('claseForm_curso'));
     document.getElementById('claseForm_curso').value = c.curso;
     document.getElementById('claseForm_semana').value = c.semana;
@@ -1692,6 +1714,7 @@
 
   document.getElementById('btnGuardarClase').addEventListener('click', () => {
     const id    = document.getElementById('claseId').value;
+    const ciclo = document.getElementById('claseForm_ciclo').value;
     const curso = document.getElementById('claseForm_curso').value;
     const semana= parseInt(document.getElementById('claseForm_semana').value);
     const titulo= document.getElementById('claseForm_titulo').value.trim();
@@ -1699,14 +1722,15 @@
     const thumb = document.getElementById('claseForm_thumbnail').value || 'PDF';
     const url   = document.getElementById('claseForm_url').value.trim();
 
+    if (!ciclo) { showToast('Selecciona el ciclo académico', 'warning'); return; }
     if (!curso || !titulo || !url) { showToast('Completa todos los campos requeridos', 'warning'); return; }
 
     if (id) {
       const idx = clases.findIndex(c => c.id === parseInt(id));
-      if (idx >= 0) clases[idx] = { ...clases[idx], curso, semana, titulo, tipo, thumbnail: thumb, url };
+      if (idx >= 0) clases[idx] = { ...clases[idx], ciclo, curso, semana, titulo, tipo, thumbnail: thumb, url };
       showToast('Clase actualizada', 'success');
     } else {
-      clases.push({ id: nextId++, curso, semana, titulo, tipo, thumbnail: thumb, url });
+      clases.push({ id: nextId++, ciclo, curso, semana, titulo, tipo, thumbnail: thumb, url });
       showToast('Clase agregada', 'success');
     }
     closeModal('claseModal');
@@ -1727,13 +1751,14 @@
   // ─────────────────────────────────────────────────────────
   // RESÚMENES
   // ─────────────────────────────────────────────────────────
-  function openResumenModalForCurso(curso = null) {
+  function openResumenModalForCurso(curso = null, ciclo = null) {
     document.getElementById('resumenModalTitle').textContent = 'Nuevo Resumen';
     document.getElementById('resumenId').value = '';
     ['curso','tema','titulo','paginas','url'].forEach(f => {
       const el = document.getElementById(`resForm_${f}`);
       if (el) el.value = f === 'paginas' ? '4' : '';
     });
+    populateCiclosSelect(document.getElementById('resForm_ciclo'), ciclo || '');
     populateCursosSelect(document.getElementById('resForm_curso'));
     if (curso) document.getElementById('resForm_curso').value = curso;
     openModal('resumenModal');
@@ -1803,6 +1828,7 @@
                     <span class="padlet-post-tag" style="background:rgba(232,82,26,0.1);color:var(--primary);display:inline-flex;align-items:center;gap:4px;">
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> ${r.paginas || 1} PÁG.
                     </span>
+                    ${r.ciclo ? `<span style="font-size:0.65rem;font-weight:700;background:rgba(99,102,241,0.1);color:#6366F1;padding:2px 7px;border-radius:20px;">${r.ciclo}</span>` : ''}
                     <div style="display:flex;align-items:center;gap:6px;">
                       <button class="padlet-post-more-btn" data-id="${r.id}" title="Opciones">⋮</button>
                       <div class="padlet-options-menu" id="padlet-menu-resumen-${r.id}">
@@ -1953,6 +1979,7 @@
     if (!r) return;
     document.getElementById('resumenModalTitle').textContent = 'Editar Resumen';
     document.getElementById('resumenId').value = id;
+    populateCiclosSelect(document.getElementById('resForm_ciclo'), r.ciclo || '');
     populateCursosSelect(document.getElementById('resForm_curso'));
     document.getElementById('resForm_curso').value = r.curso;
     document.getElementById('resForm_tema').value = r.tema;
@@ -1964,19 +1991,21 @@
 
   document.getElementById('btnGuardarResumen').addEventListener('click', () => {
     const id    = document.getElementById('resumenId').value;
+    const ciclo = document.getElementById('resForm_ciclo').value;
     const curso = document.getElementById('resForm_curso').value;
     const tema  = document.getElementById('resForm_tema').value.trim();
     const titulo= document.getElementById('resForm_titulo').value.trim();
     const pags  = parseInt(document.getElementById('resForm_paginas').value) || 4;
     const url   = document.getElementById('resForm_url').value.trim() || '#';
+    if (!ciclo) { showToast('Selecciona el ciclo académico', 'warning'); return; }
     if (!curso || !titulo) { showToast('Completa los campos requeridos', 'warning'); return; }
     if (id) {
       const idx = resumenes.findIndex(r => r.id === parseInt(id));
-      if (idx >= 0) resumenes[idx] = { ...resumenes[idx], curso, tema, titulo, paginas: pags, url };
-      showToast('Resumen actualizado');
+      if (idx >= 0) resumenes[idx] = { ...resumenes[idx], ciclo, curso, tema, titulo, paginas: pags, url };
+      showToast('Resumen actualizado', 'success');
     } else {
-      resumenes.push({ id: nextId++, curso, tema, titulo, paginas: pags, url });
-      showToast('Resumen agregado');
+      resumenes.push({ id: nextId++, ciclo, curso, tema, titulo, paginas: pags, url });
+      showToast('Resumen agregado', 'success');
     }
     closeModal('resumenModal');
     renderResumenesBoard();
