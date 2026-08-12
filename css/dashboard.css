@@ -1047,7 +1047,7 @@ html, body {
   width: 135px !important;
 }
 
-#section-preguntas {
+#section-preguntas.active {
   width: 100% !important;
   display: flex !important;
   flex-direction: column !important;
@@ -1340,7 +1340,7 @@ html, body {
   }
 
   /* Banco de Preguntas Mobile Overrides */
-  #section-preguntas {
+  #section-preguntas.active {
     overflow: visible !important;
     max-height: none !important;
   }
