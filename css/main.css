@@ -192,14 +192,17 @@ h4 { font-size: 1.1rem; }
 .btn-primary:active { transform: translateY(0); }
 
 .btn-outline {
-  background: transparent;
-  border-color: var(--primary);
+  background: white;
+  border: 1px solid var(--primary);
   color: var(--primary);
 }
 .btn-outline:hover {
-  background: var(--primary);
-  color: white;
+  background: var(--primary) !important;
+  color: white !important;
   transform: translateY(-2px);
+}
+.btn-outline:hover svg {
+  stroke: white !important;
 }
 
 .btn-danger {
