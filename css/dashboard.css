@@ -979,9 +979,84 @@ html, body {
   justify-content: center;
   padding: 12px 0;
 }
-.sidebar.collapsed .btn-logout {
-  justify-content: center;
-  padding: 10px 0;
+/* ── Padlet Board Multi-Column Independent Vertical Scroll System ── */
+#section-clases.active,
+#section-resumenes.active {
+  display: flex !important;
+  flex-direction: column !important;
+  height: calc(100vh - 110px) !important;
+  height: calc(100dvh - 110px) !important;
+  overflow: hidden !important;
+}
+
+.padlet-board-container {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 16px !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  align-items: stretch !important;
+  padding: 4px 4px 16px 4px !important;
+  box-sizing: border-box !important;
+}
+
+.padlet-column {
+  flex: 0 0 320px !important;
+  min-width: 290px !important;
+  max-width: 340px !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #F8FAFC !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.03) !important;
+  overflow: hidden !important;
+}
+
+.padlet-column-header {
+  flex-shrink: 0 !important;
+  padding: 14px 16px !important;
+  background: white !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.padlet-column-body {
+  flex: 1 !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+.padlet-column-body::-webkit-scrollbar {
+  width: 6px !important;
+}
+.padlet-column-body::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+.padlet-column-body::-webkit-scrollbar-thumb {
+  background: #CBD5E1 !important;
+  border-radius: 6px !important;
+}
+.padlet-column-body::-webkit-scrollbar-thumb:hover {
+  background: var(--primary) !important;
+}
+
+.padlet-column-add-btn {
+  flex-shrink: 0 !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
 }
 
 /* ── Banco de Preguntas Base Styles (Desktop & Laptop) ── */
