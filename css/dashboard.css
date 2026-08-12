@@ -1036,9 +1036,23 @@ html, body {
     margin-left: 0 !important;
     height: calc(100vh - 54px) !important;
     height: calc(100dvh - 54px) !important;
+    overflow: hidden !important;
   }
   .content-area {
-    padding: 4px 10px 4px 10px !important;
+    padding: 4px 10px 24px 10px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .section-view {
+    overflow-y: visible !important;
+  }
+
+  /* Horario Cards Container Mobile Scroll */
+  #horarioListContainer {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding-bottom: 40px !important;
   }
 
   /* Board Headers & Filters Mobile */
