@@ -319,6 +319,25 @@ html, body {
 }
 .topbar-brand-title span { color: var(--primary); }
 
+.topbar-role-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+}
+.topbar-role-badge.admin-badge {
+  background: rgba(232, 82, 26, 0.12);
+  color: var(--primary);
+  border: 1px solid rgba(232, 82, 26, 0.25);
+}
+.topbar-role-badge.student-badge {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
 /* ── Main Content & Sidebar Base ── */
 .sidebar {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1063,17 +1082,19 @@ html, body {
 
   .main-content {
     margin-left: 0 !important;
-    padding-top: 54px !important;
+    padding-top: 50px !important;
   }
   .content-area {
-    padding: 8px 10px !important;
+    padding: 2px 10px 4px 10px !important;
   }
 
   /* Board Headers & Filters Mobile */
   .board-header {
     flex-direction: column !important;
     align-items: stretch !important;
-    gap: 8px !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    gap: 6px !important;
     padding-bottom: 6px !important;
     width: 100% !important;
   }
