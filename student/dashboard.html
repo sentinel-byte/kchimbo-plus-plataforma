@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Panel Estudiantil</title>
-  <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani para la UNA PUNO.">
-  <link rel="stylesheet" href="../css/main.css?v=1.3.1">
-  <link rel="stylesheet" href="../css/dashboard.css?v=1.3.1">
+  <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani.">
+  <link rel="stylesheet" href="../css/main.css?v=1.3.2">
+  <link rel="stylesheet" href="../css/dashboard.css?v=1.3.2">
   <style>
     /* Extra styles for student dashboard */
     .quiz-answer-feedback {
@@ -245,12 +245,10 @@
               Horario de Clases en Vivo
             </h2>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <span style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Clases Virtuales UNA PUNO
+              Ciclo 2026
             </span>
-          </div>
         </div>
 
         <!-- Filter Row: Days of Week + Enrolled Ciclos Filter -->
@@ -315,7 +313,7 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 Examen Simulacro de Admisión
               </h2>
-              <p>Simulación oficial del examen de la <strong>UNA PUNO</strong> con 60 preguntas por área y cronómetro de 2 horas</p>
+              <p>Simulación oficial del examen de admisión con 60 preguntas por área y cronómetro de 2 horas</p>
             </div>
             <div style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:6px 16px;border-radius:20px;font-size:0.82rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
               <span style="width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 6px rgba(232,82,26,0.5);"></span>
@@ -362,7 +360,7 @@
             <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
               <div style="font-size:0.75rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                Criterio Oficial de Calificación UNA PUNO
+                Criterio Oficial de Calificación
               </div>
               <div style="display:flex;flex-direction:column;gap:10px;font-size:0.86rem;color:var(--text-main);">
                 <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:6px;border-bottom:1px solid #F1F5F9;">
@@ -453,20 +451,18 @@
       <div class="section-view" id="section-repasos">
         <!-- Setup -->
         <div id="quizSetup">
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
-            <div>
-              <h2 style="font-size:1.4rem;font-weight:800;color:var(--text-main);display:flex;align-items:center;gap:8px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          <div class="board-header" style="margin-bottom:20px;">
+            <div class="board-header-info">
+              <h2>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
                 Repasos y Práctica Guiada
               </h2>
-              <p style="font-size:0.82rem;color:var(--text-muted);margin-top:2px;">Entrena con preguntas filtradas por curso y tema con evaluación e historial instantáneo</p>
+              <p>Entrena con preguntas filtradas por curso y tema con evaluación e historial instantáneo</p>
             </div>
-            <div>
-              <span style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Área: INGENIERÍAS
-              </span>
-            </div>
+            <span style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Área: INGENIERÍAS
+            </span>
           </div>
 
           <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,0.02);margin-bottom:24px;">
@@ -643,51 +639,43 @@
 
       <!-- ════ SECCIÓN: MI AVANCE ════ -->
       <div class="section-view" id="section-avance">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
-          <div>
-            <h2 style="font-size:1.4rem;font-weight:800;color:var(--text-main);display:flex;align-items:center;gap:8px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <div class="board-header" style="margin-bottom:20px;">
+          <div class="board-header-info">
+            <h2>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
               Reporte de Avance Académico
             </h2>
-            <p style="font-size:0.82rem;color:var(--text-muted);margin-top:2px;">Análisis de tu rendimiento histórico en simulacros y repasos de la UNA PUNO</p>
+            <p>Análisis de tu rendimiento histórico en simulacros y repasos</p>
           </div>
-          <div>
-            <span style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              Monitoreo Activo
-            </span>
-          </div>
+          <span style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Monitoreo Activo
+          </span>
         </div>
 
         <!-- Metric KPI Cards -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;">
-          <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,0.02);display:flex;align-items:center;gap:14px;">
-            <div style="width:44px;height:44px;border-radius:12px;background:rgba(232,82,26,0.1);color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            </div>
-            <div>
-              <div style="font-size:1.35rem;font-weight:900;color:var(--text-main);line-height:1;" id="avanceTotalSimulacros">3</div>
-              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Simulacros Rendidos</div>
+        <div class="kpi-ribbon">
+          <div class="kpi-pill">
+            <span class="kpi-dot" style="background:#E8521A;box-shadow:0 0 8px rgba(232,82,26,0.5);"></span>
+            <div class="kpi-content">
+              <span class="kpi-val" id="avanceTotalSimulacros">3</span>
+              <span class="kpi-lbl">Simulacros rendidos</span>
             </div>
           </div>
-
-          <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,0.02);display:flex;align-items:center;gap:14px;">
-            <div style="width:44px;height:44px;border-radius:12px;background:rgba(16,185,129,0.1);color:#10B981;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
-            </div>
-            <div>
-              <div style="font-size:1.35rem;font-weight:900;color:#10B981;line-height:1;" id="avancePromedioPuntos">1670.0</div>
-              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Promedio Ponderado</div>
+          <div class="kpi-sep"></div>
+          <div class="kpi-pill">
+            <span class="kpi-dot" style="background:#10B981;box-shadow:0 0 8px rgba(16,185,129,0.5);"></span>
+            <div class="kpi-content">
+              <span class="kpi-val" id="avancePromedioPuntos">1670.0</span>
+              <span class="kpi-lbl">Promedio ponderado</span>
             </div>
           </div>
-
-          <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,0.02);display:flex;align-items:center;gap:14px;">
-            <div style="width:44px;height:44px;border-radius:12px;background:rgba(59,130,246,0.1);color:#3B82F6;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-            </div>
-            <div>
-              <div style="font-size:1.35rem;font-weight:900;color:#3B82F6;line-height:1;" id="avanceEfectividad">64.5%</div>
-              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Efectividad Global</div>
+          <div class="kpi-sep"></div>
+          <div class="kpi-pill">
+            <span class="kpi-dot" style="background:#3B82F6;box-shadow:0 0 8px rgba(59,130,246,0.5);"></span>
+            <div class="kpi-content">
+              <span class="kpi-val" id="avanceEfectividad">64.5%</span>
+              <span class="kpi-lbl">Efectividad global</span>
             </div>
           </div>
         </div>
@@ -733,18 +721,16 @@
 
       <!-- ════ SECCIÓN: PAGOS ════ -->
       <div class="section-view" id="section-pagos">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
-          <div>
-            <h2 style="font-size:1.4rem;font-weight:800;color:var(--text-main);display:flex;align-items:center;gap:8px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        <div class="board-header" style="margin-bottom:20px;">
+          <div class="board-header-info">
+            <h2>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
               Estado de Membresía y Plan
             </h2>
-            <p style="font-size:0.82rem;color:var(--text-muted);margin-top:2px;">Consulta la vigencia de tu cuenta, renovaciones y accesos autorizados</p>
+            <p>Consulta la vigencia de tu cuenta, renovaciones y accesos autorizados</p>
           </div>
-          <div>
-            <div class="membership-status active" id="membershipStatus" style="padding:6px 16px;border-radius:20px;font-weight:800;font-size:0.8rem;display:inline-flex;align-items:center;gap:6px;">
-              <span>●</span> Membresía Activa
-            </div>
+          <div class="membership-status active" id="membershipStatus" style="padding:6px 16px;border-radius:20px;font-weight:800;font-size:0.8rem;display:inline-flex;align-items:center;gap:6px;">
+            <span>●</span> Membresía Activa
           </div>
         </div>
 
@@ -820,7 +806,7 @@
 
     <!-- Footer -->
     <footer class="main-footer">
-      <div>Copyright © 2026 <span class="footer-brand">Mirzakhani</span> | Plataforma Virtual UNA PUNO</div>
+      <div>Copyright © 2026 <span class="footer-brand">Mirzakhani</span> | Panel Estudiantil</div>
       <div class="footer-links">
         <a href="https://facebook.com" target="_blank">Facebook</a>
         <a href="https://tiktok.com" target="_blank">TikTok</a>
@@ -837,7 +823,7 @@
       K+
     </div>
     <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:4px;">Mirzakhani Plataforma</h3>
-    <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:16px;">Plataforma Educativa Preuniversitaria UNA PUNO</p>
+    <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:16px;">Plataforma Educativa Preuniversitaria</p>
 
     <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:14px;margin-bottom:16px;text-align:left;">
       <div style="font-size:0.68rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Desarrollado por</div>
@@ -2060,7 +2046,7 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
               Resultados del Examen Simulacro
             </h2>
-            <p style="font-size:0.82rem;color:var(--text-muted);margin-top:2px;">Evaluación oficial según la matriz de admisión de la UNA PUNO</p>
+            <p style="font-size:0.82rem;color:var(--text-muted);margin-top:2px;">Evaluación oficial según la matriz de admisión universitaria</p>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <span style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
@@ -2077,7 +2063,7 @@
         <!-- 2 Main Score Hero Cards -->
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px;">
           <div style="background:white;border:1.5px solid var(--border);border-radius:18px;padding:22px;box-shadow:0 2px 10px rgba(0,0,0,0.02);text-align:center;">
-            <div style="font-size:0.74rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Puntaje Ponderado UNA PUNO</div>
+            <div style="font-size:0.74rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Puntaje Ponderado Oficial</div>
             <div style="font-size:3rem;font-weight:900;color:${estadoColor};line-height:1.05;">${puntajePonderado}</div>
             <div style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin-top:4px;">de 3000.00 Puntos Máximos</div>
           </div>
