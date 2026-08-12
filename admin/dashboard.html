@@ -279,16 +279,25 @@
         <div class="admin-actions-bar">
           <div class="search-input-wrap">
             <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-            <input type="text" class="search-input" id="searchPreguntasPadlet" placeholder="Buscar pregunta por texto, tema o palabra clave...">
+            <input type="text" class="search-input" id="searchPreguntasPadlet" placeholder="Buscar pregunta por texto, tema, modalidad o año...">
           </div>
           <select class="custom-cycle-select" id="filterPregTema">
             <option value="">Todos los temas</option>
           </select>
-          <select class="custom-cycle-select" id="filterPregAreaPadlet">
-            <option value="">Todas las áreas</option>
-            <option value="INGENIERÍAS">INGENIERÍAS</option>
-            <option value="BIOMÉDICAS">BIOMÉDICAS</option>
-            <option value="SOCIALES">SOCIALES</option>
+          <select class="custom-cycle-select" id="filterPregModalidad">
+            <option value="">Todas las modalidades</option>
+            <option value="Ordinario">Ordinario</option>
+            <option value="CepreUNA">CepreUNA</option>
+            <option value="Extraordinario">Extraordinario</option>
+          </select>
+          <select class="custom-cycle-select" id="filterPregAño">
+            <option value="">Todos los años</option>
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
           </select>
         </div>
 
@@ -588,14 +597,14 @@
         <div class="form-group"><label class="form-label">Tema</label>
           <input type="text" class="form-input" id="pForm_tema" placeholder="Subtema">
         </div>
-        <div class="form-group"><label class="form-label">Área</label>
-          <select class="form-select" id="pForm_area">
-            <option value="INGENIERÍAS">INGENIERÍAS</option>
-            <option value="BIOMÉDICAS">BIOMÉDICAS</option>
-            <option value="SOCIALES">SOCIALES</option>
+        <div class="form-group"><label class="form-label">Modalidad</label>
+          <select class="form-select" id="pForm_modalidad">
+            <option value="Ordinario">Ordinario</option>
+            <option value="CepreUNA">CepreUNA</option>
+            <option value="Extraordinario">Extraordinario</option>
           </select>
         </div>
-        <div class="form-group"><label class="form-label">Año</label>
+        <div class="form-group"><label class="form-label">Año de Examen</label>
           <input type="number" class="form-input" id="pForm_año" min="2000" max="2030" value="2026">
         </div>
       </div>
@@ -2085,9 +2094,9 @@
   function openPreguntaModalForCurso(curso = null, tema = null) {
     document.getElementById('preguntaModalTitle').textContent = tema ? `Nueva Pregunta (${tema})` : 'Nueva Pregunta';
     document.getElementById('preguntaId').value = '';
-    ['curso','tema','area','año','pregunta','a','b','c','d','e','respuesta'].forEach(f => {
+    ['curso','tema','modalidad','año','pregunta','a','b','c','d','e','respuesta'].forEach(f => {
       const el = document.getElementById(`pForm_${f}`);
-      if (el) el.value = f==='año' ? new Date().getFullYear() : f==='area' ? 'INGENIERÍAS' : f==='respuesta' ? 'A' : '';
+      if (el) el.value = f==='año' ? new Date().getFullYear() : f==='modalidad' ? 'Ordinario' : f==='respuesta' ? 'A' : '';
     });
     populateCursosSelect(document.getElementById('pForm_curso'));
     if (curso) document.getElementById('pForm_curso').value = curso;
@@ -2106,7 +2115,8 @@
 
     const searchEl = document.getElementById('searchPreguntasPadlet');
     const searchTerm = (searchEl ? searchEl.value : '').toLowerCase().trim();
-    const areaFilter = (document.getElementById('filterPregAreaPadlet')?.value || '').trim();
+    const modalidadFilter = (document.getElementById('filterPregModalidad')?.value || '').trim();
+    const añoFilter = (document.getElementById('filterPregAño')?.value || '').trim();
 
     // Render course tabs
     const cursosDisponibles = CURSOS_POR_AREA.ADMIN;
@@ -2151,20 +2161,17 @@
     let filtered = preguntas.filter(p => {
       const matchCurso = p.curso === selectedPregCursoTab;
       const matchTema = !temaFilter || p.tema === temaFilter;
-      const matchArea = !areaFilter || p.area === areaFilter;
+      const matchModalidad = !modalidadFilter || p.modalidad === modalidadFilter;
+      const matchAño = !añoFilter || String(p.año) === String(añoFilter);
       const matchSearch = !searchTerm ||
         p.pregunta.toLowerCase().includes(searchTerm) ||
         p.tema.toLowerCase().includes(searchTerm) ||
         p.curso.toLowerCase().includes(searchTerm) ||
+        (p.modalidad && p.modalidad.toLowerCase().includes(searchTerm)) ||
+        (p.año && String(p.año).includes(searchTerm)) ||
         p.respuesta.toLowerCase() === searchTerm;
-      return matchCurso && matchTema && matchArea && matchSearch;
+      return matchCurso && matchTema && matchModalidad && matchAño && matchSearch;
     });
-
-    const areaColors = {
-      'INGENIERÍAS': { bg: 'rgba(41,128,185,0.1)', color: '#2980B9' },
-      'BIOMÉDICAS': { bg: 'rgba(16,185,129,0.1)', color: '#10B981' },
-      'SOCIALES': { bg: 'rgba(142,68,173,0.1)', color: '#8E44AD' }
-    };
 
     const courseBadgeColors = {
       'ÁLGEBRA': '#F97316', 'ARITMÉTICA': '#10B981', 'GEOMETRÍA': '#3B82F6',
@@ -2181,15 +2188,16 @@
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.5;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
           <div style="font-weight: 700; font-size: 1rem; color: var(--text-main);">No se encontraron preguntas</div>
-          <div style="font-size: 0.8rem; margin-top: 4px;">Prueba ajustando los filtros de curso, tema o área.</div>
+          <div style="font-size: 0.8rem; margin-top: 4px;">Prueba ajustando los filtros de curso, tema, modalidad o año.</div>
         </div>`;
       return;
     }
 
     container.innerHTML = filtered.map((p, idx) => {
-      const aStyle = areaColors[p.area] || { bg: 'rgba(232,82,26,0.1)', color: '#E8521A' };
       const cColor = courseBadgeColors[p.curso] || '#E8521A';
-      const claveTexto = p[p.respuesta.toLowerCase()] || '';
+      const modNombre = p.modalidad || 'Ordinario';
+      const modColor = modNombre === 'Ordinario' ? '#2563EB' : modNombre === 'CepreUNA' ? '#7C3AED' : '#D97706';
+      const modBg = modNombre === 'Ordinario' ? 'rgba(37,99,235,0.1)' : modNombre === 'CepreUNA' ? 'rgba(124,58,237,0.1)' : 'rgba(217,119,6,0.1)';
 
       const opciones = ['A', 'B', 'C', 'D', 'E'].map(opt => {
         const texto = p[opt.toLowerCase()];
@@ -2207,7 +2215,7 @@
           <!-- Header con texto de pregunta 100% visible -->
           <div style="padding: 12px 14px; cursor:pointer; background:#FFFFFF; display:flex; flex-direction:column; gap:8px;" onclick="togglePregDetail(${p.id})">
             
-            <!-- Top Row: Badges & Actions -->
+            <!-- Top Row: Badges (Curso, Tema, Modalidad, Año) & Actions -->
             <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
               <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                 <span style="font-size:0.75rem; font-weight:800; color:#64748B;">P${idx + 1}</span>
@@ -2217,8 +2225,11 @@
                 <span style="font-size:0.68rem; font-weight:700; color:#475569; background:#F1F5F9; border:1px solid #E2E8F0; padding:2px 8px; border-radius:6px;">
                   ${p.tema}
                 </span>
-                <span style="background:${aStyle.bg}; color:${aStyle.color}; border:1px solid rgba(0,0,0,0.05); padding:2px 8px; border-radius:6px; font-size:0.65rem; font-weight:800;">
-                  ${p.area}
+                <span style="background:${modBg}; color:${modColor}; border:1px solid ${modColor}33; padding:2px 8px; border-radius:6px; font-size:0.65rem; font-weight:800;">
+                  ${modNombre}
+                </span>
+                <span style="background:#F8FAFC; color:#64748B; border:1px solid #E2E8F0; padding:2px 7px; border-radius:6px; font-size:0.65rem; font-weight:800;">
+                  ${p.año || 2026}
                 </span>
               </div>
 
@@ -2281,7 +2292,8 @@
 
   document.getElementById('searchPreguntasPadlet')?.addEventListener('input', renderPreguntasBoard);
   document.getElementById('filterPregTema')?.addEventListener('change', renderPreguntasBoard);
-  document.getElementById('filterPregAreaPadlet')?.addEventListener('change', renderPreguntasBoard);
+  document.getElementById('filterPregModalidad')?.addEventListener('change', renderPreguntasBoard);
+  document.getElementById('filterPregAño')?.addEventListener('change', renderPreguntasBoard);
 
   window.editPregunta = (id) => {
     const p = preguntas.find(x => x.id === id);
@@ -2289,9 +2301,9 @@
     document.getElementById('preguntaModalTitle').textContent = 'Editar Pregunta';
     document.getElementById('preguntaId').value = id;
     populateCursosSelect(document.getElementById('pForm_curso'));
-    ['curso','tema','area','año','pregunta','a','b','c','d','e'].forEach(f => {
+    ['curso','tema','modalidad','año','pregunta','a','b','c','d','e'].forEach(f => {
       const el = document.getElementById(`pForm_${f}`);
-      if (el) el.value = p[f] || '';
+      if (el) el.value = p[f] || (f==='modalidad' ? 'Ordinario' : '');
     });
     document.getElementById('pForm_respuesta').value = p.respuesta;
     openModal('preguntaModal');
@@ -2302,8 +2314,8 @@
     const data = {
       curso: document.getElementById('pForm_curso').value,
       tema: document.getElementById('pForm_tema').value.trim(),
-      area: document.getElementById('pForm_area').value,
-      año: parseInt(document.getElementById('pForm_año').value),
+      modalidad: document.getElementById('pForm_modalidad').value,
+      año: parseInt(document.getElementById('pForm_año').value) || 2026,
       pregunta: document.getElementById('pForm_pregunta').value.trim(),
       a: document.getElementById('pForm_a').value.trim(),
       b: document.getElementById('pForm_b').value.trim(),
