@@ -1248,6 +1248,54 @@ html, body {
     display: none !important;
   }
 
+  /* Banco de Preguntas Mobile Styles */
+  #section-preguntas .board-header > div:last-child {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+  }
+  #section-preguntas .board-header .btn {
+    flex: 1 !important;
+    height: 38px !important;
+    justify-content: center !important;
+    font-size: 0.8rem !important;
+  }
+
+  #pregCursosTabs {
+    display: flex !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 2px 2px 8px 2px !important;
+    margin-bottom: 10px !important;
+    width: 100% !important;
+  }
+  #pregCursosTabs .tipo-btn {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: 6px 14px !important;
+    font-size: 0.78rem !important;
+    font-weight: 800 !important;
+    border-radius: 20px !important;
+  }
+
+  .admin-actions-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+  }
+  .admin-actions-bar .search-input-wrap,
+  .admin-actions-bar select,
+  .admin-actions-bar .custom-cycle-select {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
   /* Footer Mobile Clean Formatting */
   .main-footer {
     flex-direction: column !important;
