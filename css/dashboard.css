@@ -1231,7 +1231,7 @@ html, body {
     overflow: hidden !important;
   }
   .content-area {
-    padding: 12px 14px 24px 14px !important;
+    padding: 10px 10px 6px 10px !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
   }
@@ -1239,12 +1239,13 @@ html, body {
     overflow-y: visible !important;
   }
 
-  /* Horario Cards Container Mobile Scroll */
-  #horarioListContainer {
+  /* Horario & Preguntas Cards Container Mobile Scroll */
+  #horarioListContainer,
+  #adminPreguntasBoard {
     display: flex !important;
     flex-direction: column !important;
     gap: 12px !important;
-    padding-bottom: 40px !important;
+    padding-bottom: 12px !important;
   }
 
   /* Board Headers & Filters Mobile */
@@ -1318,10 +1319,9 @@ html, body {
   .padlet-board-container {
     flex: 1 !important;
     min-height: 0 !important;
-    height: calc(100vh - 190px) !important;
-    height: calc(100dvh - 190px) !important;
-    gap: 12px !important;
-    padding: 2px 2px 14px 2px !important;
+    height: 100% !important;
+    gap: 10px !important;
+    padding: 2px 2px 4px 2px !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
     overflow-x: auto !important;
