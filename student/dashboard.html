@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Panel Estudiantil</title>
   <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani para la UNA PUNO.">
-  <link rel="stylesheet" href="../css/main.css?v=1.3.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=1.3.0">
+  <link rel="stylesheet" href="../css/main.css?v=1.3.1">
+  <link rel="stylesheet" href="../css/dashboard.css?v=1.3.1">
   <style>
     /* Extra styles for student dashboard */
     .quiz-answer-feedback {
@@ -236,31 +236,27 @@
         </div>
       </div>
 
-      <!-- ════ SECCIÓN: HORARIO DE CLASES ════ -->
+      <!-- ════ SECCIÓN: HORARIO DE CLASES (ESTUDIANTE) ════ -->
       <div class="section-view" id="section-horario">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
-          <div>
-            <h2 style="font-size:1.2rem;font-weight:800;color:var(--text-main);display:flex;align-items:center;gap:8px;margin:0;">
+        <div class="board-header" style="margin-bottom:14px;">
+          <div class="board-header-info">
+            <h2>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Horario Semanal
+              Horario de Clases en Vivo
             </h2>
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <button class="btn btn-primary" id="btnNuevoHorario" style="display:none;border-radius:12px;font-weight:800;font-size:0.85rem;padding:8px 18px;align-items:center;gap:6px;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Agregar Horario
-            </button>
             <span style="background:rgba(232,82,26,0.1);color:var(--primary);border:1px solid rgba(232,82,26,0.25);padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Ciclo 2026
+              Clases Virtuales UNA PUNO
             </span>
           </div>
         </div>
 
-        <!-- Filter Row: Days of Week + Ciclo Filter -->
-        <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:14px;margin-bottom:20px;box-shadow:0 2px 6px rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <!-- Filter Row: Days of Week + Enrolled Ciclos Filter -->
+        <div class="admin-actions-bar" style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:12px 16px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:12px;">
           <!-- Day Filter Buttons -->
-          <div style="display:flex;gap:6px;flex-wrap:wrap;" id="horarioDaysFilter">
+          <div style="display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;" id="horarioDaysFilter">
             <button class="tipo-btn active" data-dia="LUNES">Lunes</button>
             <button class="tipo-btn" data-dia="MARTES">Martes</button>
             <button class="tipo-btn" data-dia="MIÉRCOLES">Miércoles</button>
@@ -270,14 +266,10 @@
             <button class="tipo-btn" data-dia="DOMINGO">Domingo</button>
           </div>
 
-          <!-- Ciclo Selector -->
-          <div style="display:flex;align-items:center;gap:8px;">
-            <label style="font-size:0.75rem;font-weight:800;color:var(--text-muted);letter-spacing:0.5px;">CICLO:</label>
-            <select class="form-select" id="horarioCicloSelect" style="height:36px;border-radius:10px;font-size:0.8rem;font-weight:700;padding:4px 10px;">
-              <option value="TODOS">Todos los Ciclos</option>
-              <option value="Ciclo Matecero">Ciclo Matecero</option>
-              <option value="Ciclo Formativo">Ciclo Formativo</option>
-              <option value="Ciclo Intensivo">Ciclo Intensivo</option>
+          <!-- Ciclos del Estudiante Selector -->
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <select class="custom-cycle-select" id="horarioCicloSelect" style="width:185px;">
+              <option value="TODOS">Todos mis ciclos</option>
             </select>
           </div>
         </div>
@@ -1062,6 +1054,11 @@
   let resumenes = [...DEMO_RESUMENES];
   let preguntas = [...DEMO_PREGUNTAS];
 
+  // Helper: devuelve el objeto de sesión del usuario logueado (con ciclos, rol, area, etc.)
+  function getLoggedUser() {
+    return sesion || null;
+  }
+
   // ── Inicializar UI con datos de sesión ──
   const nameEl  = document.getElementById('sidebarUserName');
   const areaEl  = document.getElementById('sidebarUserArea');
@@ -1411,27 +1408,31 @@
   }
 
   function updateCiclosSelectStudent() {
-    const ciclos = getCiclosData();
     const select = document.getElementById('horarioCicloSelect');
-    if (select) {
-      const currentVal = select.value;
-      let opts = `<option value="TODOS">Todos los Ciclos</option>`;
-      ciclos.forEach(c => {
-        opts += `<option value="${c}">${c}</option>`;
-      });
-      select.innerHTML = opts;
-      select.value = ciclos.includes(currentVal) ? currentVal : 'TODOS';
+    if (!select) return;
+
+    const loggedUser = getLoggedUser();
+    let ciclosDisponibles = getCiclosData();
+
+    // If student, filter select options strictly to ENROLLED cycles only!
+    if (loggedUser && loggedUser.rol === 'estudiante') {
+      const userCiclos = Array.isArray(loggedUser.ciclos) && loggedUser.ciclos.length > 0
+        ? loggedUser.ciclos
+        : ['Ciclo Matecero', 'Ciclo Formativo'];
+      ciclosDisponibles = ciclosDisponibles.filter(c => userCiclos.includes(c));
     }
 
-    const selectModal = document.getElementById('horarioCiclo');
-    if (selectModal) {
-      const currentVal = selectModal.value;
-      let opts = `<option value="TODOS LOS CICLOS">Todos los Ciclos</option>`;
-      ciclos.forEach(c => {
-        opts += `<option value="${c}">${c}</option>`;
-      });
-      selectModal.innerHTML = opts;
-      selectModal.value = ciclos.includes(currentVal) ? currentVal : (ciclos[0] || 'TODOS LOS CICLOS');
+    const currentVal = select.value;
+    let opts = `<option value="TODOS">Todos mis ciclos (${ciclosDisponibles.length})</option>`;
+    ciclosDisponibles.forEach(c => {
+      opts += `<option value="${c}">${c}</option>`;
+    });
+    select.innerHTML = opts;
+
+    if (currentVal && (currentVal === 'TODOS' || ciclosDisponibles.includes(currentVal))) {
+      select.value = currentVal;
+    } else {
+      select.value = 'TODOS';
     }
   }
 
@@ -1441,17 +1442,25 @@
 
     updateCiclosSelectStudent();
 
-    // Show Admin Add button if Admin
-    const btnNuevo = document.getElementById('btnNuevoHorario');
-    if (btnNuevo) btnNuevo.style.display = isAdmin ? 'inline-flex' : 'none';
-
     let horarios = getHorariosData();
+    const loggedUser = getLoggedUser();
+
+    // Filter by enrolled student cycles
+    if (loggedUser && loggedUser.rol === 'estudiante') {
+      const userCiclos = Array.isArray(loggedUser.ciclos) && loggedUser.ciclos.length > 0
+        ? loggedUser.ciclos
+        : ['Ciclo Matecero', 'Ciclo Formativo'];
+
+      horarios = horarios.filter(h =>
+        h.ciclo === 'TODOS LOS CICLOS' || userCiclos.includes(h.ciclo)
+      );
+    }
 
     // Filter by Day
     if (diaHorarioFiltro !== 'TODOS') {
       horarios = horarios.filter(h => h.dia === diaHorarioFiltro);
     }
-    // Filter by Ciclo
+    // Filter by Selected Ciclo
     if (cicloHorarioFiltro !== 'TODOS') {
       horarios = horarios.filter(h => h.ciclo === cicloHorarioFiltro || h.ciclo === 'TODOS LOS CICLOS');
     }
