@@ -383,6 +383,36 @@ html, body {
   overflow: visible !important;
 }
 
+/* ── Desktop & Mobile Responsive Sidebar ── */
+@media (min-width: 769px) {
+  .sidebar {
+    position: fixed;
+    top: 54px;
+    left: 0;
+    width: var(--sidebar-width, 240px);
+    height: calc(100vh - 54px);
+    height: calc(100dvh - 54px);
+    z-index: 100;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s ease;
+  }
+  .sidebar.hidden-pc {
+    transform: translateX(-100%);
+  }
+  .main-content {
+    margin-top: 54px;
+    margin-left: var(--sidebar-width, 240px);
+    width: calc(100% - var(--sidebar-width, 240px));
+    min-height: calc(100vh - 54px);
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .sidebar.hidden-pc ~ .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
