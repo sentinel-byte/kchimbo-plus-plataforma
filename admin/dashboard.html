@@ -262,7 +262,7 @@
           <div style="display:flex;align-items:center;gap:8px;">
             <button class="btn btn-outline btn-sm" id="btnToggleExpandAll" style="font-size:0.78rem;padding:5px 12px;display:inline-flex;align-items:center;gap:4px;">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg>
-              <span id="txtToggleExpandAll">Expandir todo</span>
+              <span id="txtToggleExpandAll">Colapsar todo</span>
             </button>
             <button class="btn btn-primary" id="btnAddPreguntaTop" style="font-size:0.82rem;padding:6px 14px;display:inline-flex;align-items:center;gap:6px;">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -2105,7 +2105,7 @@
   }
 
   let selectedPregCursoTab = 'ÁLGEBRA';
-  let isAllExpanded = false;
+  let isAllExpanded = true;
 
   function renderPreguntasBoard() {
     const container = document.getElementById('adminPreguntasBoard');
