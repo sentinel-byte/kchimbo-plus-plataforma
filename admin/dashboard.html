@@ -2095,7 +2095,7 @@
     openModal('preguntaModal');
   }
 
-  let selectedPregCursoTab = 'TODOS';
+  let selectedPregCursoTab = 'ÁLGEBRA';
   let isAllExpanded = false;
 
   function renderPreguntasBoard() {
@@ -2109,11 +2109,15 @@
     const areaFilter = (document.getElementById('filterPregAreaPadlet')?.value || '').trim();
 
     // Render course tabs
-    const cursosDisponibles = ['TODOS', ...CURSOS_POR_AREA.ADMIN];
+    const cursosDisponibles = CURSOS_POR_AREA.ADMIN;
+    if (!cursosDisponibles.includes(selectedPregCursoTab)) {
+      selectedPregCursoTab = cursosDisponibles[0] || 'ÁLGEBRA';
+    }
+
     if (tabsContainer) {
       tabsContainer.innerHTML = cursosDisponibles.map(c => `
-        <button class="tipo-btn ${selectedPregCursoTab === c ? 'active' : ''}" data-curso="${c}" style="font-size:0.78rem;padding:5px 12px;white-space:nowrap;border-radius:20px;">
-          ${c === 'TODOS' ? 'Todos los cursos' : c}
+        <button class="tipo-btn ${selectedPregCursoTab === c ? 'active' : ''}" data-curso="${c}">
+          ${c}
         </button>
       `).join('');
 
@@ -2129,7 +2133,7 @@
     // Populate tema select dynamically based on course selection
     if (temaSelect) {
       const currentTemaVal = temaSelect.value;
-      const availablePregs = preguntas.filter(p => selectedPregCursoTab === 'TODOS' || p.curso === selectedPregCursoTab);
+      const availablePregs = preguntas.filter(p => p.curso === selectedPregCursoTab);
       const temasUnicos = [...new Set(availablePregs.map(p => p.tema).filter(Boolean))].sort();
 
       const isValidTopic = temasUnicos.includes(currentTemaVal);
@@ -2145,7 +2149,7 @@
 
     // Filter questions
     let filtered = preguntas.filter(p => {
-      const matchCurso = selectedPregCursoTab === 'TODOS' || p.curso === selectedPregCursoTab;
+      const matchCurso = p.curso === selectedPregCursoTab;
       const matchTema = !temaFilter || p.tema === temaFilter;
       const matchArea = !areaFilter || p.area === areaFilter;
       const matchSearch = !searchTerm ||
