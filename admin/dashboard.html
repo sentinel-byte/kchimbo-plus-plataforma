@@ -198,8 +198,7 @@
         <div style="background:white;border:1px solid #E2E8F0;border-radius:16px;padding:14px;margin-bottom:20px;box-shadow:0 2px 6px rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <!-- Day Filter Buttons -->
           <div style="display:flex;gap:6px;flex-wrap:wrap;" id="horarioDaysFilter">
-            <button class="tipo-btn active" data-dia="TODOS">Toda la Semana</button>
-            <button class="tipo-btn" data-dia="LUNES">Lunes</button>
+            <button class="tipo-btn active" data-dia="LUNES">Lunes</button>
             <button class="tipo-btn" data-dia="MARTES">Martes</button>
             <button class="tipo-btn" data-dia="MIÉRCOLES">Miércoles</button>
             <button class="tipo-btn" data-dia="JUEVES">Jueves</button>
@@ -1382,7 +1381,7 @@
   // ─────────────────────────────────────────────────────────
   // SECCIÓN: HORARIO DE CLASES Y ASESORÍAS (ADMIN - 100% VIRTUAL)
   // ─────────────────────────────────────────────────────────
-  let diaHorarioAdminFiltro = 'TODOS';
+  let diaHorarioAdminFiltro = 'LUNES';
   let cicloHorarioAdminFiltro = 'TODOS';
 
   function getHorariosData() {
