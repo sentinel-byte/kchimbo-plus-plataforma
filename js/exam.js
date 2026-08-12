@@ -1,5 +1,5 @@
 // ============================================================
-// KCHIMBO+ — MOTOR EXAMEN SIMULACRO
+// Mirzakhani — MOTOR EXAMEN SIMULACRO
 // 60 preguntas según distribución real UNA PUNO
 // Puntaje: Correcta +1, Incorrecta -0.25, Blanco 0
 // Convertido a escala de 20 puntos
@@ -156,7 +156,7 @@ class ExamenSimulacro {
     this.calcularPuntaje();
 
     // Guardar en historial local
-    const historial = JSON.parse(localStorage.getItem('kchimbo_historial') || '[]');
+    const historial = JSON.parse(localStorage.getItem('Mirzakhani_historial') || '[]');
     historial.unshift({
       fecha: this.resultado.fecha,
       correctas: this.resultado.correctas,
@@ -165,7 +165,7 @@ class ExamenSimulacro {
       puntaje: parseFloat(this.resultado.puntajeBruto),
       area: this.area
     });
-    localStorage.setItem('kchimbo_historial', JSON.stringify(historial));
+    localStorage.setItem('Mirzakhani_historial', JSON.stringify(historial));
 
     return this.resultado;
   }

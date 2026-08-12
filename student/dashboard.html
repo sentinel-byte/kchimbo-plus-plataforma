@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KCHIMBO+ | Panel Estudiantil</title>
-  <meta name="description" content="Panel del estudiante - Plataforma virtual KCHIMBO+ para la UNA PUNO.">
+  <title>Mirzakhani | Panel Estudiantil</title>
+  <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani para la UNA PUNO.">
   <link rel="stylesheet" href="../css/main.css?v=1.0.8">
   <link rel="stylesheet" href="../css/dashboard.css?v=1.0.8">
   <style>
@@ -81,7 +81,7 @@
 <!-- Loading Overlay -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
-  <div class="loading-text">Cargando KCHIMBO+...</div>
+  <div class="loading-text">Cargando Mirzakhani...</div>
 </div>
 
 <!-- Universal Topbar -->
@@ -90,7 +90,7 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
   <div class="topbar-brand-title">
-    <span>KCHIMBO+</span> — Plataforma Virtual
+    <span>Mirzakhani</span> — Plataforma Virtual
   </div>
 </div>
 
@@ -108,7 +108,7 @@
           <span style="font-size:1.2rem;font-weight:900;color:white;">K<span style="color:#FAD390">+</span></span>
         </div>
         <div class="sidebar-logo-text">
-          <div class="sidebar-logo-name">KCHIMBO<span>+</span></div>
+          <div class="sidebar-logo-name">Mirzakhani<span>+</span></div>
           <div class="sidebar-logo-sub">Plataforma Virtual</div>
         </div>
       </div>
@@ -759,7 +759,7 @@
                   VERIFICADO
                 </span>
               </div>
-              <h3 style="font-size:1.25rem;font-weight:900;color:var(--text-main);margin-bottom:6px;">Plan Estudiante — KCHIMBO+</h3>
+              <h3 style="font-size:1.25rem;font-weight:900;color:var(--text-main);margin-bottom:6px;">Plan Estudiante — Mirzakhani</h3>
               <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;" id="membershipDates">Inicio: — | Vence: —</div>
 
               <div style="margin-bottom:12px;">
@@ -820,7 +820,7 @@
 
     <!-- Footer -->
     <footer class="main-footer">
-      <div>Copyright © 2026 <span class="footer-brand">KCHIMBO+</span> | Plataforma Virtual UNA PUNO</div>
+      <div>Copyright © 2026 <span class="footer-brand">Mirzakhani</span> | Plataforma Virtual UNA PUNO</div>
       <div class="footer-links">
         <a href="https://facebook.com" target="_blank">Facebook</a>
         <a href="https://tiktok.com" target="_blank">TikTok</a>
@@ -836,7 +836,7 @@
     <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--primary),#C0392B);display:inline-flex;align-items:center;justify-content:center;color:white;font-size:1.5rem;font-weight:900;box-shadow:0 4px 15px rgba(232,82,26,0.3);margin:0 auto 12px auto;">
       K+
     </div>
-    <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:4px;">KCHIMBO+ Plataforma</h3>
+    <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:4px;">Mirzakhani Plataforma</h3>
     <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:16px;">Plataforma Educativa Preuniversitaria UNA PUNO</p>
 
     <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:14px;margin-bottom:16px;text-align:left;">
@@ -849,7 +849,7 @@
     </div>
 
     <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:16px;">
-      Copyright © 2026 <strong>KCHIMBO+</strong>. Todos los derechos reservados.
+      Copyright © 2026 <strong>Mirzakhani</strong>. Todos los derechos reservados.
     </div>
 
     <button class="btn btn-primary" onclick="closeModal('aboutModal')" style="width:100%;">Cerrar</button>
@@ -1136,11 +1136,11 @@
       // PC toggle
       sidebar.classList.toggle('hidden-pc');
       const isHidden = sidebar.classList.contains('hidden-pc');
-      localStorage.setItem('kchimbo_sidebar_hidden_pc', isHidden ? 'true' : 'false');
+      localStorage.setItem('Mirzakhani_sidebar_hidden_pc', isHidden ? 'true' : 'false');
     }
   });
 
-  if (window.innerWidth > 768 && localStorage.getItem('kchimbo_sidebar_hidden_pc') === 'true') {
+  if (window.innerWidth > 768 && localStorage.getItem('Mirzakhani_sidebar_hidden_pc') === 'true') {
     sidebar.classList.add('hidden-pc');
   }
 
@@ -1376,16 +1376,16 @@
   let cicloHorarioFiltro = 'TODOS';
 
   function getHorariosData() {
-    const raw = localStorage.getItem('kchimbo_horarios');
+    const raw = localStorage.getItem('Mirzakhani_horarios');
     if (!raw) {
-      localStorage.setItem('kchimbo_horarios', JSON.stringify(DEMO_HORARIO));
+      localStorage.setItem('Mirzakhani_horarios', JSON.stringify(DEMO_HORARIO));
       return [...DEMO_HORARIO];
     }
     try { return JSON.parse(raw); } catch { return [...DEMO_HORARIO]; }
   }
 
   function saveHorariosData(data) {
-    localStorage.setItem('kchimbo_horarios', JSON.stringify(data));
+    localStorage.setItem('Mirzakhani_horarios', JSON.stringify(data));
   }
 
   function updateCiclosSelectStudent() {
@@ -2319,7 +2319,7 @@
   // SECCIÓN: MI AVANCE
   // ─────────────────────────────────────────────────────────
   function renderAvance() {
-    const historial = JSON.parse(localStorage.getItem('kchimbo_historial') || '[]');
+    const historial = JSON.parse(localStorage.getItem('Mirzakhani_historial') || '[]');
     const todosHistorial = [...DEMO_HISTORIAL, ...historial];
 
     // Update KPI Cards

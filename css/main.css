@@ -1,26 +1,28 @@
 /* ============================================================
-   KCHIMBO+ — DESIGN SYSTEM GLOBAL
+   MIRZAKHANI — DESIGN SYSTEM GLOBAL
    Plataforma Virtual UNA PUNO
    Desarrollado por: Carlos Llano | llanovilca97@gmail.com
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
-/* ── CSS Variables ── */
+/* ── CSS Variables — Mirzakhani Design System ── */
 :root {
-  --primary:        #E8521A;
-  --primary-dark:   #C0392B;
-  --primary-deeper: #A04000;
-  --primary-light:  #FF6B35;
-  --accent:         #F39C12;
-  --accent-light:   #FAD390;
+  /* ── Brand / Accent ── */
+  --primary:        #F97316;
+  --primary-dark:   #EA6A00;
+  --primary-deeper: #C85500;
+  --primary-light:  #FB923C;
+  --accent:         #F59E0B;
+  --accent-light:   #FDE68A;
 
-  --bg:             #F9FAFB;
-  --bg-warm:        #F3F4F6;
+  /* ── Light Mode Backgrounds ── */
+  --bg:             #F4F4F4;
+  --bg-warm:        #EBEBEB;
   --bg-surface:     #FFFFFF;
   --bg-card:        #FFFFFF;
 
-  /* Padlet course color palette */
+  /* ── Course / Padlet palette ── */
   --padlet-orange:  #F97316;
   --padlet-amber:   #F59E0B;
   --padlet-emerald: #10B981;
@@ -29,37 +31,69 @@
   --padlet-purple:  #8B5CF6;
   --padlet-rose:    #F43F5E;
 
-  --sidebar-bg:     #111827;
+  /* ── Sidebar ── */
+  --sidebar-bg:     #18181B;
   --sidebar-width:  260px;
 
-  --text-primary:   #111827;
-  --text-secondary: #4B5563;
-  --text-muted:     #9CA3AF;
-  --text-white:     #FFFFFF;
+  /* ── Typography ── */
+  --text-primary:   #09090B;
+  --text-secondary: #52525B;
+  --text-muted:     #A1A1AA;
+  --text-white:     #FAFAFA;
 
-  --border:         #E5E7EB;
-  --border-strong:  #D1D5DB;
+  /* ── Borders ── */
+  --border:         #E4E4E7;
+  --border-strong:  #D4D4D8;
 
-  --success:        #10B981;
+  /* ── Semantic ── */
+  --success:        #22C55E;
   --warning:        #F59E0B;
   --danger:         #EF4444;
   --info:           #3B82F6;
 
-  --shadow-sm:      0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md:      0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-  --shadow-lg:      0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl:      0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  /* ── Shadows ── */
+  --shadow-sm:      0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  --shadow-md:      0 3px 8px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg:      0 10px 20px -3px rgba(0, 0, 0, 0.09), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --shadow-xl:      0 20px 30px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.05);
 
+  /* ── Radius ── */
   --radius-sm:      6px;
   --radius-md:      8px;
   --radius-lg:      12px;
   --radius-xl:      16px;
   --radius-full:    9999px;
 
-  --transition:     all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  /* ── Motion ── */
+  --transition:     all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:all 0.38s cubic-bezier(0.4, 0, 0.2, 1);
 
-  --font:           'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* ── Font ── */
+  --font:           'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:      'Space Mono', 'Courier New', monospace;
+}
+
+/* ── Dark Mode ── */
+[data-theme="dark"],
+body.dark {
+  --bg:             #09090B;
+  --bg-warm:        #18181B;
+  --bg-surface:     #1C1C1F;
+  --bg-card:        #27272A;
+
+  --sidebar-bg:     #111113;
+
+  --text-primary:   #FAFAFA;
+  --text-secondary: #A1A1AA;
+  --text-muted:     #71717A;
+
+  --border:         #27272A;
+  --border-strong:  #3F3F46;
+
+  --shadow-sm:      0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md:      0 3px 8px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg:      0 10px 20px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl:      0 20px 30px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
 }
 
 /* ── Reset & Base ── */
@@ -77,6 +111,8 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
 }
 
 a { text-decoration: none; color: inherit; }

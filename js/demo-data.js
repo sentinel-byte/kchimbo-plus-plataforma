@@ -1,5 +1,5 @@
 // ============================================================
-// KCHIMBO+ — DEMO DATA (banco de datos local)
+// Mirzakhani — DEMO DATA (banco de datos local)
 // Se usa mientras no hay Google Sheets conectado
 // ============================================================
 
@@ -34,9 +34,9 @@ const DEMO_USERS = [
 
 // ── USUARIOS DEMO & DYNAMIC STORAGE ───────────────────────
 function getUsuariosData() {
-  const raw = localStorage.getItem('kchimbo_usuarios');
+  const raw = localStorage.getItem('Mirzakhani_usuarios');
   if (!raw) {
-    localStorage.setItem('kchimbo_usuarios', JSON.stringify(DEMO_USERS));
+    localStorage.setItem('Mirzakhani_usuarios', JSON.stringify(DEMO_USERS));
     return JSON.parse(JSON.stringify(DEMO_USERS));
   }
   try {
@@ -53,7 +53,7 @@ function getUsuariosData() {
         if (!existing.password) existing.password = defU.password;
       }
     });
-    localStorage.setItem('kchimbo_usuarios', JSON.stringify(list));
+    localStorage.setItem('Mirzakhani_usuarios', JSON.stringify(list));
     return list;
   } catch {
     return JSON.parse(JSON.stringify(DEMO_USERS));
@@ -61,16 +61,16 @@ function getUsuariosData() {
 }
 
 function saveUsuariosData(data) {
-  localStorage.setItem('kchimbo_usuarios', JSON.stringify(data));
+  localStorage.setItem('Mirzakhani_usuarios', JSON.stringify(data));
 }
 
 // ── CICLOS ACADÉMICOS DEMO & DYNAMIC STORAGE ──────────────
 const DEMO_CICLOS = ["Ciclo Matecero", "Ciclo Formativo", "Ciclo Intensivo"];
 
 function getCiclosData() {
-  const raw = localStorage.getItem('kchimbo_ciclos');
+  const raw = localStorage.getItem('Mirzakhani_ciclos');
   if (!raw) {
-    localStorage.setItem('kchimbo_ciclos', JSON.stringify(DEMO_CICLOS));
+    localStorage.setItem('Mirzakhani_ciclos', JSON.stringify(DEMO_CICLOS));
     return [...DEMO_CICLOS];
   }
   try {
@@ -82,7 +82,7 @@ function getCiclosData() {
 }
 
 function saveCiclosData(data) {
-  localStorage.setItem('kchimbo_ciclos', JSON.stringify(data));
+  localStorage.setItem('Mirzakhani_ciclos', JSON.stringify(data));
 }
 
 // ── CLASES (PDFs y Videos) ──────────────────────────────────
@@ -118,8 +118,8 @@ const DEMO_HORARIO = [
   { id: 4, dia: "MIÉRCOLES", horaInicio: "08:30", horaFin: "10:00", curso: "FÍSICA", docente: "Ing. Roberto Quispe", ciclo: "Ciclo Formativo", tipo: "EN VIVO", url: "https://zoom.us" },
   { id: 5, dia: "JUEVES", horaInicio: "07:00", horaFin: "08:30", curso: "QUÍMICA", docente: "Dr. Walter Canaza", ciclo: "Ciclo Intensivo", tipo: "EN VIVO", url: "https://zoom.us" },
   { id: 6, dia: "VIERNES", horaInicio: "07:00", horaFin: "08:30", curso: "BIOLOGÍA", docente: "Dra. Elena Vargas", ciclo: "Ciclo Intensivo", tipo: "EN VIVO", url: "https://zoom.us" },
-  { id: 7, dia: "SÁBADO", horaInicio: "08:00", horaFin: "12:00", curso: "SIMULACRO GENERAL", docente: "Equipo Académico KCHIMBO+", ciclo: "TODOS LOS CICLOS", tipo: "EVALUACIÓN", url: "#" },
-  { id: 8, dia: "DOMINGO", horaInicio: "09:00", horaFin: "11:00", curso: "ASESORÍA Y REPASO", docente: "Plana Docente KCHIMBO+", ciclo: "TODOS LOS CICLOS", tipo: "ASESORÍA", url: "https://meet.google.com" }
+  { id: 7, dia: "SÁBADO", horaInicio: "08:00", horaFin: "12:00", curso: "SIMULACRO GENERAL", docente: "Equipo Académico Mirzakhani", ciclo: "TODOS LOS CICLOS", tipo: "EVALUACIÓN", url: "#" },
+  { id: 8, dia: "DOMINGO", horaInicio: "09:00", horaFin: "11:00", curso: "ASESORÍA Y REPASO", docente: "Plana Docente Mirzakhani", ciclo: "TODOS LOS CICLOS", tipo: "ASESORÍA", url: "https://meet.google.com" }
 ];
 
 // ── BANCO DE PREGUNTAS DEMO ────────────────────────────────

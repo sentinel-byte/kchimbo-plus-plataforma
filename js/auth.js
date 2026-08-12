@@ -1,5 +1,5 @@
 // ============================================================
-// KCHIMBO+ — AUTENTICACIÓN + BLOQUEO 3 INTENTOS
+// Mirzakhani — AUTENTICACIÓN + BLOQUEO 3 INTENTOS
 // ============================================================
 
 const AUTH = {
@@ -8,10 +8,10 @@ const AUTH = {
 
   // Claves localStorage
   KEYS: {
-    SESSION: 'kchimbo_session',
-    INTENTOS: 'kchimbo_intentos',
-    BLOQUEADO: 'kchimbo_bloqueado_hasta',
-    USUARIO: 'kchimbo_usuario',
+    SESSION: 'Mirzakhani_session',
+    INTENTOS: 'Mirzakhani_intentos',
+    BLOQUEADO: 'Mirzakhani_bloqueado_hasta',
+    USUARIO: 'Mirzakhani_usuario',
   },
 
   // ── Hash SHA-256 (compatible con navegadores modernos) ──

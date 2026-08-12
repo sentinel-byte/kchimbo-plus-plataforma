@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KCHIMBO+ | Plataforma Virtual UNA PUNO — Iniciar Sesión</title>
-  <meta name="description" content="Accede a la plataforma virtual KCHIMBO+ para prepararte para el examen de admisión de la UNA PUNO. Clases en línea, simulacros, repasos y más.">
+  <title>Mirzakhani | Plataforma Virtual UNA PUNO — Iniciar Sesión</title>
+  <meta name="description" content="Accede a la plataforma virtual Mirzakhani para prepararte para el examen de admisión de la UNA PUNO. Clases en línea, simulacros, repasos y más.">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/login.css">
 </head>
@@ -32,15 +32,15 @@
 
     <!-- Brand Side -->
     <div class="login-brand">
-      <!-- Brand Logo Header (Ultra-Premium Icon Emblem & Typography) -->
+      <!-- Brand Logo Header -->
       <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:24px;">
-        <div style="width:125px; height:125px; border-radius:28px; background:white; padding:10px; box-shadow:0 14px 35px rgba(232,82,26,0.18), 0 0 0 1px rgba(232,82,26,0.1); display:flex; align-items:center; justify-content:center; transition:all 0.3s ease;">
-          <img src="img/kchimbo_logo.png" alt="KCHIMBO+" style="width:100%; height:100%; object-fit:contain; border-radius:20px;">
+        <div style="width:125px; height:125px; border-radius:28px; background:white; padding:10px; box-shadow:0 14px 35px rgba(249,115,22,0.16), 0 0 0 1px rgba(249,115,22,0.1); display:flex; align-items:center; justify-content:center; transition:all 0.3s ease;">
+          <img src="img/mirzakhani_logo.png" alt="Mirzakhani" style="width:100%; height:100%; object-fit:contain; border-radius:20px;">
         </div>
-        <div style="font-size:2rem; font-weight:900; color:var(--text-main); letter-spacing:-0.5px; margin-top:14px; line-height:1; display:flex; align-items:center; gap:2px;">
-          KCHIMBO<span style="color:var(--primary); font-weight:900;">+</span>
+        <div style="font-size:1.9rem; font-weight:700; color:var(--text-primary); letter-spacing:-0.5px; margin-top:14px; line-height:1;">
+          Mirzakhani
         </div>
-        <div style="font-size:0.68rem; font-weight:800; color:var(--primary); background:rgba(232,82,26,0.08); border:1px solid rgba(232,82,26,0.2); padding:3px 12px; border-radius:20px; text-transform:uppercase; letter-spacing:1.5px; margin-top:6px;">
+        <div style="font-size:0.68rem; font-weight:700; color:var(--primary); background:rgba(249,115,22,0.08); border:1px solid rgba(249,115,22,0.2); padding:3px 12px; border-radius:20px; text-transform:uppercase; letter-spacing:1.5px; margin-top:6px;">
           Plataforma Virtual
         </div>
       </div>
@@ -138,7 +138,7 @@
     <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--primary),#C0392B);display:inline-flex;align-items:center;justify-content:center;color:white;font-size:1.5rem;font-weight:900;box-shadow:0 4px 15px rgba(232,82,26,0.3);margin:0 auto 12px auto;">
       K+
     </div>
-    <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:4px;">KCHIMBO+ Plataforma</h3>
+    <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:4px;">Mirzakhani Plataforma</h3>
     <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:16px;">Plataforma Educativa Preuniversitaria UNA PUNO</p>
 
     <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:14px;margin-bottom:16px;text-align:left;">
@@ -151,7 +151,7 @@
     </div>
 
     <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:16px;">
-      Copyright © 2026 <strong>KCHIMBO+</strong>. Todos los derechos reservados.
+      Copyright © 2026 <strong>Mirzakhani</strong>. Todos los derechos reservados.
     </div>
 
     <button class="btn btn-primary" onclick="closeModal('aboutModal')" style="width:100%;">Cerrar</button>
@@ -257,7 +257,7 @@
 
   // ── Verificar bloqueo al cargar ──
   function verificarBloqueoInicial() {
-    const u = localStorage.getItem('kchimbo_last_user') || '';
+    const u = localStorage.getItem('Mirzakhani_last_user') || '';
     if (u) {
       const bloqueo = AUTH.estaBlockeado(u);
       if (bloqueo.bloqueado) {
@@ -281,7 +281,7 @@
       return;
     }
 
-    localStorage.setItem('kchimbo_last_user', usuario.toLowerCase());
+    localStorage.setItem('Mirzakhani_last_user', usuario.toLowerCase());
 
     // Loading state
     btnLogin.disabled = true;
@@ -293,7 +293,7 @@
 
       if (resultado && resultado.success) {
         btnText.textContent = 'Accediendo...';
-        showToast('¡Bienvenido a KCHIMBO+!', 'success');
+        showToast('¡Bienvenido a Mirzakhani!', 'success');
         const { sesion } = resultado;
         window.location.href = (sesion && sesion.rol === 'admin')
           ? 'admin/dashboard.html'

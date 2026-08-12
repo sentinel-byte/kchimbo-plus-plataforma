@@ -1,5 +1,5 @@
 // ============================================================
-// KCHIMBO+ — MOTOR REPASOS POR CURSO Y TEMA
+// Mirzakhani — MOTOR REPASOS POR CURSO Y TEMA
 // ============================================================
 
 class ModoRepaso {

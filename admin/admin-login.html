@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KCHIMBO+ | Administrador — Iniciar Sesión</title>
-  <meta name="description" content="Acceso administrador a la plataforma KCHIMBO+.">
+  <title>Mirzakhani | Administrador — Iniciar Sesión</title>
+  <meta name="description" content="Acceso administrador a la plataforma Mirzakhani.">
   <link rel="stylesheet" href="../css/main.css">
   <link rel="stylesheet" href="../css/login.css">
 </head>
@@ -26,13 +26,13 @@
     <div class="login-brand">
       <div class="login-logo-wrap" style="background: linear-gradient(145deg, #A04000 0%, #C0392B 50%, #7D3412 100%);">
         <div class="logo-text-fallback">
-          <div class="kchimbo">KCHIMBO<span>+</span></div>
+          <div class="Mirzakhani">Mirzakhani<span>+</span></div>
           <div class="sub">Panel Admin</div>
         </div>
       </div>
       <h1 class="login-tagline">Panel de <span>Administración</span></h1>
       <p class="login-desc">
-        Gestiona el contenido, usuarios, preguntas y membresías de la plataforma <strong>KCHIMBO+</strong> desde aquí.
+        Gestiona el contenido, usuarios, preguntas y membresías de la plataforma <strong>Mirzakhani</strong> desde aquí.
       </p>
       <div class="brand-dots">
         <div class="brand-dot active"></div>
@@ -121,7 +121,7 @@
     <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--primary),#C0392B);display:inline-flex;align-items:center;justify-content:center;color:white;font-size:1.5rem;font-weight:900;box-shadow:0 4px 15px rgba(232,82,26,0.3);margin:0 auto 12px auto;">
       K+
     </div>
-    <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:4px;">KCHIMBO+ Plataforma</h3>
+    <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:4px;">Mirzakhani Plataforma</h3>
     <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:16px;">Plataforma Educativa Preuniversitaria UNA PUNO</p>
 
     <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:14px;margin-bottom:16px;text-align:left;">
@@ -134,7 +134,7 @@
     </div>
 
     <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:16px;">
-      Copyright © 2026 <strong>KCHIMBO+</strong>. Todos los derechos reservados.
+      Copyright © 2026 <strong>Mirzakhani</strong>. Todos los derechos reservados.
     </div>
 
     <button class="btn btn-primary" onclick="closeModal('aboutModal')" style="width:100%;">Cerrar</button>
@@ -208,7 +208,7 @@
     lockoutTimerObj.start();
   }
 
-  const lastUser = localStorage.getItem('kchimbo_last_admin') || '';
+  const lastUser = localStorage.getItem('Mirzakhani_last_admin') || '';
   if (lastUser) {
     const bloqueo = AUTH.estaBlockeado(lastUser);
     if (bloqueo.bloqueado) iniciarBloqueo(bloqueo.msRestantes);
@@ -221,7 +221,7 @@
     const password = passwordIn.value;
     if (!usuario || !password) { showError('Ingresa usuario y contraseña.'); return; }
 
-    localStorage.setItem('kchimbo_last_admin', usuario.toLowerCase());
+    localStorage.setItem('Mirzakhani_last_admin', usuario.toLowerCase());
     btnLogin.disabled = true;
     btnText.textContent = 'Verificando...';
     hideError();

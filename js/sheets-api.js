@@ -1,5 +1,5 @@
 // ============================================================
-// KCHIMBO+ — GOOGLE SHEETS API INTEGRATION
+// Mirzakhani — GOOGLE SHEETS API INTEGRATION
 // Conecta con tu Google Apps Script desplegado como Web App
 //
 // INSTRUCCIONES DE CONFIGURACIÓN:
