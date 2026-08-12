@@ -431,12 +431,20 @@ html, body {
   .board-header { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
 
-/* ── Section Views ── */
 .section-view {
   display: none;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
   animation: fadeInUp 0.3s ease;
 }
-.section-view.active { display: block; }
+.section-view.active {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+}
 
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(12px); }
@@ -1001,14 +1009,34 @@ html, body {
 /* ── Responsive Dashboard & Board System ── */
 @media (max-width: 768px) {
   .sidebar {
+    top: 54px !important;
+    height: calc(100vh - 54px) !important;
+    height: calc(100dvh - 54px) !important;
     transform: translateX(-100%);
     width: 260px !important;
+    z-index: 1000 !important;
   }
   .sidebar.open {
     transform: translateX(0);
     box-shadow: var(--shadow-xl);
   }
+  .sidebar-overlay {
+    top: 54px !important;
+    z-index: 999 !important;
+  }
   .sidebar-overlay.visible { display: block; }
+
+  .padlet-board-container {
+    flex: 1 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    margin-top: 4px !important;
+    gap: 12px !important;
+    padding-bottom: 8px !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    overflow-x: auto !important;
+  }
   
   .topbar {
     display: flex !important;
