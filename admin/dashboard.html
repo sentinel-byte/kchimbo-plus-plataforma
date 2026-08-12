@@ -151,6 +151,10 @@
             </h2>
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <!-- Filtro por Ciclo -->
+            <select id="filterCicloClases" class="form-select" style="min-width:160px;height:34px;font-size:0.8rem;font-weight:600;border-radius:8px;">
+              <option value="TODOS">Todos los ciclos</option>
+            </select>
             <div class="tipo-filter-wrap">
               <button class="tipo-btn active" data-tipo="TODOS">Todos</button>
               <button class="tipo-btn" data-tipo="PDF">PDFs</button>
@@ -228,7 +232,11 @@
             </h2>
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <div class="search-input-wrap" style="width:220px;margin-bottom:0;">
+            <!-- Filtro por Ciclo -->
+            <select id="filterCicloResumenes" class="form-select" style="min-width:160px;height:34px;font-size:0.8rem;font-weight:600;border-radius:8px;">
+              <option value="TODOS">Todos los ciclos</option>
+            </select>
+            <div class="search-input-wrap" style="width:200px;margin-bottom:0;">
               <span class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
               <input type="text" class="search-input" id="searchResumenesPadlet" placeholder="Buscar resumen..." style="padding:5px 10px 5px 30px;font-size:0.8rem;">
             </div>
@@ -1077,7 +1085,19 @@
   // ─────────────────────────────────────────────────────────
   // CLASES (TABLERO PADLET MURAL ADMIN)
   // ─────────────────────────────────────────────────────────
-  let tipoFiltroAdmin = 'TODOS';
+  let tipoFiltroAdmin   = 'TODOS';
+  let cicloFiltroClases = 'TODOS';
+  let cicloFiltroResumenes = 'TODOS';
+
+  function populateFilterCicloSelect(selectId) {
+    const sel = document.getElementById(selectId);
+    if (!sel) return;
+    const ciclos = getCiclosData();
+    const current = sel.value;
+    sel.innerHTML = `<option value="TODOS">Todos los ciclos</option>` +
+      ciclos.map(c => `<option value="${c}">${c}</option>`).join('');
+    if (ciclos.includes(current)) sel.value = current;
+  }
 
   function parseGoogleDriveUrl(url) {
     if (!url) return { preview: '', download: '' };
@@ -1144,12 +1164,19 @@
       'ECONOMÍA': '#059669'
     };
 
+    populateFilterCicloSelect('filterCicloClases');
+
     let boardHTML = `<div class="padlet-board-container">`;
 
     cursosArea.forEach(curso => {
       let matCurso = clases.filter(c => c.curso === curso);
+      // Filtro por tipo (PDF / VIDEO)
       if (tipoFiltroAdmin !== 'TODOS') {
         matCurso = matCurso.filter(c => c.tipo === tipoFiltroAdmin);
+      }
+      // Filtro por ciclo
+      if (cicloFiltroClases !== 'TODOS') {
+        matCurso = matCurso.filter(c => c.ciclo === cicloFiltroClases);
       }
 
       const colorTheme = courseColors[curso] || '#E8521A';
@@ -1691,6 +1718,18 @@
     });
   });
 
+  // Filter por ciclo — Clases
+  document.getElementById('filterCicloClases')?.addEventListener('change', (e) => {
+    cicloFiltroClases = e.target.value;
+    renderClasesBoard();
+  });
+
+  // Filter por ciclo — Resúmenes
+  document.getElementById('filterCicloResumenes')?.addEventListener('change', (e) => {
+    cicloFiltroResumenes = e.target.value;
+    renderResumenesBoard();
+  });
+
   renderClasesBoard();
 
   document.getElementById('btnAddClaseHeader')?.addEventListener('click', () => openClaseModalForCurso());
@@ -1791,8 +1830,15 @@
 
     let boardHTML = `<div class="padlet-board-container">`;
 
+    populateFilterCicloSelect('filterCicloResumenes');
+
     cursosArea.forEach(curso => {
       let matCurso = resumenes.filter(r => r.curso === curso);
+      // Filtro por ciclo
+      if (cicloFiltroResumenes !== 'TODOS') {
+        matCurso = matCurso.filter(r => r.ciclo === cicloFiltroResumenes);
+      }
+      // Filtro por texto
       if (searchTerm) {
         matCurso = matCurso.filter(r =>
           r.titulo.toLowerCase().includes(searchTerm) ||
