@@ -357,31 +357,30 @@ html, body {
 
 .content-area {
   flex: 1;
-  min-height: 0;
-  padding: 14px 20px 6px 20px;
-  max-width: 100%;
   width: 100%;
+  max-width: 100%;
   margin: 0 auto;
+  padding: 16px 24px 40px 24px;
   display: flex;
   flex-direction: column;
   overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
   box-sizing: border-box;
 }
 
 .section-view {
-  flex: 1;
-  min-height: 0;
   display: none;
+  width: 100%;
   flex-direction: column;
-  overflow-y: auto !important;
   animation: fadeInUp 0.3s ease;
 }
 .section-view.active {
   display: flex !important;
   flex-direction: column !important;
-  flex: 1 !important;
-  min-height: 0 !important;
-  overflow-y: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: min-content !important;
+  overflow: visible !important;
 }
 
 @keyframes fadeInUp {
@@ -1018,11 +1017,23 @@ html, body {
   width: 135px !important;
 }
 
+#section-preguntas {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: auto !important;
+  min-height: min-content !important;
+  overflow: visible !important;
+}
+
 #adminPreguntasBoard {
   display: flex !important;
   flex-direction: column !important;
   gap: 12px !important;
   padding-bottom: 40px !important;
+  width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
 }
 
 /* ── Responsive Dashboard & Board System ── */
