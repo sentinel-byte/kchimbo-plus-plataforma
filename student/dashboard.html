@@ -1157,11 +1157,25 @@
   };
   window.closeModal = (id) => {
     const m = document.getElementById(id);
-    if (m) m.classList.remove('open');
+    if (m) {
+      m.classList.remove('open');
+      if (id === 'mediaModal') {
+        const iframe = document.getElementById('mediaModalIframe');
+        if (iframe) iframe.src = 'about:blank';
+      }
+    }
   };
 
   document.querySelectorAll('.modal-overlay').forEach(m => {
-    m.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+    m.addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        e.currentTarget.classList.remove('open');
+        if (e.currentTarget.id === 'mediaModal') {
+          const iframe = document.getElementById('mediaModalIframe');
+          if (iframe) iframe.src = 'about:blank';
+        }
+      }
+    });
   });
 
   // ─────────────────────────────────────────────────────────
@@ -1813,7 +1827,7 @@
                 <div>Sin resúmenes teóricos</div>
               </div>
             ` : matCurso.map(r => `
-              <div class="padlet-post-card" data-id="${r.id}" data-url="${r.url}" data-titulo="${r.titulo}">
+              <div class="padlet-post-card" data-id="${r.id}" data-url="${r.url}" data-titulo="${r.tema || r.titulo}">
                 <div class="padlet-post-top" style="background:${colorTheme};"></div>
                 <div class="padlet-post-inner">
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
@@ -1821,8 +1835,7 @@
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> ${r.paginas || 1} PÁG.
                     </span>
                   </div>
-                  <div class="padlet-post-title" style="margin:4px 0 6px 0;">${r.titulo}</div>
-                  <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">Tema: <strong>${r.tema}</strong></div>
+                  <div class="padlet-post-title" style="margin:4px 0 8px 0;font-weight:700;">${r.tema || r.titulo}</div>
                   <div class="padlet-post-preview" style="margin-bottom:0;">
                     <div style="display:flex;align-items:center;gap:8px;color:#C0392B;">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>

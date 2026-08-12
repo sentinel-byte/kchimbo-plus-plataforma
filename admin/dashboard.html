@@ -544,12 +544,9 @@
         <div class="form-group"><label class="form-label">Curso</label>
           <select class="form-select" id="resForm_curso"><option value="">Selecciona...</option></select>
         </div>
-        <div class="form-group"><label class="form-label">Tema</label>
-          <input type="text" class="form-input" id="resForm_tema" placeholder="Ej: Factorización">
+        <div class="form-group"><label class="form-label">Tema (Nombre del PDF)</label>
+          <input type="text" class="form-input" id="resForm_tema" placeholder="Ej: Factorización y Productos Notables">
         </div>
-      </div>
-      <div class="form-group"><label class="form-label">Título del resumen</label>
-        <input type="text" class="form-input" id="resForm_titulo" placeholder="Ej: Guía de Factorización Práctica">
       </div>
       <div class="form-inline-row">
         <div class="form-group"><label class="form-label">Páginas</label>
@@ -1056,11 +1053,25 @@
   };
   window.closeModal = (id) => {
     const m = document.getElementById(id);
-    if (m) m.classList.remove('open');
+    if (m) {
+      m.classList.remove('open');
+      if (id === 'mediaModal') {
+        const iframe = document.getElementById('mediaModalIframe');
+        if (iframe) iframe.src = 'about:blank';
+      }
+    }
   };
 
   document.querySelectorAll('.modal-overlay').forEach(m => {
-    m.addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+    m.addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        e.currentTarget.classList.remove('open');
+        if (e.currentTarget.id === 'mediaModal') {
+          const iframe = document.getElementById('mediaModalIframe');
+          if (iframe) iframe.src = 'about:blank';
+        }
+      }
+    });
   });
 
   // ── Populate cursosSelect ──
@@ -1793,7 +1804,7 @@
   function openResumenModalForCurso(curso = null, ciclo = null) {
     document.getElementById('resumenModalTitle').textContent = 'Nuevo Resumen';
     document.getElementById('resumenId').value = '';
-    ['curso','tema','titulo','paginas','url'].forEach(f => {
+    ['curso','tema','paginas','url'].forEach(f => {
       const el = document.getElementById(`resForm_${f}`);
       if (el) el.value = f === 'paginas' ? '4' : '';
     });
@@ -1867,7 +1878,7 @@
                 <div>Sin resúmenes en este curso</div>
               </div>
             ` : matCurso.map(r => `
-              <div class="padlet-post-card" data-id="${r.id}" data-url="${r.url}" data-titulo="${r.titulo}" data-curso="${r.curso}">
+              <div class="padlet-post-card" data-id="${r.id}" data-url="${r.url}" data-titulo="${r.tema || r.titulo}" data-curso="${r.curso}">
                 <div class="padlet-post-top" style="background:${colorTheme};"></div>
                 <div class="padlet-post-inner">
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;position:relative;">
@@ -1898,8 +1909,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="padlet-post-title" style="margin:4px 0 6px 0;">${r.titulo}</div>
-                  <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">Tema: <strong>${r.tema}</strong></div>
+                  <div class="padlet-post-title" style="margin:4px 0 8px 0;font-weight:700;">${r.tema || r.titulo}</div>
                   <div class="padlet-post-preview" style="margin-bottom:0;">
                     <div style="display:flex;align-items:center;gap:8px;color:#C0392B;">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
@@ -2029,7 +2039,6 @@
     populateCursosSelect(document.getElementById('resForm_curso'));
     document.getElementById('resForm_curso').value = r.curso;
     document.getElementById('resForm_tema').value = r.tema;
-    document.getElementById('resForm_titulo').value = r.titulo;
     document.getElementById('resForm_paginas').value = r.paginas;
     document.getElementById('resForm_url').value = r.url;
     openModal('resumenModal');
@@ -2040,11 +2049,11 @@
     const ciclo = document.getElementById('resForm_ciclo').value;
     const curso = document.getElementById('resForm_curso').value;
     const tema  = document.getElementById('resForm_tema').value.trim();
-    const titulo= document.getElementById('resForm_titulo').value.trim();
+    const titulo= tema; // El título es automáticamente el tema (nombre del PDF)
     const pags  = parseInt(document.getElementById('resForm_paginas').value) || 4;
     const url   = document.getElementById('resForm_url').value.trim() || '#';
     if (!ciclo) { showToast('Selecciona el ciclo académico', 'warning'); return; }
-    if (!curso || !titulo) { showToast('Completa los campos requeridos', 'warning'); return; }
+    if (!curso || !tema) { showToast('Completa los campos requeridos', 'warning'); return; }
     if (id) {
       const idx = resumenes.findIndex(r => r.id === parseInt(id));
       if (idx >= 0) resumenes[idx] = { ...resumenes[idx], ciclo, curso, tema, titulo, paginas: pags, url };
