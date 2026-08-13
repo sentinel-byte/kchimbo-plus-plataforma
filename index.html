@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Plataforma Virtual UNA PUNO — Iniciar Sesión</title>
   <meta name="description" content="Accede a la plataforma virtual Mirzakhani para prepararte para el examen de admisión de la UNA PUNO. Clases en línea, simulacros, repasos y más.">
-  <link rel="stylesheet" href="css/main.css?v=1.4.5">
-  <link rel="stylesheet" href="css/login.css?v=1.4.5">
+  <link rel="stylesheet" href="css/main.css?v=1.5.0">
+  <link rel="stylesheet" href="css/login.css?v=1.5.0">
 </head>
 <body>
 <div class="login-page">
@@ -140,6 +140,32 @@
 
       <!-- REGISTER FORM (Nuevo Estudiante / Modo Visitante) -->
       <form id="registerForm" style="display:none;" novalidate>
+        <!-- Badges Institucionales del Sur -->
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.75rem;font-weight:800;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Universidades Disponibles</div>
+          <div style="display:grid;grid-template-columns:repeat(5, 1fr);gap:6px;">
+            <div title="UNA PUNO — Universidad Nacional del Altiplano" style="background:#1E3A8A;border-radius:10px;padding:8px 4px;text-align:center;color:white;box-shadow:0 2px 5px rgba(30,58,138,0.25);">
+              <svg width="20" height="20" viewBox="0 0 32 32" fill="none" style="display:block;margin:0 auto 2px;"><path d="M16 5L21 12H11L16 5Z" fill="#F59E0B"/><circle cx="16" cy="17" r="5" fill="#FBBF24" stroke="#FFF" stroke-width="1.5"/><path d="M7 25C12 23 20 23 25 25" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/></svg>
+              <span style="font-size:0.65rem;font-weight:900;display:block;line-height:1;">PUNO</span>
+            </div>
+            <div title="UNSA — Univ. Nacional de San Agustín (Arequipa)" style="background:#991B1B;border-radius:10px;padding:8px 4px;text-align:center;color:white;box-shadow:0 2px 5px rgba(153,27,27,0.25);">
+              <svg width="20" height="20" viewBox="0 0 32 32" fill="none" style="display:block;margin:0 auto 2px;"><path d="M16 7L25 23H7L16 7Z" fill="#FFFFFF"/><path d="M16 7L19.5 14H12.5L16 7Z" fill="#CBD5E1"/><circle cx="16" cy="25" r="3" fill="#F59E0B"/></svg>
+              <span style="font-size:0.65rem;font-weight:900;display:block;line-height:1;">UNSA</span>
+            </div>
+            <div title="UNAJ — Univ. Nacional de Juliaca" style="background:#065F46;border-radius:10px;padding:8px 4px;text-align:center;color:white;box-shadow:0 2px 5px rgba(6,95,70,0.25);">
+              <svg width="20" height="20" viewBox="0 0 32 32" fill="none" style="display:block;margin:0 auto 2px;"><circle cx="16" cy="16" r="6" stroke="#34D399" stroke-width="2.5"/><circle cx="16" cy="16" r="2" fill="#FBBF24"/><path d="M16 5V9M16 23V27M5 16H9M23 16H27" stroke="#A7F3D0" stroke-width="2" stroke-linecap="round"/></svg>
+              <span style="font-size:0.65rem;font-weight:900;display:block;line-height:1;">UNAJ</span>
+            </div>
+            <div title="UNAM — Univ. Nacional de Moquegua / Ilo" style="background:#B45309;border-radius:10px;padding:8px 4px;text-align:center;color:white;box-shadow:0 2px 5px rgba(180,83,9,0.25);">
+              <svg width="20" height="20" viewBox="0 0 32 32" fill="none" style="display:block;margin:0 auto 2px;"><path d="M16 6L18.5 11.5H24.5L20 15L21.5 21L16 17.5L10.5 21L12 15L7.5 11.5H13.5L16 6Z" fill="#FBBF24"/></svg>
+              <span style="font-size:0.65rem;font-weight:900;display:block;line-height:1;">UNAM</span>
+            </div>
+            <div title="UNJBG — Univ. Nac. Jorge Basadre Grohmann (Tacna)" style="background:#1E40AF;border-radius:10px;padding:8px 4px;text-align:center;color:white;box-shadow:0 2px 5px rgba(30,64,175,0.25);">
+              <svg width="20" height="20" viewBox="0 0 32 32" fill="none" style="display:block;margin:0 auto 2px;"><path d="M9 25V13C9 9.13401 12.134 6 16 6C19.866 6 23 9.13401 23 13V25" stroke="#FBBF24" stroke-width="2.5"/><circle cx="16" cy="15" r="3" fill="#EF4444"/></svg>
+              <span style="font-size:0.65rem;font-weight:900;display:block;line-height:1;">UNJBG</span>
+            </div>
+          </div>
+        </div>
         <div class="form-group">
           <label class="form-label" for="regNombre">Nombres y Apellidos</label>
           <div class="input-icon-wrap">
