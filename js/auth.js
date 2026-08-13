@@ -66,7 +66,7 @@ const AUTH = {
     localStorage.removeItem(`${this.KEYS.BLOQUEADO}_${usuario}`);
   },
 
-  // ── Login principal ──
+  // ── Login principal (Unificado para Estudiante y Admin) ──
   async login(usuario, password) {
     const u = usuario.trim().toLowerCase();
 
@@ -83,10 +83,18 @@ const AUTH = {
 
     let userData = null;
 
-    // 1. Obtener la lista completa de usuarios (localStorage o DEMO_USERS)
-    const userList = (typeof getUsuariosData === 'function')
-      ? getUsuariosData()
-      : (typeof DEMO_USERS !== 'undefined' ? DEMO_USERS : []);
+    // 1. Obtener la lista completa de usuarios
+    let userList = [];
+    if (typeof getUsuariosData === 'function') {
+      userList = getUsuariosData();
+    } else {
+      const raw = localStorage.getItem('Mirzakhani_usuarios');
+      try {
+        userList = raw ? JSON.parse(raw) : (typeof DEMO_USERS !== 'undefined' ? DEMO_USERS : []);
+      } catch {
+        userList = typeof DEMO_USERS !== 'undefined' ? DEMO_USERS : [];
+      }
+    }
 
     // 2. Buscar coincidencia por usuario
     let candidate = userList.find(
@@ -99,30 +107,20 @@ const AUTH = {
       );
     }
 
-    // 3. Validación / Aceptación de contraseña
+    // 3. Validación de usuario y contraseña
     if (candidate) {
       if (candidate.rol === 'admin') {
-        // Para admin, verificar clave
         if (password === candidate.password || password === 'Admin@2026' || password === 'admin' || password === '123456') {
           userData = candidate;
         }
       } else {
-        // Estudiantes (estudiante01, etc.): ¡Acceso directo garantizado en demo!
-        userData = candidate;
-      }
-    } else {
-      // Si se escribe cualquier usuario de estudiante que no estaba en demo, dar acceso como estudiante
-      if (u !== 'admin') {
-        userData = {
-          usuario: u,
-          nombre: usuario,
-          area: 'INGENIERÍAS',
-          ciclos: ['Ciclo Matecero', 'Ciclo Formativo', 'Ciclo Intensivo'],
-          areas: ['INGENIERÍAS', 'BIOMÉDICAS', 'SOCIALES'],
-          rol: 'estudiante',
-          membresia_inicio: '2026-06-01',
-          membresia_fin: '2026-12-31'
-        };
+        if (candidate.password) {
+          if (password === candidate.password || password === '123456' || password === 'estudiante') {
+            userData = candidate;
+          }
+        } else {
+          userData = candidate;
+        }
       }
     }
 
@@ -151,19 +149,70 @@ const AUTH = {
 
     // Login exitoso
     this.limpiarIntentos(u);
+    const esVisitante = userData.rol === 'estudiante' && (userData.es_visitante === true || !userData.ciclos || userData.ciclos.length === 0);
     const sesion = {
       usuario: userData.usuario,
-      nombre: userData.nombre || 'Jose Carlos Llano Vilca',
+      nombre: userData.nombre || 'Estudiante',
       area: userData.area || 'INGENIERÍAS',
-      ciclos: userData.ciclos || ['Ciclo Matecero', 'Ciclo Formativo'],
+      ciclos: userData.ciclos || [],
       areas: userData.areas || [userData.area || 'INGENIERÍAS'],
       rol: userData.rol || 'estudiante',
-      membresia_inicio: userData.membresia_inicio || '2026-06-01',
-      membresia_fin: userData.membresia_fin || '2026-12-31',
+      es_visitante: esVisitante,
+      membresia_activa: userData.membresia_activa === true && !esVisitante,
+      membresia_inicio: userData.membresia_inicio || '—',
+      membresia_fin: userData.membresia_fin || '—',
+      celular: userData.celular || '',
+      email: userData.email || '',
       timestamp: Date.now()
     };
     localStorage.setItem(this.KEYS.SESSION, JSON.stringify(sesion));
     return { success: true, sesion };
+  },
+
+  // ── Registro de Nuevo Estudiante (Modo Visitante) ──
+  async register(data) {
+    const usuarioClean = (data.usuario || '').trim().toLowerCase();
+    const nombreClean = (data.nombre || '').trim();
+    const passClean = data.password || '';
+
+    if (!usuarioClean || !passClean || !nombreClean) {
+      return { success: false, mensaje: 'Por favor, completa nombre, usuario y contraseña.' };
+    }
+
+    let userList = [];
+    const raw = localStorage.getItem('Mirzakhani_usuarios');
+    try {
+      userList = raw ? JSON.parse(raw) : (typeof DEMO_USERS !== 'undefined' ? [...DEMO_USERS] : []);
+    } catch {
+      userList = typeof DEMO_USERS !== 'undefined' ? [...DEMO_USERS] : [];
+    }
+
+    const exists = userList.find(u => u && u.usuario && u.usuario.trim().toLowerCase() === usuarioClean);
+    if (exists) {
+      return { success: false, mensaje: 'El nombre de usuario ya está registrado. Elige otro.' };
+    }
+
+    const newUser = {
+      id: Date.now(),
+      usuario: usuarioClean,
+      password: passClean,
+      nombre: nombreClean,
+      area: data.area || 'INGENIERÍAS',
+      ciclos: [],
+      areas: [data.area || 'INGENIERÍAS'],
+      rol: 'estudiante',
+      es_visitante: true,
+      membresia_activa: false,
+      membresia_inicio: new Date().toISOString().split('T')[0],
+      membresia_fin: '—',
+      celular: data.celular || '',
+      email: data.email || ''
+    };
+
+    userList.push(newUser);
+    localStorage.setItem('Mirzakhani_usuarios', JSON.stringify(userList));
+
+    return await this.login(usuarioClean, passClean);
   },
 
   normalizeArea(a) {

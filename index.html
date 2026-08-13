@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Plataforma Virtual UNA PUNO — Iniciar Sesión</title>
   <meta name="description" content="Accede a la plataforma virtual Mirzakhani para prepararte para el examen de admisión de la UNA PUNO. Clases en línea, simulacros, repasos y más.">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/main.css?v=1.4.0">
+  <link rel="stylesheet" href="css/login.css?v=1.4.0">
 </head>
 <body>
 <div class="login-page">
@@ -57,9 +57,17 @@
       </div>
     </div>
 
-    <!-- Form Side (Unificado Estudiante & Admin) -->
+    <!-- Form Side (Unificado Estudiante & Admin + Registro) -->
     <div class="login-form-panel">
-      <h2 class="login-form-subtitle" style="margin-top: 10px;">Iniciar <span class="highlight">Sesión</span></h2>
+      <!-- Tabs Switcher -->
+      <div class="auth-tabs" style="display:flex;background:#F1F5F9;border-radius:14px;padding:4px;margin-bottom:20px;gap:4px;">
+        <button type="button" class="auth-tab-btn active" id="tabLoginBtn" style="flex:1;padding:10px;border:none;border-radius:10px;font-size:0.85rem;font-weight:800;cursor:pointer;transition:all 0.2s;background:white;color:var(--text-main);box-shadow:0 2px 6px rgba(0,0,0,0.06);">
+          🔑 Iniciar Sesión
+        </button>
+        <button type="button" class="auth-tab-btn" id="tabRegisterBtn" style="flex:1;padding:10px;border:none;border-radius:10px;font-size:0.85rem;font-weight:800;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--text-muted);">
+          📝 Registrarse
+        </button>
+      </div>
 
       <!-- Lockout Box -->
       <div class="lockout-box" id="lockoutBox">
@@ -77,7 +85,7 @@
         <span id="loginErrorText">Usuario o contraseña incorrectos.</span>
       </div>
 
-      <!-- Form -->
+      <!-- LOGIN FORM (Estudiante & Admin) -->
       <form id="loginForm" novalidate>
         <div class="form-group">
           <label class="form-label" for="usuario">Usuario</label>
@@ -125,6 +133,62 @@
 
         <button type="submit" class="btn-login" id="btnLogin">
           <span id="btnLoginText">Iniciar Sesión</span>
+        </button>
+      </form>
+
+      <!-- REGISTER FORM (Nuevo Estudiante / Modo Visitante) -->
+      <form id="registerForm" style="display:none;" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="regNombre">Nombres y Apellidos</label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <input type="text" id="regNombre" class="form-input" placeholder="Ej: Carlos Llano Vilca" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="regUsuario">Nombre de Usuario (o Celular/DNI)</label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>
+            </span>
+            <input type="text" id="regUsuario" class="form-input" placeholder="Crea tu usuario (Ej: juan123)" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="regArea">Área Académica</label>
+          <select id="regArea" class="form-select" style="width:100%;height:44px;border-radius:12px;font-weight:700;padding:0 12px;border:1px solid #CBD5E1;">
+            <option value="INGENIERÍAS">INGENIERÍAS</option>
+            <option value="BIOMÉDICAS">BIOMÉDICAS</option>
+            <option value="SOCIALES">SOCIALES</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="regCelular">WhatsApp / Teléfono</label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
+            <input type="tel" id="regCelular" class="form-input" placeholder="Ej: 965890475">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="regPassword">Contraseña</label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            </span>
+            <input type="password" id="regPassword" class="form-input" placeholder="Crea una contraseña" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-login" id="btnRegister">
+          <span id="btnRegisterText">Crear Cuenta (Modo Visitante)</span>
         </button>
       </form>
     </div>
@@ -319,6 +383,85 @@
       btnText.textContent = 'Iniciar Sesión';
     }
   });
+
+  // ── Tab Switcher (Login vs Registro) ──
+  const tabLoginBtn = document.getElementById('tabLoginBtn');
+  const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+  const registerForm = document.getElementById('registerForm');
+
+  if (tabLoginBtn && tabRegisterBtn && registerForm) {
+    tabLoginBtn.addEventListener('click', () => {
+      tabLoginBtn.classList.add('active');
+      tabLoginBtn.style.background = 'white';
+      tabLoginBtn.style.color = 'var(--text-main)';
+      tabLoginBtn.style.boxShadow = '0 2px 6px rgba(0,0,0,0.06)';
+
+      tabRegisterBtn.classList.remove('active');
+      tabRegisterBtn.style.background = 'transparent';
+      tabRegisterBtn.style.color = 'var(--text-muted)';
+      tabRegisterBtn.style.boxShadow = 'none';
+
+      form.style.display = 'block';
+      registerForm.style.display = 'none';
+      hideError();
+    });
+
+    tabRegisterBtn.addEventListener('click', () => {
+      tabRegisterBtn.classList.add('active');
+      tabRegisterBtn.style.background = 'white';
+      tabRegisterBtn.style.color = 'var(--text-main)';
+      tabRegisterBtn.style.boxShadow = '0 2px 6px rgba(0,0,0,0.06)';
+
+      tabLoginBtn.classList.remove('active');
+      tabLoginBtn.style.background = 'transparent';
+      tabLoginBtn.style.color = 'var(--text-muted)';
+      tabLoginBtn.style.boxShadow = 'none';
+
+      form.style.display = 'none';
+      registerForm.style.display = 'block';
+      hideError();
+    });
+
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById('regNombre').value.trim();
+      const usuario = document.getElementById('regUsuario').value.trim();
+      const area = document.getElementById('regArea').value;
+      const celular = document.getElementById('regCelular').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const btnRegister = document.getElementById('btnRegister');
+      const btnRegText = document.getElementById('btnRegisterText');
+
+      if (!nombre || !usuario || !password) {
+        showError('Por favor, ingresa tu nombre, usuario y contraseña.');
+        return;
+      }
+
+      btnRegister.disabled = true;
+      btnRegText.textContent = 'Registrando...';
+      hideError();
+
+      try {
+        const res = await AUTH.register({ nombre, usuario, area, celular, password });
+        if (res && res.success) {
+          showToast('¡Registro exitoso en Modo Visitante!', 'success');
+          btnRegText.textContent = 'Ingresando...';
+          setTimeout(() => {
+            window.location.href = 'student/dashboard.html';
+          }, 400);
+        } else {
+          showError(res.mensaje || 'Error al registrar el usuario.');
+          btnRegister.disabled = false;
+          btnRegText.textContent = 'Crear Cuenta (Modo Visitante)';
+        }
+      } catch (err) {
+        console.error(err);
+        showError('Error al crear la cuenta. Intenta de nuevo.');
+        btnRegister.disabled = false;
+        btnRegText.textContent = 'Crear Cuenta (Modo Visitante)';
+      }
+    });
+  }
 
   // ── Modal helpers ──
   window.openModal = (id) => {
