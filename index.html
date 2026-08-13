@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Plataforma Virtual UNA PUNO — Iniciar Sesión</title>
   <meta name="description" content="Accede a la plataforma virtual Mirzakhani para prepararte para el examen de admisión de la UNA PUNO. Clases en línea, simulacros, repasos y más.">
-  <link rel="stylesheet" href="css/main.css?v=1.4.4">
-  <link rel="stylesheet" href="css/login.css?v=1.4.4">
+  <link rel="stylesheet" href="css/main.css?v=1.4.5">
+  <link rel="stylesheet" href="css/login.css?v=1.4.5">
 </head>
 <body>
 <div class="login-page">
@@ -61,11 +61,13 @@
     <div class="login-form-panel">
       <!-- Tabs Switcher -->
       <div class="auth-tabs" style="display:flex;background:#F1F5F9;border-radius:14px;padding:4px;margin-bottom:20px;gap:4px;">
-        <button type="button" class="auth-tab-btn active" id="tabLoginBtn" style="flex:1;padding:10px;border:none;border-radius:10px;font-size:0.85rem;font-weight:800;cursor:pointer;transition:all 0.2s;background:white;color:var(--text-main);box-shadow:0 2px 6px rgba(0,0,0,0.06);">
-          🔑 Iniciar Sesión
+        <button type="button" class="auth-tab-btn active" id="tabLoginBtn" style="flex:1;padding:10px 14px;border:none;border-radius:10px;font-size:0.85rem;font-weight:800;cursor:pointer;transition:all 0.2s;background:white;color:var(--text-main);box-shadow:0 2px 6px rgba(0,0,0,0.06);display:inline-flex;align-items:center;justify-content:center;gap:6px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Iniciar Sesión
         </button>
-        <button type="button" class="auth-tab-btn" id="tabRegisterBtn" style="flex:1;padding:10px;border:none;border-radius:10px;font-size:0.85rem;font-weight:800;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--text-muted);">
-          📝 Registrarse
+        <button type="button" class="auth-tab-btn" id="tabRegisterBtn" style="flex:1;padding:10px 14px;border:none;border-radius:10px;font-size:0.85rem;font-weight:800;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;gap:6px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+          Registrarse
         </button>
       </div>
 
@@ -88,7 +90,7 @@
       <!-- LOGIN FORM (Estudiante & Admin) -->
       <form id="loginForm" novalidate>
         <div class="form-group">
-          <label class="form-label" for="usuario">Usuario</label>
+          <label class="form-label" for="usuario">Usuario (DNI / Celular)</label>
           <div class="input-icon-wrap">
             <span class="input-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -170,7 +172,7 @@
               <option value="UNAJ">UNAJ — Univ. Nacional de Juliaca</option>
               <option value="UNAM">UNAM — Univ. Nacional de Moquegua / Ilo</option>
               <option value="UNJBG">UNJBG — Univ. Nacional Jorge Basadre Grohmann (Tacna)</option>
-              <option value="OTRA">✏️ OTRA UNIVERSIDAD (Escribir manualmente)</option>
+              <option value="OTRA">OTRA UNIVERSIDAD (Escribir manualmente)</option>
             </select>
           </div>
           <!-- Dynamic Vector SVG Emblem Preview -->
@@ -637,7 +639,7 @@
       carreras.forEach(c => {
         opts += `<option value="${univ} - ${c}">${c}</option>`;
       });
-      opts += '<option value="OTRA">✏️ OTRA CARRERA (Escribir manualmente)</option>';
+      opts += '<option value="OTRA">OTRA CARRERA (Escribir manualmente)</option>';
 
       regCarreraSel.innerHTML = opts;
 
