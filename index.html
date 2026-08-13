@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Plataforma Virtual UNA PUNO — Iniciar Sesión</title>
   <meta name="description" content="Accede a la plataforma virtual Mirzakhani para prepararte para el examen de admisión de la UNA PUNO. Clases en línea, simulacros, repasos y más.">
-  <link rel="stylesheet" href="css/main.css?v=1.8.0">
-  <link rel="stylesheet" href="css/login.css?v=1.8.0">
+  <link rel="stylesheet" href="css/main.css?v=1.9.0">
+  <link rel="stylesheet" href="css/login.css?v=1.9.0">
 </head>
 <body>
 <div class="login-page">
@@ -200,9 +200,6 @@
               <option value="UNJBG">UNJBG — Universidad Nacional Jorge Basadre Grohmann (Tacna)</option>
             </datalist>
           </div>
-          <div id="univRecognizedBadge" style="margin-top:8px;font-size:0.75rem;font-weight:700;color:#047857;display:flex;align-items:center;gap:6px;">
-            <!-- JS status feedback -->
-          </div>
         </div>
 
         <!-- 6. ELIGE EL ÁREA ACADÉMICA -->
@@ -231,9 +228,6 @@
             <datalist id="carrerasDatalist">
               <!-- Dynamically built by JS -->
             </datalist>
-          </div>
-          <div id="carreraRecognizedBadge" style="margin-top:8px;font-size:0.75rem;font-weight:700;color:#047857;display:flex;align-items:center;gap:6px;">
-            <!-- JS status feedback -->
           </div>
         </div>
 
@@ -604,31 +598,31 @@
       }
     };
 
+    function normalizarTexto(str) {
+      if (!str) return '';
+      return str
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s]/g, '')
+        .trim();
+    }
+
     const regUnivInput = document.getElementById('regUnivInput');
     const regAreaSel = document.getElementById('regArea');
     const regCarreraInput = document.getElementById('regCarreraInput');
     const carrerasDatalist = document.getElementById('carrerasDatalist');
-    const univRecognizedBadge = document.getElementById('univRecognizedBadge');
-    const carreraRecognizedBadge = document.getElementById('carreraRecognizedBadge');
 
     function autorreconocerUniversidad(txt) {
-      const q = (txt || '').trim().toLowerCase();
+      const q = normalizarTexto(txt);
       if (!q) return 'UNA PUNO';
       if (q.includes('unap') || q.includes('puno') || q.includes('altiplano')) return 'UNA PUNO';
       if (q.includes('unsa') || q.includes('arequipa') || q.includes('agustin')) return 'UNSA';
       if (q.includes('unaj') || q.includes('juliaca')) return 'UNAJ';
       if (q.includes('unam') || q.includes('moquegua') || q.includes('ilo')) return 'UNAM';
       if (q.includes('unjbg') || q.includes('tacna') || q.includes('basadre')) return 'UNJBG';
-      return 'OTRA';
+      return txt.trim();
     }
-
-    const UNIV_NOMBRES = {
-      'UNA PUNO': 'Universidad Nacional del Altiplano (Puno)',
-      'UNSA': 'Universidad Nacional de San Agustín (Arequipa)',
-      'UNAJ': 'Universidad Nacional de Juliaca (Puno)',
-      'UNAM': 'Universidad Nacional de Moquegua / Ilo',
-      'UNJBG': 'Universidad Nacional Jorge Basadre Grohmann (Tacna)'
-    };
 
     function actualizarJerarquia() {
       if (!regUnivInput || !regAreaSel) return;
@@ -637,53 +631,15 @@
       const univKey = autorreconocerUniversidad(textoUniv);
       const areaKey = regAreaSel.value || 'INGENIERÍAS';
 
-      // 1. Feedback en tiempo real de Universidad
-      if (univRecognizedBadge) {
-        if (!textoUniv) {
-          univRecognizedBadge.innerHTML = '<span style="color:#64748B;">💡 Escribe tu universidad (ej: unap, unsa) para autorreconocer</span>';
-        } else if (UNIV_NOMBRES[univKey]) {
-          univRecognizedBadge.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-            <span style="color:#047857;">Universidad Reconocida: <strong>${univKey} — ${UNIV_NOMBRES[univKey]}</strong></span>
-          `;
-        } else {
-          univRecognizedBadge.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            <span style="color:#2563EB;">Universidad Personalizada: <strong>"${textoUniv}"</strong> (Se guardará automáticamente)</span>
-          `;
-        }
-      }
-
-      // 2. Poblar Datalist de Carreras para autocompletar según la Universidad y Área elegida
+      // Poblar Datalist de Carreras para autocompletar insensible a tildes/mayúsculas
       if (carrerasDatalist) {
-        const carreras = (CARRERAS_MAP[univKey] && CARRERAS_MAP[univKey][areaKey]) ? CARRERAS_MAP[univKey][areaKey] : [];
+        const keyMap = (CARRERAS_MAP[univKey]) ? univKey : 'UNA PUNO';
+        const carreras = (CARRERAS_MAP[keyMap] && CARRERAS_MAP[keyMap][areaKey]) ? CARRERAS_MAP[keyMap][areaKey] : [];
         let optionsHtml = '';
         carreras.forEach(c => {
-          optionsHtml += `<option value="${c}">${c} (${univKey})</option>`;
+          optionsHtml += `<option value="${c}">${c}</option>`;
         });
         carrerasDatalist.innerHTML = optionsHtml;
-      }
-
-      // 3. Feedback en tiempo real de la Carrera escrita
-      if (regCarreraInput && carreraRecognizedBadge) {
-        const cVal = regCarreraInput.value.trim();
-        if (!cVal) {
-          carreraRecognizedBadge.innerHTML = '<span style="color:#64748B;">💡 Escribe tu carrera arriba para validar o autocompletar</span>';
-        } else {
-          const carreras = (CARRERAS_MAP[univKey] && CARRERAS_MAP[univKey][areaKey]) ? CARRERAS_MAP[univKey][areaKey] : [];
-          const match = carreras.find(c => c.toLowerCase().includes(cVal.toLowerCase()) || cVal.toLowerCase().includes(c.toLowerCase()));
-          if (match) {
-            carreraRecognizedBadge.innerHTML = `
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-              <span style="color:#047857;">Carrera Reconocida: <strong>${match} (${univKey})</strong></span>
-            `;
-          } else {
-            carreraRecognizedBadge.innerHTML = `
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-              <span style="color:#2563EB;">Carrera Personalizada: <strong>"${cVal}"</strong> (Se guardará automáticamente)</span>
-            `;
-          }
-        }
       }
     }
 
