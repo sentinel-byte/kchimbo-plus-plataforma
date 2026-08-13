@@ -5,10 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Panel Estudiantil</title>
   <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani.">
-  <link rel="stylesheet" href="../css/main.css?v=9.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=9.0.0">
+  <link rel="stylesheet" href="../css/main.css?v=10.0.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=10.0.0">
   <style>
     /* Extra styles for student dashboard */
+    /* ── Examen Activo: Modo Hoja Digital Blanca Impecable (Sin Espacio Gris) ── */
+    body.exam-in-progress .main-footer {
+      display: none !important;
+    }
+    #section-simulacro.mode-active-exam {
+      background: #FFFFFF !important;
+      border-radius: 24px;
+      padding: 20px !important;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.03);
+      min-height: calc(100vh - 90px) !important;
+      min-height: calc(100dvh - 90px) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      box-sizing: border-box;
+    }
+    #section-simulacro.mode-active-exam #examActive {
+      display: flex !important;
+      flex-direction: column !important;
+      flex: 1 !important;
+      width: 100% !important;
+      max-width: 860px !important;
+      margin: 0 auto !important;
+    }
+    #section-simulacro.mode-active-exam .question-card {
+      flex: 1 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      background: #FFFFFF !important;
+      border: 1px solid #E2E8F0 !important;
+      border-radius: 18px !important;
+      padding: 20px !important;
+      box-shadow: none !important;
+      margin-bottom: 0 !important;
+    }
+
     .quiz-answer-feedback {
       padding: 14px 18px;
       border-radius: var(--radius-md);
@@ -2094,6 +2131,10 @@
       (res) => mostrarResultados(res)
     );
 
+    const secSim = document.getElementById('section-simulacro');
+    if (secSim) secSim.classList.add('mode-active-exam');
+    document.body.classList.add('exam-in-progress');
+
     document.getElementById('examSetup').classList.add('hidden');
     document.getElementById('examActive').classList.remove('hidden');
     document.getElementById('examResults').classList.add('hidden');
@@ -2238,6 +2279,10 @@
   });
 
   function mostrarResultados(res) {
+    const secSim = document.getElementById('section-simulacro');
+    if (secSim) secSim.classList.remove('mode-active-exam');
+    document.body.classList.remove('exam-in-progress');
+
     document.getElementById('examActive').classList.add('hidden');
     const resultsDiv = document.getElementById('examResults');
     resultsDiv.classList.remove('hidden');
