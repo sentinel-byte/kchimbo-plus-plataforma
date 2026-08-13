@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Plataforma Virtual UNA PUNO — Iniciar Sesión</title>
   <meta name="description" content="Accede a la plataforma virtual Mirzakhani para prepararte para el examen de admisión de la UNA PUNO. Clases en línea, simulacros, repasos y más.">
-  <link rel="stylesheet" href="css/main.css?v=1.5.0">
-  <link rel="stylesheet" href="css/login.css?v=1.5.0">
+  <link rel="stylesheet" href="css/main.css?v=1.6.0">
+  <link rel="stylesheet" href="css/login.css?v=1.6.0">
 </head>
 <body>
 <div class="login-page">
@@ -186,29 +186,42 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="regUniversidad">Universidad a la que Postulas</label>
+        <!-- PASO 1: UNIVERSIDAD (Input Inteligente con Autorreconocimiento + Chips) -->
+        <div class="form-group" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;padding:14px;margin-bottom:14px;">
+          <div style="font-size:0.75rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+            <span style="background:var(--primary);color:white;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:900;">1</span>
+            Universidad a la que Postulas
+          </div>
+          
+          <!-- Chips Rápidos -->
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+            <button type="button" class="univ-chip-btn active" data-univ="UNA PUNO" style="padding:6px 12px;border-radius:8px;border:1px solid #1E3A8A;background:#1E3A8A;color:white;font-weight:800;font-size:0.75rem;cursor:pointer;transition:all 0.2s;">UNA PUNO</button>
+            <button type="button" class="univ-chip-btn" data-univ="UNSA" style="padding:6px 12px;border-radius:8px;border:1px solid #CBD5E1;background:white;color:#334155;font-weight:800;font-size:0.75rem;cursor:pointer;transition:all 0.2s;">UNSA</button>
+            <button type="button" class="univ-chip-btn" data-univ="UNAJ" style="padding:6px 12px;border-radius:8px;border:1px solid #CBD5E1;background:white;color:#334155;font-weight:800;font-size:0.75rem;cursor:pointer;transition:all 0.2s;">UNAJ</button>
+            <button type="button" class="univ-chip-btn" data-univ="UNAM" style="padding:6px 12px;border-radius:8px;border:1px solid #CBD5E1;background:white;color:#334155;font-weight:800;font-size:0.75rem;cursor:pointer;transition:all 0.2s;">UNAM</button>
+            <button type="button" class="univ-chip-btn" data-univ="UNJBG" style="padding:6px 12px;border-radius:8px;border:1px solid #CBD5E1;background:white;color:#334155;font-weight:800;font-size:0.75rem;cursor:pointer;transition:all 0.2s;">UNJBG</button>
+          </div>
+
+          <!-- Input con autorreconocimiento por texto ('unap', 'unsa', 'puno', etc.) -->
           <div class="input-icon-wrap">
             <span class="input-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
             </span>
-            <select id="regUniversidad" class="form-select" style="width:100%;height:44px;border-radius:12px;font-weight:700;padding:0 12px 0 42px;border:1px solid #CBD5E1;">
-              <option value="UNA PUNO">UNA PUNO — Univ. Nacional del Altiplano (Puno)</option>
-              <option value="UNSA">UNSA — Univ. Nacional de San Agustín (Arequipa)</option>
-              <option value="UNAJ">UNAJ — Univ. Nacional de Juliaca</option>
-              <option value="UNAM">UNAM — Univ. Nacional de Moquegua / Ilo</option>
-              <option value="UNJBG">UNJBG — Univ. Nacional Jorge Basadre Grohmann (Tacna)</option>
-              <option value="OTRA">OTRA UNIVERSIDAD (Escribir manualmente)</option>
-            </select>
+            <input type="text" id="regUnivInput" class="form-input" placeholder="Escribe tu universidad (Ej: unap, unsa, unaj)..." value="UNA PUNO" required>
           </div>
-          <!-- Dynamic Vector SVG Emblem Preview -->
-          <div id="univBadgePreview" style="margin-top:8px;padding:8px 12px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;display:flex;align-items:center;gap:10px;">
-            <!-- Rendered by JS -->
+
+          <!-- Badge SVG vectorial del autorreconocimiento -->
+          <div id="univBadgePreview" style="margin-top:10px;padding:8px 12px;background:white;border:1px solid #E2E8F0;border-radius:10px;display:flex;align-items:center;gap:10px;">
+            <!-- JS dynamic content -->
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="regArea">Área Académica</label>
+        <!-- PASO 2: ÁREA ACADÉMICA -->
+        <div class="form-group" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;padding:14px;margin-bottom:14px;">
+          <div style="font-size:0.75rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+            <span style="background:var(--primary);color:white;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:900;">2</span>
+            Área Académica
+          </div>
           <div class="input-icon-wrap">
             <span class="input-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
@@ -221,25 +234,24 @@
           </div>
         </div>
 
-        <div class="form-group" id="regCarreraSelectWrap">
-          <label class="form-label" for="regCarrera">Carrera Profesional</label>
+        <!-- PASO 3: CARRERA PROFESIONAL (Input Inteligente con Autorreconocimiento) -->
+        <div class="form-group" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;padding:14px;margin-bottom:14px;">
+          <div style="font-size:0.75rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+            <span style="background:var(--primary);color:white;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:900;">3</span>
+            Carrera Profesional
+          </div>
           <div class="input-icon-wrap">
             <span class="input-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
             </span>
-            <select id="regCarrera" class="form-select" style="width:100%;height:44px;border-radius:12px;font-weight:700;padding:0 12px 0 42px;border:1px solid #CBD5E1;">
-              <!-- Filtrado dinámico por Universidad y Área -->
-            </select>
+            <input type="text" id="regCarreraInput" class="form-input" placeholder="Escribe tu carrera (Ej: medicina, civil, sistemas, derecho)..." list="carrerasDatalist" required>
+            <datalist id="carrerasDatalist">
+              <!-- Dynamically built by JS -->
+            </datalist>
           </div>
-        </div>
-
-        <div class="form-group" id="regCarreraManualWrap" style="display:none;">
-          <label class="form-label" for="regCarreraManual">Especifica tu Universidad / Carrera Profesional</label>
-          <div class="input-icon-wrap">
-            <span class="input-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            </span>
-            <input type="text" id="regCarreraManual" class="form-input" placeholder="Ej: Universidad Nacional de San Martín - Medicina">
+          <!-- Real-time Carrera Recognition Status -->
+          <div id="carreraRecognizedBadge" style="margin-top:8px;font-size:0.75rem;font-weight:700;color:#047857;display:flex;align-items:center;gap:6px;">
+            <!-- JS status feedback -->
           </div>
         </div>
 
@@ -634,63 +646,111 @@
       `
     };
 
-    const regUnivSel = document.getElementById('regUniversidad');
+    const regUnivInput = document.getElementById('regUnivInput');
     const regAreaSel = document.getElementById('regArea');
-    const regCarreraSel = document.getElementById('regCarrera');
-    const regCarreraSelectWrap = document.getElementById('regCarreraSelectWrap');
-    const regCarreraManualWrap = document.getElementById('regCarreraManualWrap');
-    const regCarreraManualIn = document.getElementById('regCarreraManual');
+    const regCarreraInput = document.getElementById('regCarreraInput');
+    const carrerasDatalist = document.getElementById('carrerasDatalist');
     const univBadgePreview = document.getElementById('univBadgePreview');
+    const carreraRecognizedBadge = document.getElementById('carreraRecognizedBadge');
 
-    function actualizarSelectCarrera() {
-      if (!regUnivSel || !regAreaSel || !regCarreraSel) return;
-      const univ = regUnivSel.value;
-      const area = regAreaSel.value;
-
-      if (univBadgePreview && UNIV_BADGES[univ]) {
-        univBadgePreview.innerHTML = UNIV_BADGES[univ];
-      }
-
-      if (univ === 'OTRA') {
-        if (regCarreraSelectWrap) regCarreraSelectWrap.style.display = 'none';
-        if (regCarreraManualWrap) regCarreraManualWrap.style.display = 'block';
-        return;
-      }
-
-      if (regCarreraSelectWrap) regCarreraSelectWrap.style.display = 'block';
-
-      const carreras = (CARRERAS_MAP[univ] && CARRERAS_MAP[univ][area]) ? CARRERAS_MAP[univ][area] : [];
-
-      let opts = '<option value="">— Selecciona tu carrera —</option>';
-      carreras.forEach(c => {
-        opts += `<option value="${univ} - ${c}">${c}</option>`;
-      });
-      opts += '<option value="OTRA">OTRA CARRERA (Escribir manualmente)</option>';
-
-      regCarreraSel.innerHTML = opts;
-
-      if (regCarreraSel.value === 'OTRA') {
-        if (regCarreraManualWrap) regCarreraManualWrap.style.display = 'block';
-      } else {
-        if (regCarreraManualWrap) regCarreraManualWrap.style.display = 'none';
-      }
+    function autorreconocerUniversidad(txt) {
+      const q = (txt || '').trim().toLowerCase();
+      if (!q) return 'UNA PUNO';
+      if (q.includes('unap') || q.includes('puno') || q.includes('altiplano')) return 'UNA PUNO';
+      if (q.includes('unsa') || q.includes('arequipa') || q.includes('agustin')) return 'UNSA';
+      if (q.includes('unaj') || q.includes('juliaca')) return 'UNAJ';
+      if (q.includes('unam') || q.includes('moquegua') || q.includes('ilo')) return 'UNAM';
+      if (q.includes('unjbg') || q.includes('tacna') || q.includes('basadre')) return 'UNJBG';
+      return 'OTRA';
     }
 
-    if (regUnivSel) regUnivSel.addEventListener('change', actualizarSelectCarrera);
-    if (regAreaSel) regAreaSel.addEventListener('change', actualizarSelectCarrera);
+    function actualizarJerarquia() {
+      if (!regUnivInput || !regAreaSel) return;
 
-    if (regCarreraSel) {
-      regCarreraSel.addEventListener('change', () => {
-        if (regCarreraSel.value === 'OTRA') {
-          if (regCarreraManualWrap) regCarreraManualWrap.style.display = 'block';
-          if (regCarreraManualIn) regCarreraManualIn.focus();
+      const textoUniv = regUnivInput.value;
+      const univKey = autorreconocerUniversidad(textoUniv);
+      const areaKey = regAreaSel.value || 'INGENIERÍAS';
+
+      // 1. Actualizar Chips
+      document.querySelectorAll('.univ-chip-btn').forEach(btn => {
+        if (btn.dataset.univ === univKey) {
+          btn.classList.add('active');
+          btn.style.background = btn.dataset.univ === 'UNA PUNO' ? '#1E3A8A' : (btn.dataset.univ === 'UNSA' ? '#991B1B' : (btn.dataset.univ === 'UNAJ' ? '#065F46' : (btn.dataset.univ === 'UNAM' ? '#B45309' : '#1E40AF')));
+          btn.style.color = 'white';
+          btn.style.borderColor = btn.style.background;
         } else {
-          if (regCarreraManualWrap) regCarreraManualWrap.style.display = 'none';
+          btn.classList.remove('active');
+          btn.style.background = 'white';
+          btn.style.color = '#334155';
+          btn.style.borderColor = '#CBD5E1';
         }
       });
+
+      // 2. Actualizar Badge Emblem SVG
+      if (univBadgePreview) {
+        if (UNIV_BADGES[univKey]) {
+          univBadgePreview.innerHTML = UNIV_BADGES[univKey];
+        } else {
+          univBadgePreview.innerHTML = `
+            <div style="width:34px;height:34px;border-radius:10px;background:#5B21B6;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:0.8rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <div>
+              <div style="font-weight:800;font-size:0.82rem;color:#5B21B6;">${textoUniv || 'Universidad Personalizada'}</div>
+              <div style="font-size:0.72rem;color:#64748B;font-weight:600;">Institución registrada manualmente</div>
+            </div>
+          `;
+        }
+      }
+
+      // 3. Poblar Datalist de Carreras para autocompletar
+      if (carrerasDatalist) {
+        const carreras = (CARRERAS_MAP[univKey] && CARRERAS_MAP[univKey][areaKey]) ? CARRERAS_MAP[univKey][areaKey] : [];
+        let optionsHtml = '';
+        carreras.forEach(c => {
+          optionsHtml += `<option value="${c}">${univKey} — ${c}</option>`;
+        });
+        carrerasDatalist.innerHTML = optionsHtml;
+      }
+
+      // 4. Feedback en tiempo real de la Carrera escrita
+      if (regCarreraInput && carreraRecognizedBadge) {
+        const cVal = regCarreraInput.value.trim();
+        if (!cVal) {
+          carreraRecognizedBadge.innerHTML = '<span style="color:#64748B;">💡 Escribe tu carrera arriba para validar o autocompletar</span>';
+        } else {
+          const carreras = (CARRERAS_MAP[univKey] && CARRERAS_MAP[univKey][areaKey]) ? CARRERAS_MAP[univKey][areaKey] : [];
+          const match = carreras.find(c => c.toLowerCase().includes(cVal.toLowerCase()) || cVal.toLowerCase().includes(c.toLowerCase()));
+          if (match) {
+            carreraRecognizedBadge.innerHTML = `
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="color:#047857;">Carrera Reconocida: <strong>${univKey} — ${match}</strong></span>
+            `;
+          } else {
+            carreraRecognizedBadge.innerHTML = `
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              <span style="color:#2563EB;">Carrera Personalizada: <strong>"${cVal}"</strong> (Se guardará automáticamente)</span>
+            `;
+          }
+        }
+      }
     }
 
-    actualizarSelectCarrera();
+    // Event Listeners Chips
+    document.querySelectorAll('.univ-chip-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (regUnivInput) {
+          regUnivInput.value = btn.dataset.univ;
+          actualizarJerarquia();
+        }
+      });
+    });
+
+    if (regUnivInput) regUnivInput.addEventListener('input', actualizarJerarquia);
+    if (regAreaSel) regAreaSel.addEventListener('change', actualizarJerarquia);
+    if (regCarreraInput) regCarreraInput.addEventListener('input', actualizarJerarquia);
+
+    actualizarJerarquia();
 
     registerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -698,10 +758,9 @@
       const usuario = document.getElementById('regUsuario').value.trim();
       const area = document.getElementById('regArea').value;
       
-      let carrera = (regCarreraSel ? regCarreraSel.value : '').trim();
-      if (carrera === 'OTRA') {
-        carrera = regCarreraManualIn ? regCarreraManualIn.value.trim() : '';
-      }
+      const univTxt = (regUnivInput ? regUnivInput.value.trim() : 'UNA PUNO') || 'UNA PUNO';
+      const cTxt = regCarreraInput ? regCarreraInput.value.trim() : '';
+      const carrera = cTxt ? `${univTxt} — ${cTxt}` : univTxt;
 
       const celular = document.getElementById('regCelular').value.trim();
       const password = document.getElementById('regPassword').value;
