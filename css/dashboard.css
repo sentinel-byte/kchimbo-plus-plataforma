@@ -575,7 +575,7 @@ html, body {
   overflow: hidden !important;
   background: white !important;
   box-sizing: border-box !important;
-  padding: 14px 20px 6px 20px !important;
+  padding: 14px 20px 0 20px !important;
 }
 
 /* Cabecera del examen (timer, contador) — altura fija */
@@ -641,7 +641,7 @@ html, body {
   gap: 12px;
   margin-top: 8px;
   padding-top: 8px;
-  padding-bottom: 2px;
+  padding-bottom: 0;
   border-top: 1px solid #F1F5F9;
 }
 
@@ -649,7 +649,7 @@ html, body {
 @media (max-width: 768px) {
   #examActive,
   #quizActive {
-    padding: 8px 12px 4px 12px !important;
+    padding: 8px 12px 0 12px !important;
   }
   .exam-header-bar {
     padding: 8px 12px;
