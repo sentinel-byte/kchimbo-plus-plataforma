@@ -9,7 +9,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <link rel="stylesheet" href="../css/main.css?v=12.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=18.0.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=19.0.0">
   <style>
     /* ══════════════════════════════════════════════════════════════
        EXAM / QUIZ LAYOUT — REGLAS INLINE (NO CACHEABLES POR SEPARADO)
@@ -123,6 +123,29 @@
     #quizFinished {
       background: white !important;
       padding-bottom: 10px !important;
+    }
+
+    /* 9. Eliminación del espacio gigante vacio entre botones/contenido y el footer */
+    body:not(.exam-in-progress) .main-content {
+      min-height: calc(100vh - 54px) !important;
+      min-height: calc(100dvh - 54px) !important;
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    body:not(.exam-in-progress) .content-area:not(:has(#examActive:not(.hidden))):not(:has(#quizActive:not(.hidden))) {
+      flex: 0 0 auto !important;
+      height: auto !important;
+      min-height: 0 !important;
+      overflow: visible !important;
+    }
+
+    body:not(.exam-in-progress) .main-footer {
+      margin-top: 20px !important;
+      flex-shrink: 0 !important;
     }
 
     .quiz-answer-feedback {
