@@ -5,45 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Panel Estudiantil</title>
   <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani.">
-  <link rel="stylesheet" href="../css/main.css?v=10.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=10.0.0">
+  <link rel="stylesheet" href="../css/main.css?v=11.0.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=11.0.0">
   <style>
     /* Extra styles for student dashboard */
-    /* ── Examen Activo: Modo Hoja Digital Blanca Impecable (Sin Espacio Gris) ── */
-    body.exam-in-progress .main-footer {
-      display: none !important;
-    }
-    #section-simulacro.mode-active-exam {
-      background: #FFFFFF !important;
-      border-radius: 24px;
-      padding: 20px !important;
-      border: 1px solid #E2E8F0;
-      box-shadow: 0 4px 25px rgba(0,0,0,0.03);
-      min-height: calc(100vh - 90px) !important;
-      min-height: calc(100dvh - 90px) !important;
+    /* ── EXAMEN SIMULACRO Y REPASOS: DISEÑO COMPACTO Y ADAPTABLE (0 ESPACIOS SOBRANTES) ── */
+    .section-view#section-simulacro.active,
+    .section-view#section-repasos.active {
       display: flex !important;
       flex-direction: column !important;
-      box-sizing: border-box;
+      min-height: 0 !important;
+      height: auto !important;
     }
-    #section-simulacro.mode-active-exam #examActive {
-      display: flex !important;
-      flex-direction: column !important;
-      flex: 1 !important;
-      width: 100% !important;
-      max-width: 860px !important;
+
+    #examActive, #quizActive {
+      max-width: 780px !important;
       margin: 0 auto !important;
+      width: 100% !important;
     }
-    #section-simulacro.mode-active-exam .question-card {
-      flex: 1 !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: space-between !important;
-      background: #FFFFFF !important;
+
+    .question-card {
+      background: white !important;
       border: 1px solid #E2E8F0 !important;
       border-radius: 18px !important;
       padding: 20px !important;
-      box-shadow: none !important;
-      margin-bottom: 0 !important;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
+      margin-bottom: 20px !important;
+      height: auto !important;
+      min-height: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    @media (max-width: 768px) {
+      .question-card {
+        padding: 14px !important;
+        border-radius: 16px !important;
+        margin-bottom: 16px !important;
+      }
+      .question-text {
+        font-size: 0.95rem !important;
+        padding: 12px 14px !important;
+        margin-bottom: 14px !important;
+      }
+      .option-btn {
+        padding: 10px 12px !important;
+        border-radius: 12px !important;
+      }
+      .option-letter {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.8rem !important;
+      }
+      .exam-nav {
+        margin-top: 14px !important;
+        padding-top: 12px !important;
+      }
     }
 
     .quiz-answer-feedback {
@@ -463,16 +479,16 @@
           <!-- Navigator Strip (Sleek Horizontal Track) -->
           <div class="question-navigator" id="questionNavigator" style="margin-bottom:12px;"></div>
 
-          <!-- Question Card Container (Ajuste Flexible sin Espacio Gris Inferior) -->
-          <div class="question-card" style="background:white;border:1px solid #E2E8F0;border-radius:20px;padding:22px;box-shadow:0 4px 20px rgba(0,0,0,0.04);margin-bottom:14px;display:flex;flex-direction:column;justify-content:space-between;min-height:calc(100vh - 250px);min-height:calc(100dvh - 250px);box-sizing:border-box;">
-            <div id="questionCardBody" style="flex:1;">
+          <!-- Question Card Container Compacto Adaptable -->
+          <div class="question-card">
+            <div id="questionCardBody">
               <!-- Generado por JS -->
             </div>
 
             <!-- Exam Footer Controls Integrados al Final de la Tarjeta Blanca -->
-            <div class="exam-nav" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid #F1F5F9;flex-shrink:0;">
-              <button class="btn btn-outline" id="btnPrevQ" style="border-radius:12px;padding:12px 24px;font-size:0.88rem;font-weight:800;">← Anterior</button>
-              <button class="btn btn-primary" id="btnNextQ" style="border-radius:12px;padding:12px 30px;font-weight:900;font-size:0.88rem;box-shadow:0 4px 15px rgba(232,82,26,0.3);">Siguiente →</button>
+            <div class="exam-nav" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding-top:14px;border-top:1px solid #F1F5F9;">
+              <button class="btn btn-outline" id="btnPrevQ" style="border-radius:12px;padding:10px 22px;font-size:0.88rem;font-weight:800;">← Anterior</button>
+              <button class="btn btn-primary" id="btnNextQ" style="border-radius:12px;padding:10px 28px;font-weight:900;font-size:0.88rem;box-shadow:0 4px 15px rgba(232,82,26,0.3);">Siguiente →</button>
             </div>
           </div>
         </div>
@@ -588,19 +604,22 @@
             </div>
           </div>
 
-          <div class="question-card" id="quizQuestionCard">
-            <!-- Generado por JS -->
-          </div>
+          <!-- Quiz Question Card Container Compacto Adaptable -->
+          <div class="question-card">
+            <div id="quizQuestionCard">
+              <!-- Generado por JS -->
+            </div>
 
-          <div class="quiz-answer-feedback" id="quizFeedback" style="display:none;border-radius:12px;padding:12px 16px;margin-top:12px;">
-            <span id="quizFeedbackIcon"></span>
-            <span id="quizFeedbackText" style="font-weight:700;font-size:0.9rem;"></span>
-          </div>
+            <div class="quiz-answer-feedback" id="quizFeedback" style="display:none;border-radius:12px;padding:12px 16px;margin-top:14px;">
+              <span id="quizFeedbackIcon"></span>
+              <span id="quizFeedbackText" style="font-weight:700;font-size:0.9rem;"></span>
+            </div>
 
-          <div style="display:flex;justify-content:flex-end;margin-top:16px;">
-            <button class="btn btn-primary" id="btnQuizNext" style="border-radius:10px;font-weight:800;padding:10px 20px;" disabled>
-              Siguiente Pregunta →
-            </button>
+            <div style="display:flex;justify-content:flex-end;margin-top:16px;padding-top:14px;border-top:1px solid #F1F5F9;">
+              <button class="btn btn-primary" id="btnQuizNext" style="border-radius:12px;font-weight:900;padding:10px 26px;box-shadow:0 4px 15px rgba(232,82,26,0.3);" disabled>
+                Siguiente Pregunta →
+              </button>
+            </div>
           </div>
         </div>
 
