@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Panel Estudiantil</title>
   <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani.">
-  <link rel="stylesheet" href="../css/main.css?v=8.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=8.0.0">
+  <link rel="stylesheet" href="../css/main.css?v=9.0.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=9.0.0">
   <style>
     /* Extra styles for student dashboard */
     .quiz-answer-feedback {
@@ -426,16 +426,16 @@
           <!-- Navigator Strip (Sleek Horizontal Track) -->
           <div class="question-navigator" id="questionNavigator" style="margin-bottom:12px;"></div>
 
-          <!-- Question Card Container (Controles integrados dentro de la tarjeta blanca) -->
-          <div class="question-card" style="background:white;border:1px solid #E2E8F0;border-radius:20px;padding:22px;box-shadow:0 4px 20px rgba(0,0,0,0.04);margin-bottom:20px;">
-            <div id="questionCardBody">
+          <!-- Question Card Container (Ajuste Flexible sin Espacio Gris Inferior) -->
+          <div class="question-card" style="background:white;border:1px solid #E2E8F0;border-radius:20px;padding:22px;box-shadow:0 4px 20px rgba(0,0,0,0.04);margin-bottom:14px;display:flex;flex-direction:column;justify-content:space-between;min-height:calc(100vh - 250px);min-height:calc(100dvh - 250px);box-sizing:border-box;">
+            <div id="questionCardBody" style="flex:1;">
               <!-- Generado por JS -->
             </div>
 
-            <!-- Exam Footer Controls Integrados Directamente en la Tarjeta de la Pregunta -->
-            <div class="exam-nav" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid #F1F5F9;">
-              <button class="btn btn-outline" id="btnPrevQ" style="border-radius:12px;padding:10px 22px;font-size:0.88rem;font-weight:800;">← Anterior</button>
-              <button class="btn btn-primary" id="btnNextQ" style="border-radius:12px;padding:10px 28px;font-weight:900;font-size:0.88rem;box-shadow:0 4px 15px rgba(232,82,26,0.3);">Siguiente →</button>
+            <!-- Exam Footer Controls Integrados al Final de la Tarjeta Blanca -->
+            <div class="exam-nav" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid #F1F5F9;flex-shrink:0;">
+              <button class="btn btn-outline" id="btnPrevQ" style="border-radius:12px;padding:12px 24px;font-size:0.88rem;font-weight:800;">← Anterior</button>
+              <button class="btn btn-primary" id="btnNextQ" style="border-radius:12px;padding:12px 30px;font-weight:900;font-size:0.88rem;box-shadow:0 4px 15px rgba(232,82,26,0.3);">Siguiente →</button>
             </div>
           </div>
         </div>
