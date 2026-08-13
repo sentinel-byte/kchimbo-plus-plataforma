@@ -380,10 +380,12 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Modo examen/repaso: content-area sin scroll (el scroll queda dentro de la pregunta) */
+/* Modo examen/repaso: content-area sin scroll, usa flex para pasar altura */
 .content-area.exam-mode {
   overflow: hidden !important;
   padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .section-view {
@@ -401,13 +403,16 @@ html, body {
   overflow: visible !important;
 }
 
-/* Cuando el examen o repaso está activo, la sección ocupa toda la altura */
+/* Cuando el examen o repaso está activo, la sección ocupa TODA la altura disponible */
 .section-view.active.exam-active-section {
-  height: 100% !important;
+  flex: 1 !important;        /* crecer para llenar el espacio — no height:100% */
   min-height: 0 !important;
+  height: auto !important;   /* dejar que flex:1 controle la altura */
   overflow: hidden !important;
   padding: 0 !important;
   background: white !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 /* ── Desktop & Mobile Responsive Sidebar ── */
@@ -564,13 +569,14 @@ html, body {
    Los botones de nav son estáticos abajo. La pregunta es la única que scrollea.
    ═══════════════════════════════════════════════════════════════════ */
 
-/* Wrapper del examen/quiz ocupa TODA la altura disponible */
+/* Wrapper del examen/quiz ocupa TODA la altura disponible (flex:1 en lugar de height:100%) */
 #examActive,
 #quizActive {
   display: flex;
   flex-direction: column;
   width: 100% !important;
-  height: 100% !important;
+  flex: 1 !important;          /* hereda toda la altura del padre flex */
+  height: auto !important;     /* dejar que flex:1 decida, no height:100% */
   min-height: 0 !important;
   overflow: hidden !important;
   background: white !important;
