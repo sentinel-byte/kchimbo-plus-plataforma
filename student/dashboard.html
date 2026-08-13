@@ -9,7 +9,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <link rel="stylesheet" href="../css/main.css?v=12.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=16.0.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=17.0.0">
   <style>
     /* ══════════════════════════════════════════════════════════════
        EXAM / QUIZ LAYOUT — REGLAS INLINE (NO CACHEABLES POR SEPARADO)
@@ -103,6 +103,12 @@
       .resumen-card {
         gap: 12px !important;
         margin-bottom: 14px !important;
+      }
+      #btnIniciarExamen {
+        width: 100% !important;
+        padding: 14px 16px !important;
+        font-size: 0.90rem !important;
+        justify-content: center !important;
       }
     }
 
@@ -487,8 +493,8 @@
           </div>
 
           <!-- Launch Button Centrado -->
-          <div style="text-align:center;padding:12px 0 24px 0;">
-            <button class="btn btn-primary btn-lg" id="btnIniciarExamen" style="padding:16px 42px;font-size:1.05rem;font-weight:900;border-radius:16px;box-shadow:0 8px 30px rgba(232,82,26,0.35);display:inline-flex;align-items:center;gap:12px;transition:all 0.25s;">
+          <div style="text-align:center;padding:12px 0 24px 0;width:100%;">
+            <button class="btn btn-primary btn-lg" id="btnIniciarExamen" style="padding:16px 36px;font-size:1.02rem;font-weight:900;border-radius:16px;box-shadow:0 8px 30px rgba(232,82,26,0.35);display:inline-flex;align-items:center;justify-content:center;gap:10px;transition:all 0.25s;max-width:100%;box-sizing:border-box;">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               Iniciar Examen Simulacro Oficial
             </button>
@@ -1148,7 +1154,7 @@
         Cancelar
       </button>
       <button type="button" id="btnModalConfirmAccept" style="flex:1.4;background:linear-gradient(135deg, var(--primary), var(--primary-dark));border:none;color:white;padding:12px;border-radius:12px;font-weight:900;font-size:0.88rem;cursor:pointer;box-shadow:0 4px 15px rgba(232,82,26,0.35);transition:all 0.2s;">
-        Sí, Iniciar Examen 🚀
+        Sí, Iniciar Examen
       </button>
     </div>
   </div>
@@ -2175,7 +2181,7 @@
       titulo: '¿Listo para comenzar el Examen Simulacro?',
       mensaje: 'Una vez iniciado, el cronómetro oficial de 2 horas comenzará a correr de forma continua. Asegúrate de estar en un lugar tranquilo.',
       iconoSvg: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
-      textoBoton: 'Sí, Iniciar Examen 🚀',
+      textoBoton: 'Sí, Iniciar Examen',
       esPeligroso: false,
       onAccept: () => iniciarExamen()
     });
@@ -2331,7 +2337,7 @@
       titulo: '¿Finalizar y Entregar Examen?',
       mensaje: msg,
       iconoSvg: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
-      textoBoton: 'Sí, Entregar Examen 🏁',
+      textoBoton: 'Sí, Entregar Examen',
       esPeligroso: answered < 60,
       onAccept: () => {
         const resultado = examenObj.terminar();
