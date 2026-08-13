@@ -77,6 +77,12 @@
       padding-bottom: 0 !important;
     }
 
+
+    /* 7. Garantizar padding en .content-area cuando NO hay examen activo */
+    .content-area:not(:has(#examActive:not(.hidden))):not(:has(#quizActive:not(.hidden))) {
+      padding: 14px 20px 10px 20px !important;
+    }
+
     .quiz-answer-feedback {
       padding: 14px 18px;
       border-radius: var(--radius-md);
