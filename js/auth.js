@@ -153,6 +153,9 @@ const AUTH = {
     const sesion = {
       usuario: userData.usuario,
       nombre: userData.nombre || 'Estudiante',
+      nombres: userData.nombres || '',
+      apellidos: userData.apellidos || '',
+      dni: userData.dni || '',
       area: userData.area || 'INGENIERÍAS',
       carrera: userData.carrera || 'General',
       ciclos: userData.ciclos || [],
