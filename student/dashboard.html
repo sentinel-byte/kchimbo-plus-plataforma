@@ -9,60 +9,13 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <link rel="stylesheet" href="../css/main.css?v=12.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=13.0.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=14.0.0">
   <style>
-    /* Extra styles for student dashboard */
-    /* ── EXAMEN SIMULACRO Y REPASOS: DISEÑO COMPACTO Y ADAPTABLE (0 ESPACIOS SOBRANTES) ── */
-    .section-view#section-simulacro.active,
-    .section-view#section-repasos.active {
-      display: flex !important;
-      flex-direction: column !important;
-      min-height: 0 !important;
-      height: auto !important;
-    }
-
-    #examActive, #quizActive {
-      max-width: 780px !important;
-      margin: 0 auto !important;
-      width: 100% !important;
-    }
-
-    .question-card {
-      background: white !important;
-      border: 1px solid #E2E8F0 !important;
-      border-radius: 18px !important;
-      padding: 20px !important;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
-      margin-bottom: 20px !important;
-      height: auto !important;
-      min-height: 0 !important;
-      box-sizing: border-box !important;
-    }
-
-    @media (max-width: 768px) {
-      .question-card {
-        padding: 14px !important;
-        border-radius: 16px !important;
-        margin-bottom: 16px !important;
-      }
-      .question-text {
-        font-size: 0.95rem !important;
-        padding: 12px 14px !important;
-        margin-bottom: 14px !important;
-      }
-      .option-btn {
-        padding: 10px 12px !important;
-        border-radius: 12px !important;
-      }
-      .option-letter {
-        width: 28px !important;
-        height: 28px !important;
-        font-size: 0.8rem !important;
-      }
-      .exam-nav {
-        margin-top: 14px !important;
-        padding-top: 12px !important;
-      }
+    /* ── FOOTER: Ocultar durante modo examen/repaso (sin espacio sobrante) ── */
+    body.exam-in-progress footer,
+    body.exam-in-progress .site-footer,
+    body.exam-in-progress .main-footer {
+      display: none !important;
     }
 
     .quiz-answer-feedback {
