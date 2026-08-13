@@ -368,6 +368,7 @@ html, body {
 
 .content-area {
   flex: 1;
+  min-height: 0;
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
@@ -377,6 +378,12 @@ html, body {
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch !important;
   box-sizing: border-box;
+}
+
+/* Modo examen/repaso: content-area sin scroll (el scroll queda dentro de la pregunta) */
+.content-area.exam-mode {
+  overflow: hidden !important;
+  padding: 0 !important;
 }
 
 .section-view {
@@ -392,6 +399,15 @@ html, body {
   height: auto !important;
   min-height: min-content !important;
   overflow: visible !important;
+}
+
+/* Cuando el examen o repaso está activo, la sección ocupa toda la altura */
+.section-view.active.exam-active-section {
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  background: white !important;
 }
 
 /* ── Desktop & Mobile Responsive Sidebar ── */
@@ -543,26 +559,109 @@ html, body {
 .exam-progress-info { font-size: 0.88rem; color: var(--text-muted); }
 .exam-progress-info strong { color: var(--text-primary); font-size: 1rem; }
 
-/* ── Examen Simulacro & Repasos: Fondo Blanco Unificado (0 Espacios Grises) ── */
-.content-area:has(#examActive:not(.hidden)),
-.content-area:has(#quizActive:not(.hidden)) {
-  background: white !important;
-}
+/* ═══════════════════════════════════════════════════════════════════
+   EXAMEN SIMULACRO & REPASOS — LAYOUT FULL-HEIGHT PROFESIONAL
+   Los botones de nav son estáticos abajo. La pregunta es la única que scrollea.
+   ═══════════════════════════════════════════════════════════════════ */
 
-#examActive, #quizActive {
-  max-width: 780px !important;
-  margin: 0 auto !important;
+/* Wrapper del examen/quiz ocupa TODA la altura disponible */
+#examActive,
+#quizActive {
+  display: flex;
+  flex-direction: column;
   width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  background: white !important;
+  box-sizing: border-box !important;
+  padding: 14px 20px !important;
 }
 
-/* Question Card */
+/* Cabecera del examen (timer, contador) — altura fija */
+.exam-header-bar {
+  flex-shrink: 0;
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 10px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  box-sizing: border-box;
+}
+
+/* Barra de progreso — altura fija */
+.exam-progress-bar-wrap {
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+
+/* Navegador de preguntas (puntos 1-60) — altura fija, scroll horizontal */
+.question-navigator {
+  flex-shrink: 0;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 4px;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Contenedor de la tarjeta de pregunta — CRECE y scrollea */
+.question-card-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 1px;  /* pequeño padding para que la sombra se vea */
+}
+
+/* Tarjeta de la pregunta — altura automática según contenido */
 .question-card {
   background: white;
-  border-radius: 18px;
-  padding: 20px;
-  border: 1px solid var(--border);
-  margin-bottom: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  border-radius: 16px;
+  padding: 18px 20px;
+  border: 1px solid #E2E8F0;
+  margin-bottom: 0;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+}
+
+/* Barra de botones Anterior / Siguiente — siempre al fondo, fija */
+.exam-nav-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #F1F5F9;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  #examActive,
+  #quizActive {
+    padding: 8px 12px !important;
+  }
+  .exam-header-bar {
+    padding: 8px 12px;
+    margin-bottom: 6px;
+  }
+  .question-card {
+    padding: 14px 14px;
+    border-radius: 14px;
+  }
+  .exam-nav-bar {
+    margin-top: 8px;
+    padding-top: 8px;
+  }
 }
 .question-number-badge {
   display: inline-flex;
