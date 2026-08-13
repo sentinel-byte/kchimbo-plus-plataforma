@@ -241,6 +241,25 @@ const AUTH = {
         return null;
       }
       sesion.area = this.normalizeArea(sesion.area);
+
+      // Auto-enriquecer datos faltantes (dni, nombres, celular) desde la BD local de usuarios
+      if ((!sesion.dni || !sesion.celular) && sesion.usuario) {
+        try {
+          const uRaw = localStorage.getItem('Mirzakhani_usuarios');
+          if (uRaw) {
+            const uList = JSON.parse(uRaw);
+            const found = uList.find(u => u && u.usuario && u.usuario.trim().toLowerCase() === sesion.usuario.trim().toLowerCase());
+            if (found) {
+              if (!sesion.dni && found.dni) sesion.dni = found.dni;
+              if (!sesion.nombres && found.nombres) sesion.nombres = found.nombres;
+              if (!sesion.apellidos && found.apellidos) sesion.apellidos = found.apellidos;
+              if (!sesion.celular && found.celular) sesion.celular = found.celular;
+              localStorage.setItem(this.KEYS.SESSION, JSON.stringify(sesion));
+            }
+          }
+        } catch (e) { console.error(e); }
+      }
+
       return sesion;
     } catch {
       return null;

@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Panel Estudiantil</title>
   <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani.">
-  <link rel="stylesheet" href="../css/main.css?v=5.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=5.0.0">
+  <link rel="stylesheet" href="../css/main.css?v=5.1.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=5.1.0">
   <style>
     /* Extra styles for student dashboard */
     .quiz-answer-feedback {
@@ -2580,9 +2580,26 @@
       carreraNom = parts[1];
     }
 
+    let estDni = sesion.dni;
+    let estCel = sesion.celular;
+
+    if (!estDni || !estCel) {
+      try {
+        const uRaw = localStorage.getItem('Mirzakhani_usuarios');
+        if (uRaw) {
+          const uList = JSON.parse(uRaw);
+          const found = uList.find(u => u && u.usuario && u.usuario.trim().toLowerCase() === (sesion.usuario || '').trim().toLowerCase());
+          if (found) {
+            if (!estDni && found.dni) estDni = found.dni;
+            if (!estCel && found.celular) estCel = found.celular;
+          }
+        }
+      } catch (e) { console.error(e); }
+    }
+
     if (elNombre) elNombre.textContent = sesion.nombre || '—';
-    if (elDni) elDni.textContent = sesion.dni || '—';
-    if (elCel) elCel.textContent = sesion.celular || '—';
+    if (elDni) elDni.textContent = (estDni && estDni.trim()) ? estDni : 'No registrado';
+    if (elCel) elCel.textContent = (estCel && estCel.trim()) ? estCel : 'No registrado';
     if (elUniv) elUniv.textContent = univNom;
     if (elArea) elArea.textContent = areaNom;
     if (elCarrera) elCarrera.textContent = carreraNom;
