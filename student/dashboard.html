@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Panel Estudiantil</title>
   <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani.">
-  <link rel="stylesheet" href="../css/main.css?v=4.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=4.0.0">
+  <link rel="stylesheet" href="../css/main.css?v=4.1.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=4.1.0">
   <style>
     /* Extra styles for student dashboard */
     .quiz-answer-feedback {
@@ -194,23 +194,6 @@
   <!-- ════════ MAIN CONTENT ════════ -->
   <main class="main-content">
     <div class="content-area">
-
-      <!-- Visitor Mode Banner (Solo para cuentas en Modo Visitante) -->
-      <div id="visitorBanner" style="display:none;background:linear-gradient(135deg, #FFFBEB, #FEF3C7);border:1.5px solid #FCD34D;border-radius:16px;padding:14px 18px;margin-bottom:16px;box-shadow:0 4px 12px rgba(245,158,11,0.08);align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
-        <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:260px;">
-          <div style="width:42px;height:42px;border-radius:12px;background:#F59E0B;color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px rgba(245,158,11,0.3);">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          </div>
-          <div>
-            <div style="font-size:0.95rem;font-weight:900;color:#92400E;line-height:1.2;">Cuenta en Modo Visitante</div>
-            <div style="font-size:0.8rem;color:#B45309;margin-top:2px;">Para activar tu membresía completa con clases en vivo, resúmenes en PDF y simulacros, contacta al WhatsApp <strong>965890475</strong>.</div>
-          </div>
-        </div>
-        <a href="https://wa.me/51965890475?text=Hola,%20acabo%20de%20registrarme%20en%20la%20plataforma%20Mirzakhani%20y%20deseo%20activar%20mi%20membres%C3%ADa." target="_blank" class="btn btn-primary" style="background:#25D366;border-color:#25D366;color:white;border-radius:12px;font-weight:800;font-size:0.82rem;padding:10px 18px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(37,211,102,0.3);text-decoration:none;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-          Activar por WhatsApp (965890475)
-        </a>
-      </div>
 
       <!-- ════ SECCIÓN: CLASES EN LÍNEA (PADLET BOARD) ════ -->
       <div class="section-view active" id="section-clases">
@@ -725,87 +708,117 @@
         </div>
       </div>
 
-      <!-- ════ SECCIÓN: PAGOS ════ -->
+      <!-- ════ SECCIÓN: PAGOS Y MEMBRESÍA ════ -->
       <div class="section-view" id="section-pagos">
         <div class="board-header" style="margin-bottom:20px;">
           <div class="board-header-info">
             <h2>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-              Estado de Membresía y Plan
+              Datos Registrados y Estado de Cuenta
             </h2>
-            <p>Consulta la vigencia de tu cuenta, renovaciones y accesos autorizados</p>
+            <p>Consulta la información de tu perfil, estado de acceso y solicitudes de activación</p>
           </div>
           <div class="membership-status active" id="membershipStatus" style="padding:6px 16px;border-radius:20px;font-weight:800;font-size:0.8rem;display:inline-flex;align-items:center;gap:6px;">
-            <span>●</span> Membresía Activa
+            <span>●</span> Modo Visitante
           </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:24px;">
-          <!-- Premium Membership Hero Card -->
-          <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,0.02);display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                <span style="font-size:0.75rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;">SUSCRIPCIÓN OFICIAL</span>
-                <span style="background:rgba(16,185,129,0.1);color:#10B981;border:1px solid rgba(16,185,129,0.25);padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:800;display:inline-flex;align-items:center;gap:4px;">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                  VERIFICADO
-                </span>
-              </div>
-              <h3 style="font-size:1.25rem;font-weight:900;color:var(--text-main);margin-bottom:6px;">Plan Estudiante — Mirzakhani</h3>
-              <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;" id="membershipDates">Inicio: — | Vence: —</div>
-
-              <div style="margin-bottom:12px;">
-                <div style="display:flex;justify-content:space-between;font-size:0.78rem;font-weight:700;color:var(--text-main);margin-bottom:6px;">
-                  <span>Tiempo Consumido</span>
-                  <span id="membershipDaysLeft" style="color:var(--primary);">— días restantes</span>
-                </div>
-                <div class="progress-bar-wrap" style="height:6px;border-radius:3px;overflow:hidden;">
-                  <div class="progress-bar-fill" id="membershipBarFill" style="width:0%"></div>
-                </div>
-              </div>
+        <!-- TARJETA 1: DATOS REGISTRADOS DEL ESTUDIANTE -->
+        <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,0.02);margin-bottom:24px;">
+          <div style="font-size:1.05rem;font-weight:900;color:var(--text-main);margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(232,82,26,0.1);color:var(--primary);display:flex;align-items:center;justify-content:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
-
-            <!-- Features Grid -->
-            <div style="margin-top:16px;padding-top:16px;border-top:1px solid #F1F5F9;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;font-size:0.78rem;color:var(--text-secondary);">
-              <div style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Simulacros Ilimitados</div>
-              <div style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Banco por Cursos</div>
-              <div style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Resúmenes Teóricos PDF</div>
-              <div style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Clases Grabadas Padlet</div>
-            </div>
+            <span>Información del Estudiante Registrado</span>
           </div>
 
-          <!-- Contact & Renewal Support Card -->
-          <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,0.02);display:flex;flex-direction:column;justify-content:space-between;">
-            <div>
-              <h4 style="font-size:1rem;font-weight:800;color:var(--text-main);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-                Renovación y Soporte Directo
-              </h4>
-
-              <div style="display:flex;flex-direction:column;gap:12px;font-size:0.85rem;color:var(--text-main);">
-                <div style="display:flex;align-items:center;gap:10px;background:#F8FAFC;border:1px solid #E2E8F0;padding:10px 14px;border-radius:12px;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                  <span>Para renovar tu acceso, solicita la extensión con la administración.</span>
-                </div>
-
-                <div style="display:flex;align-items:center;gap:10px;background:#F8FAFC;border:1px solid #E2E8F0;padding:10px 14px;border-radius:12px;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                  <a href="mailto:llanovilca97@gmail.com" style="color:var(--primary);font-weight:700;">llanovilca97@gmail.com</a>
-                </div>
-
-                <div style="display:flex;align-items:center;gap:10px;background:#F8FAFC;border:1px solid #E2E8F0;padding:10px 14px;border-radius:12px;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                  <span>Atención vía WhatsApp institucional</span>
-                </div>
-              </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;">
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;padding:12px 14px;border-radius:12px;">
+              <div style="font-size:0.72rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Nombre Completo</div>
+              <div style="font-size:0.92rem;font-weight:800;color:var(--text-main);margin-top:2px;" id="pagoEstNombre">—</div>
             </div>
 
-            <div class="alert alert-warning" id="expiryWarning" style="display:none;margin-top:16px;border-radius:12px;padding:12px 14px;font-size:0.82rem;font-weight:700;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              <span>Tu membresía está próxima a vencer. ¡Renueva a tiempo!</span>
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;padding:12px 14px;border-radius:12px;">
+              <div style="font-size:0.72rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">DNI / Documento</div>
+              <div style="font-size:0.92rem;font-weight:800;color:var(--text-main);margin-top:2px;" id="pagoEstDni">—</div>
+            </div>
+
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;padding:12px 14px;border-radius:12px;">
+              <div style="font-size:0.72rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Teléfono / WhatsApp</div>
+              <div style="font-size:0.92rem;font-weight:800;color:var(--text-main);margin-top:2px;" id="pagoEstCelular">—</div>
+            </div>
+
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;padding:12px 14px;border-radius:12px;">
+              <div style="font-size:0.72rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Universidad</div>
+              <div style="font-size:0.92rem;font-weight:800;color:var(--primary);margin-top:2px;" id="pagoEstUniv">—</div>
+            </div>
+
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;padding:12px 14px;border-radius:12px;">
+              <div style="font-size:0.72rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Área Académica</div>
+              <div style="font-size:0.92rem;font-weight:800;color:var(--text-main);margin-top:2px;" id="pagoEstArea">—</div>
+            </div>
+
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;padding:12px 14px;border-radius:12px;">
+              <div style="font-size:0.72rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Carrera Profesional</div>
+              <div style="font-size:0.92rem;font-weight:800;color:var(--text-main);margin-top:2px;" id="pagoEstCarrera">—</div>
+            </div>
+
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;padding:12px 14px;border-radius:12px;">
+              <div style="font-size:0.72rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Usuario de Acceso</div>
+              <div style="font-size:0.92rem;font-weight:800;color:var(--text-main);margin-top:2px;" id="pagoEstUsuario">—</div>
+            </div>
+
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;padding:12px 14px;border-radius:12px;">
+              <div style="font-size:0.72rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Estado de Cuenta</div>
+              <div style="font-size:0.85rem;font-weight:900;color:#D97706;margin-top:2px;" id="pagoEstTipoCuenta">Modo Visitante / Prueba</div>
             </div>
           </div>
         </div>
+
+        <!-- TARJETA 2: ACTIVACIÓN DE ACCESO COMPLETO POR WHATSAPP -->
+        <div style="background:linear-gradient(135deg, #064E3B, #047857);border-radius:20px;padding:28px;color:white;box-shadow:0 8px 24px rgba(4,120,87,0.25);margin-bottom:24px;">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap;">
+            <div style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size:1.3rem;font-weight:900;margin:0;line-height:1.2;">¿Deseas tener Acceso Completo a toda la Plataforma?</h3>
+              <p style="font-size:0.85rem;opacity:0.9;margin-top:4px;">Ponte en contacto con administración para activar tu membresía oficial con todos los beneficios.</p>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:24px;font-size:0.82rem;font-weight:700;">
+            <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);padding:8px 12px;border-radius:10px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              Clases en vivo y grabadas
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);padding:8px 12px;border-radius:10px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              Simulacros oficiales de 60 preguntas
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);padding:8px 12px;border-radius:10px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              Resúmenes teóricos en PDF
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);padding:8px 12px;border-radius:10px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              Soporte y consultas continuas
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;background:rgba(0,0,0,0.2);padding:16px 20px;border-radius:14px;border:1px solid rgba(255,255,255,0.15);">
+            <div>
+              <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;opacity:0.8;">Número Oficial de Atención</div>
+              <div style="font-size:1.15rem;font-weight:900;letter-spacing:0.5px;">+51 965 890 475</div>
+            </div>
+
+            <a id="btnWsFullAccess" href="https://wa.me/51965890475?text=Hola,%20deseo%20activar%20el%20acceso%20completo%20a%20la%20Plataforma%20Mirzakhani." target="_blank" style="background:#25D366;color:white;padding:12px 22px;border-radius:12px;font-weight:900;font-size:0.9rem;display:inline-flex;align-items:center;gap:10px;text-decoration:none;box-shadow:0 4px 15px rgba(37,211,102,0.4);transition:transform 0.2s;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              Solicitar Acceso Completo por WhatsApp
+            </a>
+          </div>
+        </div>
+
       </div>
 
     </div><!-- /content-area -->
@@ -2541,27 +2554,45 @@
   // SECCIÓN: PAGOS
   // ─────────────────────────────────────────────────────────
   function renderPagos() {
-    const inicio = sesion.membresia_inicio;
-    const fin    = sesion.membresia_fin;
-    if (!inicio || !fin) return;
+    if (!sesion) return;
 
-    const ahora     = new Date();
-    const fechaFin  = new Date(fin);
-    const fechaIni  = new Date(inicio);
-    const duracion  = fechaFin - fechaIni;
-    const transcurrido = ahora - fechaIni;
-    const pctUsado  = Math.min(100, Math.max(0, (transcurrido / duracion) * 100));
-    const diasLeft  = Math.max(0, Math.ceil((fechaFin - ahora) / (1000*60*60*24)));
-    const activa    = ahora <= fechaFin;
+    const elNombre = document.getElementById('pagoEstNombre');
+    const elDni = document.getElementById('pagoEstDni');
+    const elCel = document.getElementById('pagoEstCelular');
+    const elUniv = document.getElementById('pagoEstUniv');
+    const elArea = document.getElementById('pagoEstArea');
+    const elCarrera = document.getElementById('pagoEstCarrera');
+    const elUsuario = document.getElementById('pagoEstUsuario');
+    const elTipo = document.getElementById('pagoEstTipoCuenta');
+    const btnWs = document.getElementById('btnWsFullAccess');
 
-    document.getElementById('membershipStatus').className = `membership-status ${activa ? 'active' : 'expired'}`;
-    document.getElementById('membershipStatus').innerHTML = `<span>●</span> ${activa ? 'Membresía Activa' : 'Membresía Vencida'}`;
-    document.getElementById('membershipDates').textContent = `Inicio: ${inicio} | Vence: ${fin}`;
-    document.getElementById('membershipBarFill').style.width = `${pctUsado}%`;
-    document.getElementById('membershipDaysLeft').textContent = activa ? `${diasLeft} días restantes` : 'Membresía vencida';
+    const areaNom = (sesion.area === 'CIE' || !sesion.area) ? 'INGENIERÍAS' : (sesion.area === 'LETRAS' ? 'SOCIALES' : sesion.area);
 
-    if (diasLeft <= 10 && activa) {
-      document.getElementById('expiryWarning').style.display = 'flex';
+    let univNom = 'UNA PUNO';
+    let carreraNom = sesion.carrera || 'General';
+    if (sesion.carrera && sesion.carrera.includes(' — ')) {
+      const parts = sesion.carrera.split(' — ');
+      univNom = parts[0];
+      carreraNom = parts[1];
+    }
+
+    if (elNombre) elNombre.textContent = sesion.nombre || '—';
+    if (elDni) elDni.textContent = sesion.dni || '—';
+    if (elCel) elCel.textContent = sesion.celular || '—';
+    if (elUniv) elUniv.textContent = univNom;
+    if (elArea) elArea.textContent = areaNom;
+    if (elCarrera) elCarrera.textContent = carreraNom;
+    if (elUsuario) elUsuario.textContent = sesion.usuario || '—';
+
+    const esVisitante = sesion.es_visitante || !sesion.membresia_activa;
+    if (elTipo) {
+      elTipo.textContent = esVisitante ? 'Modo Visitante / Prueba' : 'Membresía Activa Ilimitada';
+      elTipo.style.color = esVisitante ? '#D97706' : '#059669';
+    }
+
+    if (btnWs) {
+      const msg = encodeURIComponent(`Hola, soy ${sesion.nombre || ''} (Usuario: ${sesion.usuario || ''}). Deseo activar el acceso completo a la Plataforma Mirzakhani.`);
+      btnWs.href = `https://wa.me/51965890475?text=${msg}`;
     }
   }
 
