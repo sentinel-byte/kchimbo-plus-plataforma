@@ -9,7 +9,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <link rel="stylesheet" href="../css/main.css?v=12.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=20.0.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=21.0.0">
   <style>
     /* ══════════════════════════════════════════════════════════════
        EXAM / QUIZ LAYOUT — REGLAS INLINE (NO CACHEABLES POR SEPARADO)
@@ -482,7 +482,7 @@
           </div>
 
           <!-- 2 Details Cards (Detalles de Calificación e Instrucciones) -->
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:28px;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:14px;">
             <!-- Box 1: Criterios -->
             <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.02);">
               <div style="font-size:0.75rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
@@ -529,7 +529,7 @@
           </div>
 
           <!-- Launch Button Centrado -->
-          <div style="text-align:center;padding:12px 0 24px 0;width:100%;">
+          <div style="text-align:center;padding:4px 0 10px 0;width:100%;">
             <button class="btn btn-primary btn-lg" id="btnIniciarExamen" style="padding:16px 36px;font-size:1.02rem;font-weight:900;border-radius:16px;box-shadow:0 8px 30px rgba(232,82,26,0.35);display:inline-flex;align-items:center;justify-content:center;gap:10px;transition:all 0.25s;max-width:100%;box-sizing:border-box;">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               Iniciar Examen Simulacro Oficial
@@ -2509,25 +2509,25 @@
           </div>
         </div>
 
-        <!-- Rendimiento por Curso Card -->
-        <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+        <!-- Rendimiento por Curso Card + Botones de Acción Integrados (Sin huecos grises) -->
+        <div style="background:white;border:1px solid #E2E8F0;border-radius:18px;padding:20px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.02);">
           <div style="font-size:0.88rem;font-weight:800;color:var(--text-main);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
             Desglose de Rendimiento Ponderado por Asignatura
           </div>
           <div>${analisisHTML}</div>
-        </div>
 
-        <!-- Action Buttons -->
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:8px;padding-bottom:4px;">
-          <button class="btn btn-primary btn-lg" onclick="location.reload()" style="padding:12px 28px;font-size:0.92rem;font-weight:800;border-radius:12px;display:inline-flex;align-items:center;gap:8px;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-            Iniciar Nuevo Simulacro
-          </button>
-          <button class="btn btn-outline" id="btnVerAvanceLink" style="padding:12px 24px;font-size:0.88rem;font-weight:700;border-radius:12px;display:inline-flex;align-items:center;gap:8px;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-            Ver Mi Avance Histórico
-          </button>
+          <!-- Action Buttons Integrados -->
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid #F1F5F9;">
+            <button class="btn btn-primary btn-lg" onclick="location.reload()" style="padding:12px 26px;font-size:0.90rem;font-weight:800;border-radius:12px;display:inline-flex;align-items:center;gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Iniciar Nuevo Simulacro
+            </button>
+            <button class="btn btn-outline" id="btnVerAvanceLink" style="padding:12px 22px;font-size:0.88rem;font-weight:700;border-radius:12px;display:inline-flex;align-items:center;gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              Ver Mi Avance Histórico
+            </button>
+          </div>
         </div>
       </div>
     `;
