@@ -208,6 +208,7 @@ const AUTH = {
       membresia_inicio: new Date().toISOString().split('T')[0],
       membresia_fin: '—',
       celular: data.celular || '',
+      dni: data.dni || '',
       email: data.email || ''
     };
 
