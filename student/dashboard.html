@@ -9,7 +9,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <link rel="stylesheet" href="../css/main.css?v=12.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=15.1.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=16.0.0">
   <style>
     /* ══════════════════════════════════════════════════════════════
        EXAM / QUIZ LAYOUT — REGLAS INLINE (NO CACHEABLES POR SEPARADO)
@@ -78,9 +78,32 @@
     }
 
 
-    /* 7. Garantizar padding en .content-area cuando NO hay examen activo */
-    .content-area:not(:has(#examActive:not(.hidden))):not(:has(#quizActive:not(.hidden))) {
-      padding: 14px 20px 10px 20px !important;
+    /* 7. Garantizar padding en .content-area cuando NO hay examen activo (Desktop y Celular) */
+    @media (min-width: 769px) {
+      .content-area:not(:has(#examActive:not(.hidden))):not(:has(#quizActive:not(.hidden))) {
+        padding: 18px 24px 14px 24px !important;
+      }
+    }
+    @media (max-width: 768px) {
+      .content-area:not(:has(#examActive:not(.hidden))):not(:has(#quizActive:not(.hidden))) {
+        padding: 14px 14px 12px 14px !important;
+      }
+      .board-header {
+        margin-bottom: 14px !important;
+        gap: 10px !important;
+      }
+      .padlet-board-container {
+        padding: 4px 4px 12px 4px !important;
+        gap: 12px !important;
+      }
+      #horarioListContainer,
+      #adminPreguntasBoard,
+      .quiz-stats-bar,
+      .setup-card,
+      .resumen-card {
+        gap: 12px !important;
+        margin-bottom: 14px !important;
+      }
     }
 
     .quiz-answer-feedback {
