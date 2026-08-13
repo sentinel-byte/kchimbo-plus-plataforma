@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Panel Estudiantil</title>
   <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani.">
-  <link rel="stylesheet" href="../css/main.css?v=3.1.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=3.1.0">
+  <link rel="stylesheet" href="../css/main.css?v=4.0.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=4.0.0">
   <style>
     /* Extra styles for student dashboard */
     .quiz-answer-feedback {
@@ -86,13 +86,16 @@
 
 <!-- Universal Topbar -->
 <div class="topbar" id="topbar">
-  <div style="display:flex;align-items:center;gap:10px;">
+  <div style="display:flex;align-items:center;gap:12px;">
     <button class="topbar-menu-btn" id="menuToggle" title="Ocultar / Mostrar menú de navegación">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--primary-deeper),var(--primary-dark));display:inline-flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:0.85rem;">M</div>
-      <span style="font-weight:800;font-size:1rem;color:var(--text-primary);letter-spacing:-0.02em;">Mirzakhani</span>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--primary-deeper),var(--primary-dark));display:inline-flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:0.95rem;box-shadow:0 2px 6px rgba(232,82,26,0.3);">M</div>
+      <div>
+        <div style="font-weight:900;font-size:1.05rem;color:var(--text-primary);letter-spacing:-0.02em;line-height:1.1;">Mirzakhani</div>
+        <div style="font-size:0.7rem;color:var(--text-muted);font-weight:700;letter-spacing:0.3px;">Plataforma Virtual</div>
+      </div>
     </div>
   </div>
   <div class="topbar-role-badge student-badge">ESTUDIANTE</div>
@@ -105,29 +108,15 @@
 
   <!-- ════════ SIDEBAR ════════ -->
   <aside class="sidebar" id="sidebar">
-    <!-- Logo -->
-    <div class="sidebar-header">
-      <div class="sidebar-logo">
-        <div class="sidebar-logo-icon">
-          <span style="font-size:1.1rem;font-weight:700;color:white;">M</span>
-        </div>
-        <div class="sidebar-logo-text">
-          <div class="sidebar-logo-name">Mirzakhani</div>
-          <div class="sidebar-logo-sub">Plataforma Virtual</div>
-        </div>
-      </div>
-
-      <!-- User card -->
-      <div class="sidebar-user" style="background:white;border:1px solid #E2E8F0;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px;margin-top:14px;box-shadow:0 2px 6px rgba(0,0,0,0.02);">
+    <div class="sidebar-header" style="padding-top:14px;padding-bottom:10px;">
+      <!-- User card (Muestra solo los nombres del estudiante) -->
+      <div class="sidebar-user" style="background:white;border:1px solid #E2E8F0;border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 6px rgba(0,0,0,0.02);">
         <div style="position:relative;flex-shrink:0;">
-          <div class="sidebar-avatar" style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#C0392B);color:white;font-weight:800;font-size:0.95rem;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(232,82,26,0.25);" id="sidebarAvatarInitials">?</div>
-          <span style="position:absolute;bottom:-1px;right:-1px;width:9px;height:9px;border-radius:50%;background:#10B981;border:2px solid white;box-shadow:0 0 4px rgba(16,185,129,0.5);" title="Estudiante en Línea"></span>
+          <div class="sidebar-avatar" style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#C0392B);color:white;font-weight:800;font-size:1rem;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(232,82,26,0.25);" id="sidebarAvatarInitials">?</div>
+          <span style="position:absolute;bottom:-1px;right:-1px;width:10px;height:10px;border-radius:50%;background:#10B981;border:2px solid white;box-shadow:0 0 4px rgba(16,185,129,0.5);" title="Estudiante en Línea"></span>
         </div>
-        <div class="sidebar-user-info" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
-          <div class="sidebar-user-name" style="font-size:0.85rem;font-weight:800;color:var(--text-main);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sidebarUserName">—</div>
-          <div style="display:flex;align-items:center;">
-            <span style="background:rgba(232,82,26,0.08);color:var(--primary);border:1px solid rgba(232,82,26,0.2);padding:2px 8px;border-radius:10px;font-size:0.68rem;font-weight:800;letter-spacing:0.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sidebarUserArea">INGENIERÍAS</span>
-          </div>
+        <div class="sidebar-user-info" style="flex:1;min-width:0;">
+          <div class="sidebar-user-name" style="font-size:0.92rem;font-weight:900;color:var(--text-main);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sidebarUserName">—</div>
         </div>
       </div>
     </div>
@@ -1107,18 +1096,24 @@
 
   const areaFormateada = (sesion.area === 'CIE' || !sesion.area) ? 'INGENIERÍAS' : (sesion.area === 'LETRAS' ? 'SOCIALES' : sesion.area);
 
-  function obtenerNombreCorto(nombreCompleto) {
+  function obtenerSoloNombres(sesionObj) {
+    if (!sesionObj) return 'Estudiante';
+    if (sesionObj.nombres && sesionObj.nombres.trim()) {
+      return sesionObj.nombres.trim();
+    }
+    const nombreCompleto = (sesionObj.nombre || '').trim();
     if (!nombreCompleto) return 'Estudiante';
-    const partes = nombreCompleto.trim().split(/\s+/);
-    if (partes.length <= 2) return nombreCompleto;
-    return `${partes[0]} ${partes[1].charAt(0)}. ${partes[2]}`;
+    const partes = nombreCompleto.split(/\s+/);
+    if (partes.length >= 3) {
+      return partes.slice(0, partes.length - 2).join(' ');
+    }
+    return partes[0];
   }
 
-  if (nameEl)  nameEl.textContent  = obtenerNombreCorto(sesion.nombre);
+  if (nameEl)  nameEl.textContent  = obtenerSoloNombres(sesion);
   if (nameEl)  nameEl.title        = sesion.nombre;
-  if (areaEl)  areaEl.textContent  = sesion.carrera ? `${areaFormateada} • ${sesion.carrera}` : areaFormateada;
   if (badgeEl) badgeEl.textContent = areaFormateada;
-  if (avEl)    avEl.textContent    = sesion.nombre.charAt(0).toUpperCase();
+  if (avEl)    avEl.textContent    = (sesion.nombre || 'E').charAt(0).toUpperCase();
   if (exLabel) exLabel.textContent = areaFormateada;
 
   // ── Banner Modo Visitante ──

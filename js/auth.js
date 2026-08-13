@@ -198,6 +198,8 @@ const AUTH = {
       usuario: usuarioClean,
       password: passClean,
       nombre: nombreClean,
+      nombres: data.nombres || '',
+      apellidos: data.apellidos || '',
       area: data.area || 'INGENIERÍAS',
       carrera: data.carrera || 'General',
       ciclos: [],
