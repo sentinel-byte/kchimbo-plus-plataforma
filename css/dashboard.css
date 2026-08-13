@@ -356,18 +356,24 @@ html, body {
 
 .main-content {
   flex: 1;
-  height: calc(100vh - 56px);
-  max-height: calc(100vh - 56px);
+  min-height: calc(100vh - 56px);
   display: flex;
   flex-direction: column;
   transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.3s ease;
-  overflow: hidden;
+  overflow: visible;
   max-width: 100%;
   box-sizing: border-box;
 }
 
+/* Solo durante examen/repaso activo: main-content vuelve a altura fija con scroll interno controlado */
+.main-content:has(.content-area.exam-mode) {
+  height: calc(100vh - 56px);
+  max-height: calc(100vh - 56px);
+  overflow: hidden;
+}
+
 .content-area {
-  flex: 1;
+  flex: 0 1 auto;
   min-height: 0;
   width: 100%;
   max-width: 100%;
@@ -375,13 +381,14 @@ html, body {
   padding: 14px 20px 10px 20px !important;
   display: flex;
   flex-direction: column;
-  overflow-y: auto !important;
-  -webkit-overflow-scrolling: touch !important;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
 }
 
-/* Modo examen/repaso: content-area sin scroll, usa flex para pasar altura */
+/* Modo examen/repaso: content-area llena el espacio y controla su propio scroll interno */
 .content-area.exam-mode {
+  flex: 1 !important;
   overflow: hidden !important;
   padding: 0 !important;
   display: flex !important;
@@ -1360,14 +1367,22 @@ html, body {
     margin-top: 54px !important;
     padding-top: 0 !important;
     margin-left: 0 !important;
+    min-height: calc(100vh - 54px) !important;
+    min-height: calc(100dvh - 54px) !important;
+    overflow: visible !important;
+  }
+  .main-content:has(.content-area.exam-mode) {
     height: calc(100vh - 54px) !important;
     height: calc(100dvh - 54px) !important;
     overflow: hidden !important;
   }
   .content-area {
     padding: 10px 10px 6px 10px !important;
-    overflow-y: auto !important;
+    overflow-y: visible !important;
     -webkit-overflow-scrolling: touch !important;
+  }
+  .content-area.exam-mode {
+    overflow-y: hidden !important;
   }
   .section-view {
     overflow-y: visible !important;
