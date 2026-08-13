@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Panel Estudiantil</title>
   <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani.">
-  <link rel="stylesheet" href="../css/main.css?v=6.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=6.0.0">
+  <link rel="stylesheet" href="../css/main.css?v=6.1.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=6.1.0">
   <style>
     /* Extra styles for student dashboard */
     .quiz-answer-feedback {
@@ -1028,11 +1028,33 @@
       <button class="modal-close" id="logoutModalClose">✕</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:0.92rem;color:var(--text-secondary);">¿Estás seguro de que deseas cerrar sesión?</p>
+      ¿Estás seguro de que deseas cerrar sesión en la plataforma Mirzakhani?
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" id="logoutCancelBtn">Cancelar</button>
-      <button class="btn btn-danger" id="logoutConfirmBtn">Sí, cerrar sesión</button>
+      <button class="btn btn-primary" id="logoutConfirmBtn">Sí, Cerrar Sesión</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Confirmación General Elegante Glassmorphism -->
+<div class="modal-overlay" id="modalConfirmAction">
+  <div class="modal-box" style="max-width:440px;padding:0;overflow:hidden;border-radius:24px;">
+    <div style="padding:28px 24px 20px 24px;text-align:center;position:relative;">
+      <div id="modalConfirmIcon" style="width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg, rgba(232,82,26,0.15), rgba(232,82,26,0.05));color:var(--primary);display:inline-flex;align-items:center;justify-content:center;margin:0 auto 16px auto;border:1px solid rgba(232,82,26,0.25);box-shadow:0 4px 15px rgba(232,82,26,0.12);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </div>
+      <h3 id="modalConfirmTitle" style="font-size:1.25rem;font-weight:900;color:var(--text-main);margin:0;line-height:1.2;">¿Listo para comenzar?</h3>
+      <p id="modalConfirmMsg" style="font-size:0.88rem;color:var(--text-muted);margin-top:8px;line-height:1.5;font-weight:600;">Una vez iniciado, el cronómetro oficial de 2 horas comenzará a correr. Asegúrate de estar en un lugar tranquilo.</p>
+    </div>
+    
+    <div style="background:#F8FAFC;padding:16px 24px;border-top:1px solid #E2E8F0;display:flex;gap:12px;">
+      <button type="button" id="btnModalConfirmCancel" style="flex:1;background:white;border:1px solid #CBD5E1;color:#475569;padding:12px;border-radius:12px;font-weight:800;font-size:0.88rem;cursor:pointer;transition:all 0.2s;">
+        Cancelar
+      </button>
+      <button type="button" id="btnModalConfirmAccept" style="flex:1.4;background:linear-gradient(135deg, var(--primary), var(--primary-dark));border:none;color:white;padding:12px;border-radius:12px;font-weight:900;font-size:0.88rem;cursor:pointer;box-shadow:0 4px 15px rgba(232,82,26,0.35);transition:all 0.2s;">
+        Sí, Iniciar Examen 🚀
+      </button>
     </div>
   </div>
 </div>
@@ -2000,12 +2022,68 @@
   });
 
   // ─────────────────────────────────────────────────────────
+  // HELPER MODAL CONFIRMACIÓN ELEGANTE
+  // ─────────────────────────────────────────────────────────
+  function pedirConfirmacionAccion({ titulo, mensaje, iconoSvg, textoBoton, esPeligroso, onAccept }) {
+    const modal = document.getElementById('modalConfirmAction');
+    const elTitle = document.getElementById('modalConfirmTitle');
+    const elMsg = document.getElementById('modalConfirmMsg');
+    const elIcon = document.getElementById('modalConfirmIcon');
+    const btnAccept = document.getElementById('btnModalConfirmAccept');
+    const btnCancel = document.getElementById('btnModalConfirmCancel');
+
+    if (!modal) {
+      if (confirm(mensaje)) onAccept();
+      return;
+    }
+
+    elTitle.textContent = titulo || '¿Confirmar Acción?';
+    elMsg.textContent = mensaje || '';
+    if (iconoSvg && elIcon) elIcon.innerHTML = iconoSvg;
+    btnAccept.textContent = textoBoton || 'Confirmar';
+
+    if (esPeligroso) {
+      btnAccept.style.background = 'linear-gradient(135deg, #EF4444, #DC2626)';
+      btnAccept.style.boxShadow = '0 4px 15px rgba(239, 68, 68, 0.35)';
+    } else {
+      btnAccept.style.background = 'linear-gradient(135deg, var(--primary), var(--primary-dark))';
+      btnAccept.style.boxShadow = '0 4px 15px rgba(232, 82, 26, 0.35)';
+    }
+
+    const handleAccept = () => {
+      modal.classList.remove('open');
+      cleanup();
+      onAccept();
+    };
+
+    const handleCancel = () => {
+      modal.classList.remove('open');
+      cleanup();
+    };
+
+    const cleanup = () => {
+      btnAccept.removeEventListener('click', handleAccept);
+      btnCancel.removeEventListener('click', handleCancel);
+    };
+
+    btnAccept.addEventListener('click', handleAccept);
+    btnCancel.addEventListener('click', handleCancel);
+
+    modal.classList.add('open');
+  }
+
+  // ─────────────────────────────────────────────────────────
   // SECCIÓN: EXAMEN SIMULACRO
   // ─────────────────────────────────────────────────────────
   document.getElementById('btnIniciarExamen').addEventListener('click', () => {
-    if (confirm('¿Listo para comenzar el examen simulacro? Una vez iniciado el cronómetro correrá.')) {
-      iniciarExamen();
-    }
+    pedirConfirmacionAccion({
+      titulo: '¿Listo para comenzar el Examen Simulacro?',
+      mensaje: 'Una vez iniciado, el cronómetro oficial de 2 horas comenzará a correr de forma continua. Asegúrate de estar en un lugar tranquilo.',
+      iconoSvg: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+      textoBoton: 'Sí, Iniciar Examen 🚀',
+      esPeligroso: false,
+      onAccept: () => iniciarExamen()
+    });
   });
 
   function iniciarExamen() {
@@ -2139,12 +2217,20 @@
   document.getElementById('btnTerminarExamen').addEventListener('click', () => {
     const answered = examenObj.respuestasUsuario.filter(r => r !== null).length;
     const msg = answered < 60
-      ? `Tienes ${60 - answered} preguntas sin responder. ¿Deseas terminar el examen?`
-      : '¿Deseas entregar el examen?';
-    if (confirm(msg)) {
-      const resultado = examenObj.terminar();
-      mostrarResultados(resultado);
-    }
+      ? `Tienes ${60 - answered} preguntas sin responder de un total de 60. ¿Estás seguro de que deseas finalizar y entregar el examen?`
+      : 'Has respondido las 60 preguntas. ¿Deseas entregar el examen ahora?';
+    
+    pedirConfirmacionAccion({
+      titulo: '¿Finalizar y Entregar Examen?',
+      mensaje: msg,
+      iconoSvg: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+      textoBoton: 'Sí, Entregar Examen 🏁',
+      esPeligroso: answered < 60,
+      onAccept: () => {
+        const resultado = examenObj.terminar();
+        mostrarResultados(resultado);
+      }
+    });
   });
 
   function mostrarResultados(res) {
@@ -2452,10 +2538,17 @@
   });
 
   document.getElementById('btnSalirRepaso').addEventListener('click', () => {
-    if (confirm('¿Salir del repaso actual?')) {
-      document.getElementById('quizActive').classList.add('hidden');
-      document.getElementById('quizSetup').classList.remove('hidden');
-    }
+    pedirConfirmacionAccion({
+      titulo: '¿Salir de la Sesión de Repaso?',
+      mensaje: 'Tu progreso actual de preguntas en esta sesión de práctica no se guardará.',
+      iconoSvg: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+      textoBoton: 'Salir del Repaso',
+      esPeligroso: true,
+      onAccept: () => {
+        document.getElementById('quizActive').classList.add('hidden');
+        document.getElementById('quizSetup').classList.remove('hidden');
+      }
+    });
   });
 
   function mostrarQuizFinalizado() {
