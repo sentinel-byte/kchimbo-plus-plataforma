@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Panel Estudiantil</title>
   <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani.">
-  <link rel="stylesheet" href="../css/main.css?v=1.3.2">
-  <link rel="stylesheet" href="../css/dashboard.css?v=1.3.2">
+  <link rel="stylesheet" href="../css/main.css?v=1.3.3">
+  <link rel="stylesheet" href="../css/dashboard.css?v=1.3.3">
   <style>
     /* Extra styles for student dashboard */
     .quiz-answer-feedback {
@@ -1034,15 +1034,51 @@
   let currentSection = 'clases';
   let currentCursoTab = null;
   let tipoFiltro = 'TODOS';
+  let cicloFiltroClasesStudent = 'TODOS';
+  let cicloFiltroResumenesStudent = 'TODOS';
   let examenObj = null;
   let quizObj = null;
   let clases = [...DEMO_CLASES];
   let resumenes = [...DEMO_RESUMENES];
   let preguntas = [...DEMO_PREGUNTAS];
 
-  // Helper: devuelve el objeto de sesión del usuario logueado (con ciclos, rol, area, etc.)
+  // Helper: devuelve el objeto de sesión del usuario logueado
   function getLoggedUser() {
     return sesion || null;
+  }
+
+  function getStudentEnrolledCiclos() {
+    const loggedUser = getLoggedUser();
+    if (loggedUser && Array.isArray(loggedUser.ciclos) && loggedUser.ciclos.length > 0) {
+      return loggedUser.ciclos;
+    }
+    return ['Ciclo Matecero', 'Ciclo Formativo'];
+  }
+
+  function updateCiclosClasesSelectStudent() {
+    const select = document.getElementById('filterCicloClases');
+    if (!select) return;
+    const userCiclos = getStudentEnrolledCiclos();
+    const currentVal = select.value || 'TODOS';
+    let opts = `<option value="TODOS">Todos mis ciclos (${userCiclos.length})</option>`;
+    userCiclos.forEach(c => {
+      opts += `<option value="${c}">${c}</option>`;
+    });
+    select.innerHTML = opts;
+    select.value = (currentVal === 'TODOS' || userCiclos.includes(currentVal)) ? currentVal : 'TODOS';
+  }
+
+  function updateCiclosResumenesSelectStudent() {
+    const select = document.getElementById('filterCicloResumenes');
+    if (!select) return;
+    const userCiclos = getStudentEnrolledCiclos();
+    const currentVal = select.value || 'TODOS';
+    let opts = `<option value="TODOS">Todos mis ciclos (${userCiclos.length})</option>`;
+    userCiclos.forEach(c => {
+      opts += `<option value="${c}">${c}</option>`;
+    });
+    select.innerHTML = opts;
+    select.value = (currentVal === 'TODOS' || userCiclos.includes(currentVal)) ? currentVal : 'TODOS';
   }
 
   // ── Inicializar UI con datos de sesión ──
@@ -1173,7 +1209,8 @@
   // SECCIÓN: CLASES EN LÍNEA (MURAL PADLET INTERACTIVO)
   // ─────────────────────────────────────────────────────────
   function renderClases() {
-    // BUG FIX: el área ya está normalizada, usar INGENIERÍAS como fallback
+    updateCiclosClasesSelectStudent();
+    const userCiclos = getStudentEnrolledCiclos();
     const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA['INGENIERÍAS'] || CURSOS_POR_AREA.CIE;
     const content = document.getElementById('clasesContent');
 
@@ -1198,6 +1235,16 @@
 
     cursosArea.forEach(curso => {
       let matCurso = clases.filter(c => c.curso === curso);
+
+      // Filtro de seguridad: solo ciclos matriculados del estudiante o TODOS LOS CICLOS
+      matCurso = matCurso.filter(c => !c.ciclo || c.ciclo === 'TODOS LOS CICLOS' || userCiclos.includes(c.ciclo));
+
+      // Filtro por ciclo seleccionado en dropdown
+      if (cicloFiltroClasesStudent !== 'TODOS') {
+        matCurso = matCurso.filter(c => c.ciclo === cicloFiltroClasesStudent || c.ciclo === 'TODOS LOS CICLOS');
+      }
+
+      // Filtro por tipo (PDF / VIDEO)
       if (tipoFiltro !== 'TODOS') {
         matCurso = matCurso.filter(c => c.tipo === tipoFiltro);
       }
@@ -1787,6 +1834,11 @@
   // SECCIÓN: RESÚMENES
   // ─────────────────────────────────────────────────────────
   function renderResumenes() {
+    updateCiclosResumenesSelectStudent();
+    const userCiclos = getStudentEnrolledCiclos();
+    const searchEl = document.getElementById('searchResumenesPadlet');
+    const searchTerm = (searchEl ? searchEl.value : '').toLowerCase().trim();
+
     const cursosArea = CURSOS_POR_AREA[sesion.area] || CURSOS_POR_AREA['INGENIERÍAS'] || CURSOS_POR_AREA.CIE;
     const container = document.getElementById('studentResumenesBoard');
     if (!container) return;
@@ -1811,7 +1863,24 @@
     let boardHTML = `<div class="padlet-board-container">`;
 
     cursosArea.forEach(curso => {
-      const matCurso = resumenes.filter(r => r.curso === curso);
+      let matCurso = resumenes.filter(r => r.curso === curso);
+
+      // Filtro de seguridad: solo ciclos matriculados del estudiante o TODOS LOS CICLOS
+      matCurso = matCurso.filter(r => !r.ciclo || r.ciclo === 'TODOS LOS CICLOS' || userCiclos.includes(r.ciclo));
+
+      // Filtro por ciclo seleccionado en dropdown
+      if (cicloFiltroResumenesStudent !== 'TODOS') {
+        matCurso = matCurso.filter(r => r.ciclo === cicloFiltroResumenesStudent || r.ciclo === 'TODOS LOS CICLOS');
+      }
+
+      // Filtro por búsqueda de texto
+      if (searchTerm) {
+        matCurso = matCurso.filter(r =>
+          (r.titulo && r.titulo.toLowerCase().includes(searchTerm)) ||
+          (r.tema && r.tema.toLowerCase().includes(searchTerm))
+        );
+      }
+
       const colorTheme = courseColors[curso] || '#E8521A';
 
       boardHTML += `
@@ -1868,6 +1937,21 @@
       });
     });
   }
+
+  // Filter Listeners para Clases y Resúmenes
+  document.getElementById('filterCicloClases')?.addEventListener('change', (e) => {
+    cicloFiltroClasesStudent = e.target.value;
+    renderClases();
+  });
+
+  document.getElementById('filterCicloResumenes')?.addEventListener('change', (e) => {
+    cicloFiltroResumenesStudent = e.target.value;
+    renderResumenes();
+  });
+
+  document.getElementById('searchResumenesPadlet')?.addEventListener('input', () => {
+    renderResumenes();
+  });
 
   // ─────────────────────────────────────────────────────────
   // SECCIÓN: EXAMEN SIMULACRO
