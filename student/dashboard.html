@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mirzakhani | Panel Estudiantil</title>
   <meta name="description" content="Panel del estudiante - Plataforma virtual Mirzakhani.">
-  <link rel="stylesheet" href="../css/main.css?v=1.4.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=1.4.0">
+  <link rel="stylesheet" href="../css/main.css?v=1.4.1">
+  <link rel="stylesheet" href="../css/dashboard.css?v=1.4.1">
   <style>
     /* Extra styles for student dashboard */
     .quiz-answer-feedback {
@@ -1116,7 +1116,7 @@
 
   if (nameEl)  nameEl.textContent  = obtenerNombreCorto(sesion.nombre);
   if (nameEl)  nameEl.title        = sesion.nombre;
-  if (areaEl)  areaEl.textContent  = areaFormateada;
+  if (areaEl)  areaEl.textContent  = sesion.carrera ? `${areaFormateada} • ${sesion.carrera}` : areaFormateada;
   if (badgeEl) badgeEl.textContent = areaFormateada;
   if (avEl)    avEl.textContent    = sesion.nombre.charAt(0).toUpperCase();
   if (exLabel) exLabel.textContent = areaFormateada;
