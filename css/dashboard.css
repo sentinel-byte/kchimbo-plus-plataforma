@@ -361,7 +361,7 @@ html, body {
   display: flex;
   flex-direction: column;
   transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.3s ease;
-  overflow: hidden !important;
+  overflow: hidden;
   max-width: 100%;
   box-sizing: border-box;
 }
