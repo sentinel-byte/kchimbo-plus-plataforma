@@ -11,11 +11,70 @@
   <link rel="stylesheet" href="../css/main.css?v=12.0.0">
   <link rel="stylesheet" href="../css/dashboard.css?v=15.1.0">
   <style>
-    /* ── FOOTER: Ocultar durante modo examen/repaso (sin espacio sobrante) ── */
+    /* ══════════════════════════════════════════════════════════════
+       EXAM / QUIZ LAYOUT — REGLAS INLINE (NO CACHEABLES POR SEPARADO)
+       Usan :has() CSS puro — no dependen de clases JS
+    ══════════════════════════════════════════════════════════════ */
+
+    /* 1. Ocultar footer durante el examen */
     body.exam-in-progress footer,
-    body.exam-in-progress .site-footer,
     body.exam-in-progress .main-footer {
       display: none !important;
+    }
+
+    /* 2. Cuando examActive o quizActive está visible:
+          content-area deja de tener padding y se convierte en flex-col */
+    .content-area:has(#examActive:not(.hidden)),
+    .content-area:has(#quizActive:not(.hidden)) {
+      overflow: hidden !important;
+      padding: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    /* 3. La sección activa se convierte en flex-col y llena toda la content-area */
+    .content-area:has(#examActive:not(.hidden)) > .section-view.active,
+    .content-area:has(#quizActive:not(.hidden)) > .section-view.active {
+      flex: 1 !important;
+      min-height: 0 !important;
+      height: 0 !important;          /* con flex:1 + height:0 se fuerza a llenar el espacio */
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      padding: 0 !important;
+      background: white !important;
+    }
+
+    /* 4. examActive/quizActive llena la sección */
+    #examActive:not(.hidden),
+    #quizActive:not(.hidden) {
+      flex: 1 !important;
+      min-height: 0 !important;
+      height: 0 !important;          /* idem: flex:1 + height:0 */
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      background: white !important;
+      padding: 14px 20px 0 20px !important;
+      box-sizing: border-box !important;
+    }
+
+    /* 5. question-card-wrapper scrollea, llena el espacio entre cabecera y botones */
+    #examActive:not(.hidden) .question-card-wrapper,
+    #quizActive:not(.hidden) .question-card-wrapper {
+      flex: 1 !important;
+      min-height: 0 !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* 6. Barra de botones: pegada al fondo, sin espacio debajo */
+    #examActive:not(.hidden) .exam-nav-bar,
+    #quizActive:not(.hidden) .exam-nav-bar {
+      flex-shrink: 0 !important;
+      margin-top: 8px !important;
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
     }
 
     .quiz-answer-feedback {
