@@ -8,13 +8,20 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <link rel="stylesheet" href="../css/main.css?v=12.0.0">
-  <link rel="stylesheet" href="../css/dashboard.css?v=21.0.0">
+  <link rel="stylesheet" href="../css/main.css?v=22.0.0">
+  <link rel="stylesheet" href="../css/dashboard.css?v=22.0.0">
   <style>
     /* ══════════════════════════════════════════════════════════════
        EXAM / QUIZ LAYOUT — REGLAS INLINE (NO CACHEABLES POR SEPARADO)
        Usan :has() CSS puro — no dependen de clases JS
     ══════════════════════════════════════════════════════════════ */
+
+    /* 0. Fondo blanco estricto en vista de resultados para eliminar cualquier franja o canvas gris */
+    #section-simulacro:has(#examResults:not(.hidden)),
+    .content-area:has(#examResults:not(.hidden)),
+    #examResults {
+      background: white !important;
+    }
 
     /* 1. Ocultar footer durante el examen */
     body.exam-in-progress footer,
@@ -1196,11 +1203,11 @@
   </div>
 </div>
 
-<script src="../js/demo-data.js?v=1.0.8"></script>
-<script src="../js/sheets-api.js?v=1.0.8"></script>
-<script src="../js/auth.js?v=1.0.8"></script>
-<script src="../js/exam.js?v=1.0.8"></script>
-<script src="../js/quiz.js?v=1.0.8"></script>
+<script src="../js/demo-data.js?v=22.0.0"></script>
+<script src="../js/sheets-api.js?v=22.0.0"></script>
+<script src="../js/auth.js?v=22.0.0"></script>
+<script src="../js/exam.js?v=22.0.0"></script>
+<script src="../js/quiz.js?v=22.0.0"></script>
 <script>
 // ============================================================
 // STUDENT DASHBOARD — LÓGICA PRINCIPAL
